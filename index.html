@@ -1688,7 +1688,7 @@
   .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 32px 32px;
+    padding: 24px 32px 32px;
   }
 
   /* ====================== Hero (顶部品牌区) ====================== */
@@ -1697,15 +1697,15 @@
     50% { box-shadow: 0 0 0 8px rgba(93, 202, 165, 0.05); }
   }
   .hero {
-    padding: 56px 0 32px;
+    padding: 34px 0 18px;
     border-bottom: 1px solid var(--line);
   }
   .hero-inner {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
-    gap: 56px;
+    gap: 44px;
     align-items: center;
-    margin-bottom: 36px;
+    margin-bottom: 20px;
   }
   .hero-content { max-width: 580px; }
   .hero-eyebrow {
@@ -1714,7 +1714,7 @@
     text-transform: uppercase;
     color: var(--ink-3);
     font-family: 'JetBrains Mono', monospace;
-    margin-bottom: 20px;
+    margin-bottom: 14px;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -1727,10 +1727,10 @@
   }
   .hero h1 {
     font-family: 'Noto Serif SC', serif;
-    font-size: 50px;
+    font-size: 44px;
     line-height: 1.08;
     letter-spacing: -0.025em;
-    margin-bottom: 18px;
+    margin-bottom: 14px;
     font-weight: 700;
   }
   .hero h1 .accent {
@@ -1739,10 +1739,10 @@
     font-weight: 500;
   }
   .hero-sub {
-    font-size: 15px;
+    font-size: 14px;
     color: var(--ink-2);
-    line-height: 1.7;
-    margin-bottom: 28px;
+    line-height: 1.65;
+    margin-bottom: 22px;
   }
   .hero-cta-row {
     display: flex;
@@ -1750,12 +1750,12 @@
     flex-wrap: wrap;
   }
   .hero-cta-primary {
-    padding: 14px 26px;
+    padding: 12px 22px;
     background: linear-gradient(135deg, #1A5D3A, #0F4D2A);
     color: #FAFAF7;
     border: none;
     border-radius: 10px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
     font-family: inherit;
@@ -1770,7 +1770,7 @@
     box-shadow: 0 8px 24px rgba(26,93,58,0.35);
   }
   .hero-cta-secondary {
-    padding: 13px 22px;
+    padding: 11px 20px;
     background: transparent;
     color: var(--ink);
     border: 1px solid var(--line-strong);
@@ -1789,7 +1789,7 @@
   /* Hero 右侧视觉栈 */
   .hero-visual {
     position: relative;
-    height: 320px;
+    height: 236px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1808,7 +1808,7 @@
     background: var(--bg-elev);
     border: 1px solid var(--line);
     border-radius: 12px;
-    padding: 14px 16px;
+    padding: 12px 14px;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -1823,11 +1823,11 @@
     to { opacity: 1; transform: translateY(0) translateX(0); }
   }
   .hero-vstack-card:nth-child(1) { top: 0; transform: rotate(-1.5deg) translateX(-8px); z-index: 1; }
-  .hero-vstack-card:nth-child(2) { top: 56px; transform: rotate(0.8deg) translateX(24px); z-index: 2; }
-  .hero-vstack-card:nth-child(3) { top: 112px; transform: rotate(-0.4deg) translateX(0); z-index: 3; }
-  .hero-vstack-card:nth-child(4) { top: 168px; transform: rotate(1.2deg) translateX(20px); z-index: 4; }
-  .hero-vstack-card:nth-child(5) { top: 224px; transform: rotate(-0.8deg) translateX(-4px); z-index: 5; }
-  .hero-vstack-card:nth-child(6) { top: 280px; transform: rotate(0.6deg) translateX(16px); z-index: 6; display: none; }
+  .hero-vstack-card:nth-child(2) { top: 44px; transform: rotate(0.8deg) translateX(24px); z-index: 2; }
+  .hero-vstack-card:nth-child(3) { top: 88px; transform: rotate(-0.4deg) translateX(0); z-index: 3; }
+  .hero-vstack-card:nth-child(4) { top: 132px; transform: rotate(1.2deg) translateX(20px); z-index: 4; }
+  .hero-vstack-card:nth-child(5) { top: 176px; transform: rotate(-0.8deg) translateX(-4px); z-index: 5; }
+  .hero-vstack-card:nth-child(6) { top: 220px; transform: rotate(0.6deg) translateX(16px); z-index: 6; display: none; }
   .hero-vstack-card:hover {
     transform: translateY(-4px) rotate(0deg) translateX(0) !important;
     z-index: 10 !important;
@@ -1835,14 +1835,14 @@
     border-color: var(--line-strong);
   }
   .hvc-icon {
-    width: 36px; height: 36px;
+    width: 32px; height: 32px;
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: 'Noto Serif SC', serif;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 14px;
     flex-shrink: 0;
   }
   .hvc-info { flex: 1; min-width: 0; }
@@ -1866,8 +1866,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 24px;
-    padding: 20px 24px;
+    gap: 18px;
+    padding: 14px 18px;
     background: var(--bg-elev);
     border: 1px solid var(--line);
     border-radius: 14px;
@@ -1875,7 +1875,7 @@
   .hero-meta-stats {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
     flex-shrink: 0;
   }
   .hero-meta-stat {
@@ -1885,7 +1885,7 @@
   }
   .hero-meta-stat .num {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--ink);
     letter-spacing: -0.01em;
@@ -1921,9 +1921,9 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    margin: 24px 0 16px;
+    margin: 0;
     overflow-x: auto;
-    padding-bottom: 4px;
+    padding-bottom: 0;
   }
   .hot-bar::-webkit-scrollbar { display: none; }
   .hot-bar { scrollbar-width: none; }
@@ -1957,11 +1957,26 @@
   }
 
   /* ====================== 分类筛选 ====================== */
+  .market-controls {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+    align-items: center;
+    padding: 16px 0 18px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 18px;
+  }
+  .market-control-main {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
   .filter-row {
     display: flex;
     gap: 8px;
     flex-wrap: wrap;
-    padding: 24px 0 16px;
+    padding: 0;
     align-items: center;
   }
   .cat-pill {
@@ -1993,15 +2008,17 @@
     font-size: 12px;
     color: var(--ink-2);
     cursor: pointer;
+    white-space: nowrap;
+    height: fit-content;
   }
 
   /* ====================== 工作流卡片 ====================== */
-  .section { margin-bottom: 48px; }
+  .section { margin-bottom: 42px; }
   .section-head {
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
   .sec-tag {
     padding: 4px 11px;
@@ -2320,6 +2337,7 @@
     line-height: 1.5;
     flex: 1;
     margin-bottom: 10px;
+    min-height: 36px;
   }
   .wf-tags {
     display: flex;
@@ -2354,6 +2372,45 @@
   .wf-price { font-weight: 600; }
   .wf-price.pro { color: var(--pro); }
   .wf-price.free { color: var(--self); }
+  .wf-card-cta {
+    margin-top: 12px;
+    height: 34px;
+    border: 1px solid var(--line-strong);
+    background: var(--bg);
+    color: var(--ink);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    transition: all 0.15s;
+  }
+  .wf-card-cta:hover {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  .wf-card-cta.recommend {
+    color: var(--ad);
+    border-color: color-mix(in srgb, var(--ad) 40%, var(--line-strong));
+  }
+  .wf-card-cta.recommend:hover {
+    background: var(--ad);
+    color: #fff;
+    border-color: var(--ad);
+  }
+  .wf-card-cta.pro {
+    color: var(--pro);
+    border-color: color-mix(in srgb, var(--pro) 40%, var(--line-strong));
+  }
+  .wf-card-cta.pro:hover {
+    background: var(--pro);
+    color: #fff;
+    border-color: var(--pro);
+  }
 
   .empty {
     grid-column: 1 / -1;
@@ -3706,6 +3763,7 @@
     .hero-inner { grid-template-columns: 1fr; gap: 32px; }
     .hero-visual { display: none; }
     .hero h1 { font-size: 40px; }
+    .market-controls { grid-template-columns: 1fr; }
     .hero-meta-bar { flex-wrap: wrap; gap: 16px; }
     .hero-live { max-width: 100%; justify-content: flex-start; }
     .hero-live .live-feed-scroll { text-align: left; }
@@ -3726,7 +3784,7 @@
     .cnav-right { gap: 6px; }
     .cnav-link { display: none; }
     .container { padding: 24px 16px; }
-    .hero { padding: 32px 0 20px; }
+    .hero { padding: 24px 0 16px; }
     .hero h1 { font-size: 30px; }
     .hero-sub { font-size: 13px; }
     .hero-cta-row { flex-direction: column; }
@@ -3735,6 +3793,8 @@
     .hero-meta-stats { gap: 14px; }
     .hero-meta-stat .num { font-size: 14px; }
     .hero-meta-divider { display: none; }
+    .market-controls { padding: 12px 0 16px; margin-bottom: 16px; }
+    .hot-bar { padding-bottom: 2px; }
     .me-head-v2 { grid-template-columns: 1fr; gap: 18px; padding: 22px; text-align: center; }
     .me-head-left { flex-direction: column; gap: 14px; }
     .me-head-actions { justify-content: center; }
@@ -3769,7 +3829,7 @@
     .redirect-go, .redirect-cancel { width: 100%; justify-content: center; }
     .skeleton-grid { grid-template-columns: 1fr; }
     .me-stats { grid-template-columns: 1fr 1fr; }
-    .filter-row { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 12px; }
+    .filter-row { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; }
     .cat-pill { white-space: nowrap; flex-shrink: 0; }
     .panel-table { font-size: 11px; }
     .panel-table th, .panel-table td { padding: 8px 10px; }
@@ -4841,21 +4901,23 @@ function renderMarket() {
         </div>
       </section>
 
-      <div class="hot-bar">
-        <span class="hot-label">热门</span>
-        <span class="hot-tag" onclick="quickSearch('小红书')">小红书爆款<span class="trend">↑42%</span></span>
-        <span class="hot-tag" onclick="quickSearch('商品图')">商品图换背景</span>
-        <span class="hot-tag" onclick="quickSearch('海报')">节日海报<span class="trend">↑28%</span></span>
-        <span class="hot-tag" onclick="quickSearch('代码')">代码 Review</span>
-        <span class="hot-tag" onclick="quickSearch('翻译')">多语言翻译</span>
-        <span class="hot-tag" onclick="quickSearch('简历')">简历优化</span>
-      </div>
-
-      <div class="filter-row">
-        ${CATEGORIES.map(c => `
-          <span class="cat-pill ${state.activeCategory === c ? 'active' : ''}" onclick="setCategory('${c}')">${c}</span>
-        `).join('')}
-        <div class="filter-spacer"></div>
+      <div class="market-controls">
+        <div class="market-control-main">
+          <div class="hot-bar">
+            <span class="hot-label">热门</span>
+            <span class="hot-tag" onclick="quickSearch('小红书')">小红书爆款<span class="trend">↑42%</span></span>
+            <span class="hot-tag" onclick="quickSearch('商品图')">商品图换背景</span>
+            <span class="hot-tag" onclick="quickSearch('海报')">节日海报<span class="trend">↑28%</span></span>
+            <span class="hot-tag" onclick="quickSearch('代码')">代码 Review</span>
+            <span class="hot-tag" onclick="quickSearch('翻译')">多语言翻译</span>
+            <span class="hot-tag" onclick="quickSearch('简历')">简历优化</span>
+          </div>
+          <div class="filter-row">
+            ${CATEGORIES.map(c => `
+              <span class="cat-pill ${state.activeCategory === c ? 'active' : ''}" onclick="setCategory('${c}')">${c}</span>
+            `).join('')}
+          </div>
+        </div>
         <span class="sort-trigger"><i class="fas fa-arrow-down-wide-short"></i> 最受欢迎</span>
       </div>
 
@@ -4876,32 +4938,10 @@ function renderMarket() {
         ` : ''}
       ` : ''}
 
-      ${showHero ? `
-        <div class="section-head" style="margin-bottom:16px">
-          <span class="sec-tag self"><i class="fas fa-star" style="font-size:9px"></i> 本周精选</span>
-          <h2>编辑推荐 · ${escapeHtml(heroWf.category)}</h2>
-        </div>
-        <div class="featured-hero" onclick="goToDetail('${heroWf.id}')">
-          <div>
-            <div class="fh-eyebrow">编辑推荐 · 自营工作流</div>
-            <h2>${escapeHtml(heroWf.name)}</h2>
-            <p>${escapeHtml(heroWf.description.slice(0, 100))}${heroWf.description.length > 100 ? '…' : ''}</p>
-            <div class="fh-meta">
-              <span><i class="fas fa-star"></i> ${heroWf.rating} · ${heroWf.review_count} 评价</span>
-              <span><i class="fas fa-bolt"></i> ${getClickCount(heroWf.id)} 次调用</span>
-              <span><i class="fas fa-arrow-right"></i> 立即查看</span>
-            </div>
-          </div>
-          <div class="fh-thumb">
-            ${getThumbSvg(heroWf, 'hero')}
-          </div>
-        </div>
-      ` : ''}
-
       <section class="section">
         <div class="section-head">
           <span class="sec-tag self">自营</span>
-          <h2>平台精选 · 会员可用</h2>
+          <h2>${showHero ? `平台精选 · 本周首推 ${escapeHtml(heroWf.name)}` : '平台精选 · 会员可用'}</h2>
           <span class="count">${selfWfs.length} 个</span>
         </div>
         <div class="market-grid-with-side">
@@ -6191,6 +6231,13 @@ function renderSkeletonCards(count) {
 
 function renderWfCard(wf) {
   const clicks = getClickCount(wf.id);
+  const ctaLabel = wf.type === 'recommend'
+    ? '访问官网'
+    : (wf.price_model === 'free' ? '免费试用' : '立即使用');
+  const ctaIcon = wf.type === 'recommend'
+    ? 'fa-external-link-alt'
+    : (wf.price_model === 'free' ? 'fa-play' : 'fa-wand-magic-sparkles');
+  const ctaClass = wf.type === 'recommend' ? 'recommend' : (wf.price_model === 'pro' ? 'pro' : '');
   return `
     <div class="wf-card" onclick="goToDetail('${wf.id}')">
       <div class="wf-thumb">
@@ -6208,6 +6255,10 @@ function renderWfCard(wf) {
         <span class="wf-rating"><i class="fas fa-star"></i> ${wf.rating} · ${wf.review_count}</span>
         <span class="wf-price ${priceClass(wf)}">${formatPrice(wf)}</span>
       </div>
+      <button class="wf-card-cta ${ctaClass}" onclick="event.stopPropagation(); runWorkflow('${wf.id}')">
+        <i class="fas ${ctaIcon}" style="font-size:11px"></i>
+        ${ctaLabel}
+      </button>
     </div>
   `;
 }
@@ -6231,6 +6282,10 @@ function renderNav() {
       </div>
       <div class="cnav-right">
         <button class="mobile-menu-trigger" onclick="openMobileDrawer()"><i class="fas fa-bars"></i></button>
+        <span class="cnav-link" onclick="switchView('market')">市场</span>
+        <span class="cnav-link" onclick="switchView('creator')">创作者</span>
+        <span class="cnav-link" onclick="switchView('advertiser')">广告投放</span>
+        <span class="cnav-link" onclick="switchView('wizard')">接入文档</span>
         <span class="cnav-link" onclick="switchView('me')">我的</span>
         ${data.user && data.user.role === 'admin' ? `<span class="cnav-link" onclick="switchView('admin')">管理后台</span>` : ''}
         ${data.user ? `
