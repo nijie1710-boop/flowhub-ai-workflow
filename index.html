@@ -1629,6 +1629,323 @@
   .search-empty-suggest span { padding: 4px 12px; background: var(--bg-soft); border-radius: 20px; font-size: 12px; color: var(--ink-2); cursor: pointer; }
   .search-empty-suggest span:hover { background: var(--line); }
 
+  .home-search-panel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 540px;
+    padding: 8px;
+    background: var(--bg-elev);
+    border: 1px solid var(--line-strong);
+    border-radius: 14px;
+    margin: 0 0 18px;
+    box-shadow: 0 10px 28px rgba(15,15,14,0.06);
+  }
+  .home-search-panel i {
+    color: var(--ink-3);
+    margin-left: 8px;
+    font-size: 13px;
+  }
+  .home-search-panel input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--ink);
+    font-size: 14px;
+    font-family: inherit;
+  }
+  .home-search-panel input::placeholder { color: var(--ink-4); }
+  .home-search-panel button {
+    border: none;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 10px;
+    height: 36px;
+    padding: 0 16px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .search-page {
+    padding-top: 18px;
+  }
+  .search-hero {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: end;
+    padding: 28px 0 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .search-hero h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 8px 0 8px;
+  }
+  .search-hero p {
+    max-width: 640px;
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .search-hero-count {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+    color: var(--ink-3);
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+  .search-hero-count strong {
+    color: var(--ink);
+    font-size: 24px;
+  }
+  .search-shell {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 20px;
+    margin-top: 22px;
+    align-items: start;
+  }
+  .search-panel {
+    position: sticky;
+    top: 20px;
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px;
+  }
+  .search-panel-title {
+    font-size: 12px;
+    color: var(--ink-3);
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .search-page-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: var(--bg-soft);
+    border: 1px solid transparent;
+    border-radius: 10px;
+    margin-bottom: 16px;
+  }
+  .search-page-box:focus-within {
+    border-color: var(--line-strong);
+    background: var(--bg-elev);
+  }
+  .search-page-box i { color: var(--ink-3); font-size: 12px; }
+  .search-page-box input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--ink);
+    font-size: 13px;
+    font-family: inherit;
+  }
+  .search-filter-block { margin-top: 16px; }
+  .search-filter-title {
+    font-size: 11px;
+    color: var(--ink-3);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .search-filter-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .search-filter-item {
+    width: 100%;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink-2);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+  .search-filter-item:hover {
+    border-color: var(--line-strong);
+    background: var(--bg-soft);
+  }
+  .search-filter-item.active {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  .search-filter-item .filter-count {
+    font-family: 'JetBrains Mono', monospace;
+    opacity: 0.65;
+  }
+  .search-clear-btn {
+    width: 100%;
+    margin-top: 16px;
+    border: 1px dashed var(--line-strong);
+    background: transparent;
+    color: var(--ink-3);
+    border-radius: 8px;
+    padding: 9px 10px;
+    font-size: 12px;
+  }
+  .search-clear-btn:hover {
+    color: var(--ink);
+    border-style: solid;
+    background: var(--bg-soft);
+  }
+  .search-results-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .search-results-head h2 {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .search-results-head span {
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+  .search-result-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .search-result-card {
+    display: grid;
+    grid-template-columns: 180px 1fr auto;
+    gap: 18px;
+    align-items: center;
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .search-result-card:hover {
+    transform: translateY(-1px);
+    border-color: var(--line-strong);
+    box-shadow: 0 8px 24px rgba(15,15,14,0.06);
+  }
+  .search-result-card .wf-thumb {
+    margin: 0;
+    border-radius: 10px;
+  }
+  .result-meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .result-type-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    border-radius: 999px;
+    padding: 3px 8px;
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+  }
+  .result-type-badge.self { background: var(--self-bg); color: var(--self); }
+  .result-type-badge.external { background: var(--bg-soft); color: var(--ink-2); }
+  .result-type-badge.promo { background: var(--ad-bg); color: var(--ad); }
+  .search-result-card h3 {
+    font-size: 17px;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin-bottom: 5px;
+  }
+  .search-result-card p {
+    color: var(--ink-3);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+  .result-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .result-tags span {
+    font-size: 10px;
+    color: var(--ink-3);
+    background: var(--bg-soft);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .result-action {
+    min-width: 116px;
+    height: 38px;
+    border: 1px solid var(--line-strong);
+    background: var(--bg);
+    color: var(--ink);
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    white-space: nowrap;
+  }
+  .result-action:hover {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  .result-action.external {
+    color: var(--ad);
+    border-color: color-mix(in srgb, var(--ad) 42%, var(--line-strong));
+  }
+  .result-action.external:hover {
+    background: var(--ad);
+    color: #fff;
+    border-color: var(--ad);
+  }
+  .search-state {
+    padding: 58px 24px;
+    text-align: center;
+    background: var(--bg-elev);
+    border: 1px dashed var(--line-strong);
+    border-radius: 14px;
+  }
+  .search-state i {
+    color: var(--ink-4);
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+  .search-state h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+  .search-state p {
+    color: var(--ink-3);
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+  .search-state.loading i { color: var(--self); }
+
   .cnav-right { display: flex; align-items: center; gap: 12px; }
   .cnav-link {
     font-size: 13px;
@@ -3758,6 +4075,12 @@
     .market-grid-with-side .wf-grid { grid-template-columns: repeat(2, 1fr); }
     .market-side { position: static; flex-direction: row; }
     .market-side .side-card { flex: 1; }
+    .search-shell { grid-template-columns: 1fr; }
+    .search-panel { position: static; }
+    .search-filter-list { flex-direction: row; flex-wrap: wrap; }
+    .search-filter-item { width: auto; min-width: 116px; }
+    .search-result-card { grid-template-columns: 150px 1fr; }
+    .search-result-card .result-action { grid-column: 2; justify-self: start; }
     .featured-hero { grid-template-columns: 1fr; }
     .featured-hero .fh-thumb { display: none; }
     .hero-inner { grid-template-columns: 1fr; gap: 32px; }
@@ -3789,6 +4112,19 @@
     .hero-sub { font-size: 13px; }
     .hero-cta-row { flex-direction: column; }
     .hero-cta-primary, .hero-cta-secondary { width: 100%; justify-content: center; }
+    .home-search-panel { max-width: none; }
+    .home-search-panel button span { display: none; }
+    .search-hero { grid-template-columns: 1fr; gap: 10px; padding-top: 18px; }
+    .search-hero h1 { font-size: 28px; }
+    .search-hero-count { justify-content: flex-start; }
+    .search-shell { margin-top: 16px; }
+    .search-panel { padding: 14px; }
+    .search-filter-list { flex-direction: row; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 2px; }
+    .search-filter-list::-webkit-scrollbar { display: none; }
+    .search-filter-item { flex: 0 0 auto; }
+    .search-results-head { align-items: flex-start; flex-direction: column; }
+    .search-result-card { grid-template-columns: 1fr; gap: 12px; }
+    .search-result-card .result-action { grid-column: auto; width: 100%; }
     .hero-meta-bar { padding: 14px 16px; }
     .hero-meta-stats { gap: 14px; }
     .hero-meta-stat .num { font-size: 14px; }
@@ -3845,6 +4181,7 @@
   <span class="label">FlowHub Demo</span>
   <span class="demo-group">用户视角</span>
   <span class="demo-pill active" data-view="market">市场</span>
+  <span class="demo-pill" data-view="search">搜索</span>
   <span class="demo-pill" data-view="me">我的</span>
   <span class="demo-divider"></span>
   <span class="demo-group">运营视角</span>
@@ -3864,6 +4201,7 @@
 
 <!-- 视图容器 -->
 <div class="view active" id="view-market"></div>
+<div class="view" id="view-search"></div>
 <div class="view" id="view-detail"></div>
 <div class="view" id="view-me"></div>
 <div class="view" id="view-admin"></div>
@@ -4505,6 +4843,10 @@ function resetAll() {
   state.currentDetailId = null;
   state.adminView = 'overview';
   state.searchQuery = '';
+  state.searchCategory = '全部';
+  state.searchType = 'all';
+  state.searchLoading = false;
+  state.searchError = '';
   state.activeCategory = '全部';
   switchView('market');
   showToast('数据已重置');
@@ -4518,12 +4860,17 @@ const state = {
   currentDetailId: null,
   adminView: 'overview',
   searchQuery: '',
+  searchCategory: '全部',
+  searchType: 'all',
+  searchLoading: false,
+  searchError: '',
   activeCategory: '全部',
   detailTab: 'about'
 };
 
 const VIEW_TITLES = {
   market: 'FlowHub · AI 工作流市场',
+  search: '搜索 · FlowHub',
   detail: 'FlowHub',
   me: '个人中心 · FlowHub',
   admin: '管理后台 · FlowHub',
@@ -4531,6 +4878,16 @@ const VIEW_TITLES = {
   advertiser: '广告主入驻 · FlowHub',
   wizard: '接入向导 · FlowHub'
 };
+
+function getViewPath(view) {
+  const useHashRouting = location.hostname === 'localhost' ||
+    location.hostname === '127.0.0.1' ||
+    location.pathname.endsWith('.html');
+  if (useHashRouting) {
+    return '/index.html' + (view === 'market' ? '' : '#' + view);
+  }
+  return view === 'market' ? '/' : '/' + view;
+}
 
 function switchView(view, skipPush) {
   state.view = view;
@@ -4545,8 +4902,7 @@ function switchView(view, skipPush) {
   if (view !== 'detail') document.title = VIEW_TITLES[view] || 'FlowHub';
 
   if (!skipPush) {
-    const path = view === 'market' ? '/' : '/' + view;
-    history.pushState({ view }, '', path);
+    history.pushState({ view }, '', getViewPath(view));
   }
 }
 
@@ -4559,10 +4915,13 @@ window.addEventListener('popstate', (e) => {
 });
 
 (function initRoute() {
-  const path = location.pathname.replace(/^\//, '') || 'market';
-  const validViews = ['market', 'me', 'admin', 'creator', 'advertiser', 'wizard', 'detail'];
-  const initialView = validViews.includes(path) ? path : 'market';
-  history.replaceState({ view: initialView }, '', location.pathname);
+  const validViews = ['market', 'search', 'me', 'admin', 'creator', 'advertiser', 'wizard', 'detail'];
+  const hashView = location.hash.replace(/^#\/?/, '');
+  const pathView = location.pathname.replace(/^\//, '').replace(/\.html$/, '') || 'market';
+  const initialView = validViews.includes(hashView)
+    ? hashView
+    : (validViews.includes(pathView) ? pathView : 'market');
+  history.replaceState({ view: initialView }, '', getViewPath(initialView));
   if (initialView !== 'market') {
     setTimeout(() => switchView(initialView, true), 0);
   }
@@ -4628,6 +4987,17 @@ function escapeHtml(s) {
   })[c]);
 }
 
+function jsString(s) {
+  return String(s || '')
+    .replace(/\\/g, '\\\\')
+    .replace(/'/g, "\\'")
+    .replace(/\r?\n/g, '\\n');
+}
+
+function jsAttr(s) {
+  return escapeHtml(jsString(s));
+}
+
 function stars(rating) {
   const full = Math.floor(rating);
   const half = rating - full >= 0.5;
@@ -4684,7 +5054,50 @@ function goToDetail(wfId) {
   switchView('detail');
 }
 
-function runWorkflow(wfId) {
+function isPromotedWorkflow(wf) {
+  return wf && wf.type === 'recommend' && ['cpc', 'cps', 'package'].includes(wf.price_model);
+}
+
+function getWorkflowTypeLabel(wf) {
+  return wf.type === 'self' ? '站内工作流' : '外部工具';
+}
+
+function recordWorkflowClick(data, wfId, options = {}) {
+  const searchQuery = options.search_query !== undefined
+    ? options.search_query
+    : (state.view === 'search' ? state.searchQuery : '');
+  const clickObj = {
+    id: 'clk_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+    workflow_id: wfId,
+    user_id: data.user ? data.user.id : null,
+    source: options.source || (state.view === 'search' ? 'search' : 'market'),
+    search_query: searchQuery ? searchQuery.trim() : null,
+    clicked_at: new Date().toISOString()
+  };
+  data.clicks.push(clickObj);
+  saveData(data);
+  if (_apiLoaded) {
+    apiPost('/workflows/' + wfId + '/click', {
+      source: clickObj.source,
+      search_query: clickObj.search_query,
+      user_id: data.user ? data.user.id : null
+    });
+  }
+  return clickObj;
+}
+
+function openSearchResult(wfId) {
+  const data = getData();
+  const wf = data.workflows.find(w => w.id === wfId);
+  if (!wf) return;
+  recordWorkflowClick(data, wfId, {
+    source: 'search_result',
+    search_query: state.searchQuery
+  });
+  goToDetail(wfId);
+}
+
+function runWorkflow(wfId, options = {}) {
   const data = getData();
   const wf = data.workflows.find(w => w.id === wfId);
   if (!wf) return;
@@ -4705,7 +5118,9 @@ function runWorkflow(wfId) {
 
   // 防刷:同一 wf 5 秒内只算 1 次点击
   const recentClicks = data.clicks.filter(c =>
-    c.workflow_id === wfId && (Date.now() - new Date(c.clicked_at).getTime()) < 5000
+    c.workflow_id === wfId &&
+    c.source !== 'search_result' &&
+    (Date.now() - new Date(c.clicked_at).getTime()) < 5000
   );
   if (recentClicks.length > 0) {
     showToast('请稍后再点击', true);
@@ -4722,20 +5137,10 @@ function runWorkflow(wfId) {
   });
 
   // 记录点击
-  const clickObj = {
-    id: 'clk_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
-    workflow_id: wfId,
-    user_id: data.user ? data.user.id : null,
-    clicked_at: new Date().toISOString()
-  };
-  data.clicks.push(clickObj);
-  saveData(data);
-  if (_apiLoaded) {
-    apiPost('/workflows/' + wfId + '/click', {
-      source: 'market',
-      user_id: data.user ? data.user.id : null
-    });
-  }
+  recordWorkflowClick(data, wfId, {
+    source: options.source || (state.view === 'search' ? 'search' : 'market'),
+    search_query: options.search_query !== undefined ? options.search_query : state.searchQuery
+  });
 
   // 跳转(归因参数)
   const url = new URL(wf.target_url);
@@ -4811,17 +5216,6 @@ function renderMarket() {
   const data = getData();
   let workflows = data.workflows.filter(w => w.status === 'active');
 
-  // 搜索过滤
-  if (state.searchQuery) {
-    const q = state.searchQuery.toLowerCase();
-    workflows = workflows.filter(w =>
-      w.name.toLowerCase().includes(q) ||
-      w.tagline.toLowerCase().includes(q) ||
-      w.description.toLowerCase().includes(q) ||
-      (w.tags || []).some(t => t.toLowerCase().includes(q))
-    );
-  }
-
   // 分类过滤
   if (state.activeCategory !== '全部') {
     workflows = workflows.filter(w => w.category === state.activeCategory);
@@ -4836,7 +5230,7 @@ function renderMarket() {
     .map(w => ({ ...w, _clicks: getClickCount(w.id) }))
     .sort((a, b) => b._clicks - a._clicks)[0] || allSelf[0];
 
-  const showHero = !state.searchQuery && state.activeCategory === '全部' && heroWf;
+  const showHero = state.activeCategory === '全部' && heroWf;
 
   document.getElementById('view-market').innerHTML = `
     ${renderNav()}
@@ -4847,6 +5241,14 @@ function renderMarket() {
             <div class="hero-eyebrow">A WORKFLOW MARKETPLACE</div>
             <h1>一个订阅,<span class="accent">用尽全场工作流</span></h1>
             <p class="hero-sub">自营工作流会员可用,合作伙伴推荐位带你直达精品 AI 工具。</p>
+            <div class="home-search-panel">
+              <i class="fas fa-search"></i>
+              <input id="home-search-input" type="text" placeholder="搜索 AI 工作流、外部工具或任务场景…" value="${escapeHtml(state.searchQuery)}" />
+              <button onclick="startSearchFromInput('home-search-input')">
+                <span>搜索</span>
+                <i class="fas fa-arrow-right" style="margin:0;color:inherit"></i>
+              </button>
+            </div>
             <div class="hero-cta-row">
               ${data.user && data.user.tier === 'pro' ? `
                 <button class="hero-cta-primary" onclick="switchView('me')">
@@ -4921,23 +5323,6 @@ function renderMarket() {
         <span class="sort-trigger"><i class="fas fa-arrow-down-wide-short"></i> 最受欢迎</span>
       </div>
 
-      ${state.searchQuery ? `
-        <div style="padding: 12px 16px; background: var(--bg-soft); border-radius: 10px; margin-bottom: 24px; font-size: 13px; color: var(--ink-2); display:flex; align-items:center; justify-content:space-between;">
-          <span>搜索「<strong>${escapeHtml(state.searchQuery)}</strong>」结果 · 共 ${workflows.length} 个</span>
-          <span style="cursor: pointer; color: var(--ink-3); font-size:12px;" onclick="clearSearch()">清除搜索 ×</span>
-        </div>
-        ${workflows.length === 0 ? `
-          <div class="search-empty-box">
-            <i class="fas fa-search"></i>
-            <h4>未找到「${escapeHtml(state.searchQuery)}」相关工作流</h4>
-            <p>试试其他关键词，或浏览热门工作流</p>
-            <div class="search-empty-suggest">
-              ${['AI 生图', '小红书', '翻译', 'SQL', '海报', '简历'].map(t => `<span onclick="quickSearch('${t}')">${t}</span>`).join('')}
-            </div>
-          </div>
-        ` : ''}
-      ` : ''}
-
       <section class="section">
         <div class="section-head">
           <span class="sec-tag self">自营</span>
@@ -4994,40 +5379,103 @@ function renderMarket() {
     </div>
   `;
 
-  // 绑定搜索框
-  const searchInput = document.querySelector('#view-market .cnav-search input');
-  if (searchInput) {
-    searchInput.value = state.searchQuery;
-    let _searchTimer = null;
-    searchInput.addEventListener('input', (e) => {
-      state.searchQuery = e.target.value;
-      hideSearchDropdown();
-      clearTimeout(_searchTimer);
-      _searchTimer = setTimeout(() => {
-        if (state.searchQuery.length >= 2) addSearchHistory(state.searchQuery);
-        renderMarket();
-        const newInput = document.querySelector('#view-market .cnav-search input');
-        if (newInput) {
-          newInput.focus();
-          newInput.setSelectionRange(state.searchQuery.length, state.searchQuery.length);
-        }
-      }, 300);
-    });
-    searchInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && state.searchQuery) {
-        addSearchHistory(state.searchQuery);
-        hideSearchDropdown();
-      }
-    });
-  }
 }
 
 function quickSearch(q) {
-  state.searchQuery = q;
   state.activeCategory = '全部';
   addSearchHistory(q);
   hideSearchDropdown();
-  renderMarket();
+  startSearch(q);
+}
+
+function startSearchFromInput(inputId) {
+  const input = document.getElementById(inputId);
+  startSearch(input ? input.value : state.searchQuery);
+}
+
+function startSearch(q, options = {}) {
+  const query = String(q || '').trim();
+  state.searchQuery = query;
+  state.searchError = '';
+  state.searchLoading = true;
+  if (!options.keepFilters) {
+    state.searchCategory = '全部';
+    state.searchType = 'all';
+  }
+  if (query.length >= 2) addSearchHistory(query);
+  hideSearchDropdown();
+  if (state.view !== 'search') {
+    switchView('search');
+  } else {
+    render();
+  }
+  clearTimeout(window._flowhubSearchTimer);
+  window._flowhubSearchTimer = setTimeout(() => {
+    state.searchLoading = false;
+    if (state.view === 'search') render();
+  }, options.immediate ? 80 : 260);
+}
+
+function getSearchableText(wf) {
+  return [
+    wf.name,
+    wf.tagline,
+    wf.description,
+    wf.category,
+    ...(wf.tags || [])
+  ].join(' ').toLowerCase();
+}
+
+function filterWorkflowsForSearch(workflows) {
+  const query = state.searchQuery.trim().toLowerCase();
+  return workflows.filter(wf => {
+    if (query && !getSearchableText(wf).includes(query)) return false;
+    if (state.searchCategory !== '全部' && wf.category !== state.searchCategory) return false;
+    if (state.searchType === 'self' && wf.type !== 'self') return false;
+    if (state.searchType === 'external' && wf.type !== 'recommend') return false;
+    if (state.searchType === 'promo' && !isPromotedWorkflow(wf)) return false;
+    return true;
+  });
+}
+
+function getSearchTypeOptions(workflows) {
+  return [
+    { id: 'all', label: '全部类型', count: workflows.length },
+    { id: 'self', label: '站内工作流', count: workflows.filter(w => w.type === 'self').length },
+    { id: 'external', label: '外部工具', count: workflows.filter(w => w.type === 'recommend').length },
+    { id: 'promo', label: '广告推广', count: workflows.filter(isPromotedWorkflow).length }
+  ];
+}
+
+function setSearchCategory(c) {
+  state.searchCategory = c;
+  state.searchLoading = true;
+  render();
+  clearTimeout(window._flowhubSearchTimer);
+  window._flowhubSearchTimer = setTimeout(() => {
+    state.searchLoading = false;
+    render();
+  }, 160);
+}
+
+function setSearchType(t) {
+  state.searchType = t;
+  state.searchLoading = true;
+  render();
+  clearTimeout(window._flowhubSearchTimer);
+  window._flowhubSearchTimer = setTimeout(() => {
+    state.searchLoading = false;
+    render();
+  }, 160);
+}
+
+function clearSearchFilters() {
+  state.searchQuery = '';
+  state.searchCategory = '全部';
+  state.searchType = 'all';
+  state.searchLoading = false;
+  state.searchError = '';
+  render();
 }
 
 function getSearchHistory() {
@@ -5075,6 +5523,37 @@ function hideSearchDropdown() {
   const dd = document.getElementById('search-dropdown');
   if (dd) dd.classList.remove('show');
 }
+
+function bindSearchBox(input, options = {}) {
+  if (!input) return;
+  input.value = state.searchQuery;
+  let timer = null;
+  input.addEventListener('input', (e) => {
+    const query = e.target.value;
+    state.searchQuery = query;
+    state.searchError = '';
+    if (options.dropdown) hideSearchDropdown();
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      startSearch(query, { keepFilters: true });
+    }, query.trim() ? 280 : 120);
+  });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      startSearch(input.value, { keepFilters: true, immediate: true });
+    }
+  });
+}
+
+function bindGlobalSearch() {
+  const activeView = document.getElementById('view-' + state.view);
+  if (!activeView) return;
+  bindSearchBox(activeView.querySelector('.cnav-search input'), { dropdown: true });
+  bindSearchBox(activeView.querySelector('#home-search-input'));
+  bindSearchBox(activeView.querySelector('#search-page-input'), { searchPage: true });
+}
+
 document.addEventListener('click', (e) => {
   if (!e.target.closest('#cnav-search-wrap')) hideSearchDropdown();
 });
@@ -6263,6 +6742,166 @@ function renderWfCard(wf) {
   `;
 }
 
+function renderSearchState(type) {
+  if (type === 'loading') {
+    return `
+      <div class="search-state loading">
+        <i class="fas fa-spinner fa-spin"></i>
+        <h3>正在搜索</h3>
+        <p>正在匹配工作流、外部工具和推广资源。</p>
+      </div>
+    `;
+  }
+  if (type === 'error') {
+    return `
+      <div class="search-state">
+        <i class="fas fa-circle-exclamation"></i>
+        <h3>搜索暂时不可用</h3>
+        <p>${escapeHtml(state.searchError || '请稍后重试,或回到市场浏览推荐工作流。')}</p>
+        <button class="search-clear-btn" onclick="clearSearchFilters()">重置搜索</button>
+      </div>
+    `;
+  }
+  return `
+    <div class="search-state">
+      <i class="fas fa-magnifying-glass"></i>
+      <h3>没有找到匹配结果</h3>
+      <p>换一个关键词,或放宽分类和类型筛选。</p>
+      <div class="search-empty-suggest">
+        ${['AI 生图', '小红书', '翻译', 'SQL', '海报', '简历'].map(t => `<span onclick="quickSearch('${t}')">${t}</span>`).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderSearchResultCard(wf) {
+  const typeLabel = getWorkflowTypeLabel(wf);
+  const isExternal = wf.type === 'recommend';
+  const isPromo = isPromotedWorkflow(wf);
+  const actionLabel = isExternal ? '访问官网' : '立即使用';
+  const actionIcon = isExternal ? 'fa-external-link-alt' : 'fa-play';
+  const q = jsAttr(state.searchQuery);
+  return `
+    <article class="search-result-card" onclick="openSearchResult('${wf.id}')">
+      <div class="wf-thumb">
+        ${getThumbSvg(wf, 'card')}
+        <div class="wf-thumb-overlay"></div>
+      </div>
+      <div>
+        <div class="result-meta-row">
+          <span class="result-type-badge ${isExternal ? 'external' : 'self'}">
+            <i class="fas ${isExternal ? 'fa-arrow-up-right-from-square' : 'fa-cube'}"></i>
+            ${typeLabel}
+          </span>
+          ${isPromo ? `<span class="result-type-badge promo"><i class="fas fa-bullhorn"></i>推广</span>` : ''}
+          <span class="result-type-badge external">${escapeHtml(wf.category)}</span>
+        </div>
+        <h3>${escapeHtml(wf.name)}</h3>
+        <p>${escapeHtml(wf.tagline || wf.description.slice(0, 88))}</p>
+        <div class="result-tags">
+          ${(wf.tags || []).slice(0, 5).map(t => `<span>${escapeHtml(t)}</span>`).join('')}
+        </div>
+      </div>
+      <button class="result-action ${isExternal ? 'external' : ''}" onclick="event.stopPropagation(); runWorkflow('${wf.id}', { source: 'search', search_query: '${q}' })">
+        <i class="fas ${actionIcon}"></i>
+        ${actionLabel}
+      </button>
+    </article>
+  `;
+}
+
+function renderSearch() {
+  const data = getData();
+  const active = Array.isArray(data.workflows)
+    ? data.workflows.filter(w => w.status === 'active')
+    : null;
+
+  if (!active) {
+    state.searchError = '数据结构异常: workflows 不是可搜索列表。';
+  }
+
+  const base = active || [];
+  const results = state.searchError ? [] : filterWorkflowsForSearch(base)
+    .map(w => ({ ...w, _clicks: getClickCount(w.id) }))
+    .sort((a, b) => {
+      if (isPromotedWorkflow(a) !== isPromotedWorkflow(b)) return isPromotedWorkflow(b) - isPromotedWorkflow(a);
+      return (b._clicks || 0) - (a._clicks || 0);
+    });
+  const typeOptions = getSearchTypeOptions(base);
+  const queryText = state.searchQuery ? `「${escapeHtml(state.searchQuery)}」` : '全部工具';
+
+  document.getElementById('view-search').innerHTML = `
+    ${renderNav()}
+    <div class="container search-page">
+      <section class="search-hero">
+        <div>
+          <div class="hero-eyebrow">SEARCH WORKFLOWS</div>
+          <h1>搜索 AI 工作流与外部工具</h1>
+          <p>输入任务、平台或工具名称,快速找到站内可用工作流、合作伙伴工具和广告推广资源。</p>
+        </div>
+        <div class="search-hero-count">
+          <strong>${base.length}</strong>
+          <span>可搜索资源</span>
+        </div>
+      </section>
+
+      <div class="search-shell">
+        <aside class="search-panel">
+          <div class="search-panel-title">Search</div>
+          <div class="search-page-box">
+            <i class="fas fa-search"></i>
+            <input id="search-page-input" type="text" placeholder="例如: 小红书、商品图、代码 Review" value="${escapeHtml(state.searchQuery)}" />
+          </div>
+
+          <div class="search-filter-block">
+            <div class="search-filter-title">分类</div>
+            <div class="search-filter-list">
+              ${CATEGORIES.map(c => {
+                const count = c === '全部' ? base.length : base.filter(w => w.category === c).length;
+                return `
+                  <button class="search-filter-item ${state.searchCategory === c ? 'active' : ''}" onclick="setSearchCategory('${c}')">
+                    <span>${c}</span>
+                    <span class="filter-count">${count}</span>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+          </div>
+
+          <div class="search-filter-block">
+            <div class="search-filter-title">类型</div>
+            <div class="search-filter-list">
+              ${typeOptions.map(t => `
+                <button class="search-filter-item ${state.searchType === t.id ? 'active' : ''}" onclick="setSearchType('${t.id}')">
+                  <span>${t.label}</span>
+                  <span class="filter-count">${t.count}</span>
+                </button>
+              `).join('')}
+            </div>
+          </div>
+
+          <button class="search-clear-btn" onclick="clearSearchFilters()">清空筛选</button>
+        </aside>
+
+        <main>
+          <div class="search-results-head">
+            <h2>${queryText} 的搜索结果</h2>
+            <span>${state.searchCategory} · ${typeOptions.find(t => t.id === state.searchType)?.label || '全部类型'} · ${results.length} 个结果</span>
+          </div>
+          ${state.searchLoading
+            ? renderSearchState('loading')
+            : state.searchError
+              ? renderSearchState('error')
+              : results.length === 0
+                ? renderSearchState('empty')
+                : `<div class="search-result-grid">${results.map(renderSearchResultCard).join('')}</div>`}
+        </main>
+      </div>
+      ${renderFooter()}
+    </div>
+  `;
+}
+
 function renderNav() {
   const data = getData();
   const notifs = getNotifications();
@@ -6430,9 +7069,9 @@ function openMobileNotif() {
   if (panel) panel.classList.add('show');
 }
 function quickSearchFocus() {
-  switchView('market');
+  switchView('search');
   setTimeout(() => {
-    const input = document.querySelector('#view-market .cnav-search input');
+    const input = document.querySelector('#view-search #search-page-input, #view-search .cnav-search input');
     if (input) input.focus();
   }, 200);
 }
@@ -6442,7 +7081,11 @@ function updateMobileTab() {
   const view = state.view;
   document.querySelectorAll('.mobile-tab[data-mobile-view]').forEach(t => {
     const v = t.dataset.mobileView;
-    t.classList.toggle('active', (v === 'market' && view === 'market') || (v === 'me' && view === 'me'));
+    t.classList.toggle('active',
+      (v === 'market' && view === 'market') ||
+      (v === 'search' && view === 'search') ||
+      (v === 'me' && view === 'me')
+    );
   });
 }
 
@@ -6468,7 +7111,11 @@ function setCategory(c) {
 
 function clearSearch() {
   state.searchQuery = '';
-  renderMarket();
+  state.searchCategory = '全部';
+  state.searchType = 'all';
+  state.searchLoading = false;
+  state.searchError = '';
+  render();
 }
 
 /* =============================================================
@@ -9450,6 +10097,7 @@ function render() {
   }
 
   if (state.view === 'detail') renderDetail();
+  else if (state.view === 'search') renderSearch();
   else if (state.view === 'me') renderMe();
   else if (state.view === 'admin') renderAdmin();
   else if (state.view === 'creator') renderCreator();
@@ -9457,17 +10105,18 @@ function render() {
   else if (state.view === 'wizard') renderWizard();
   updateUserStatus();
   updateMobileTab();
+  bindGlobalSearch();
 }
 
 // 快捷键
 document.addEventListener('keydown', (e) => {
   if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
     e.preventDefault();
-    const input = document.querySelector('#view-market .cnav-search input');
-    if (input) {
-      switchView('market');
-      setTimeout(() => input.focus(), 100);
-    }
+    switchView('search');
+    setTimeout(() => {
+      const input = document.querySelector('#view-search #search-page-input, #view-search .cnav-search input');
+      if (input) input.focus();
+    }, 100);
   }
   if (e.key === 'Escape') closeModal();
 });
