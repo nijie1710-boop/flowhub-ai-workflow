@@ -1572,7 +1572,7 @@
     inset: 0;
     width: 1900px;
     height: 1000px;
-    pointer-events: none;
+    pointer-events: auto;
     z-index: 1;
     overflow: visible;
   }
@@ -1611,6 +1611,30 @@
   .iv-link-dot.running,
   .iv-link-dot.done {
     stroke: rgba(26,93,58,0.9);
+  }
+  .iv-link-remove {
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  .iv-link-remove circle {
+    fill: #fff;
+    stroke: rgba(15,15,14,0.16);
+    stroke-width: 1;
+    filter: drop-shadow(0 4px 10px rgba(15,15,14,0.12));
+  }
+  .iv-link-remove text {
+    fill: var(--ink-3);
+    font-size: 12px;
+    font-weight: 900;
+    text-anchor: middle;
+    dominant-baseline: central;
+    pointer-events: none;
+  }
+  .iv-link-remove:hover circle {
+    stroke: rgba(180,35,24,0.42);
+  }
+  .iv-link-remove:hover text {
+    fill: #B42318;
   }
   .iv-node-port {
     position: absolute;
@@ -14275,11 +14299,17 @@ function renderIvLinkSvg(wfId) {
     const mid = Math.max(from.x + 50, (from.x + to.x) / 2);
     const d = `M ${from.x} ${from.y} C ${mid} ${from.y}, ${mid} ${to.y}, ${to.x} ${to.y}`;
     const cls = `${link.pending ? 'pending' : ''} ${escapeHtml(link.status || '')}`;
+    const deleteX = (from.x + to.x) / 2;
+    const deleteY = (from.y + to.y) / 2 - 15;
     return `
       <path class="iv-link-hit" d="${d}" onclick="removeIvConnection(event,'${wfId}','${link.id}')"></path>
       <path class="iv-link-path ${cls}" d="${d}"></path>
       <circle class="iv-link-dot ${escapeHtml(link.status || '')}" cx="${from.x}" cy="${from.y}" r="5"></circle>
       <circle class="iv-link-dot ${escapeHtml(link.status || '')}" cx="${to.x}" cy="${to.y}" r="5"></circle>
+      <g class="iv-link-remove" onclick="removeIvConnection(event,'${wfId}','${link.id}')" title="删除连接">
+        <circle cx="${deleteX}" cy="${deleteY}" r="10"></circle>
+        <text x="${deleteX}" y="${deleteY}">×</text>
+      </g>
     `;
   }).join('');
 }
