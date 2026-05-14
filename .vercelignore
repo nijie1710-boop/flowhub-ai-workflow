@@ -1,0 +1,10 @@
+.git
+.DS_Store
+server
+supabase
+docs
+*.md
+CLAUDE.md
+AGENTS.md
+DEV_GUIDE.md
+HANDOVER.md

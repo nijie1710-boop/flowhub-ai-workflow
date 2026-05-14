@@ -933,6 +933,11 @@
     font-size: 11px;
     white-space: nowrap;
   }
+  .run-status.err {
+    border-color: rgba(180,35,24,0.28);
+    background: rgba(180,35,24,0.08);
+    color: #B42318;
+  }
   .run-status .dot {
     width: 7px;
     height: 7px;
@@ -1016,6 +1021,11 @@
     width: 34px;
     padding: 0;
   }
+  .run-action-btn.active {
+    border-color: rgba(91,63,168,0.45);
+    background: rgba(91,63,168,0.1);
+    color: var(--pro);
+  }
   .run-publish-btn {
     background: var(--pro);
     border-color: var(--pro);
@@ -1029,7 +1039,7 @@
     border-radius: 0;
   }
   .run-workspace .iv-studio {
-    grid-template-columns: minmax(720px, 1fr) 460px;
+    grid-template-columns: minmax(760px, 1fr) 420px;
   }
   .run-workspace .iv-canvas-panel {
     padding: 0;
@@ -1112,9 +1122,9 @@
     border: none;
     border-radius: 0;
     background: transparent;
-    padding: 145px 100px 190px 132px;
+    padding: 128px 24px 176px 88px;
     align-items: center;
-    gap: 34px;
+    gap: 0;
   }
   .run-workspace .iv-canvas-stage::-webkit-scrollbar {
     height: 8px;
@@ -1125,15 +1135,21 @@
   }
   .iv-flow-node,
   .iv-shot-node {
-    flex: 0 0 224px;
+    flex: 0 0 196px;
     position: relative;
+  }
+  .iv-flow-node.video-node {
+    flex-basis: 198px;
+  }
+  .iv-flow-node.output-node {
+    flex-basis: 170px;
   }
   .iv-flow-card,
   .iv-shot-card {
     border: 1px solid rgba(91,63,168,0.22);
     border-radius: 12px;
-    background: rgba(255,255,255,0.94);
-    box-shadow: 0 14px 38px rgba(15,15,14,0.09);
+    background: rgba(255,255,255,0.985);
+    box-shadow: 0 14px 38px rgba(15,15,14,0.08);
     overflow: hidden;
   }
   .iv-flow-card.video {
@@ -1196,13 +1212,13 @@
     white-space: nowrap;
   }
   .iv-shot-node {
-    flex-basis: 230px;
+    flex-basis: 188px;
   }
   .run-workspace .iv-shot-preview {
-    min-height: 170px;
+    min-height: 142px;
   }
   .run-workspace .iv-flow-card.output .iv-shot-preview {
-    min-height: 148px;
+    min-height: 128px;
   }
   .run-workspace .iv-flow-card.output .iv-shot-preview::after {
     content: '▶ 0:00 / ' attr(data-scene);
@@ -1213,7 +1229,7 @@
     padding: 10px 12px 12px;
   }
   .iv-connector {
-    flex: 0 0 54px;
+    flex: 0 0 28px;
     background: var(--pro);
   }
   .iv-connector::after {
@@ -1224,6 +1240,7 @@
     right: 18px;
     bottom: 18px;
     width: 320px;
+    display: none;
     z-index: 6;
     box-shadow: 0 12px 30px rgba(15,15,14,0.08);
   }
@@ -1355,6 +1372,297 @@
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(15,15,14,0.07);
   }
+  .iv-video-chat-card {
+    border: 1px solid rgba(91,63,168,0.22);
+    border-radius: 12px;
+    background: var(--bg-soft);
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 104px 1fr;
+    gap: 10px;
+    align-items: center;
+  }
+  .iv-video-chat-thumb {
+    height: 78px;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .iv-video-chat-thumb::after {
+    content: '▶';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 18px;
+    text-shadow: 0 1px 10px rgba(0,0,0,0.38);
+  }
+  .iv-video-chat-copy strong {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .iv-video-chat-copy p {
+    margin: 0;
+    color: var(--ink-3);
+    font-size: 11px;
+    line-height: 1.55;
+  }
+  .iv-video-chat-card .iv-asset-actions {
+    grid-column: 1 / -1;
+    padding: 0;
+  }
+  .iv-guide-callouts {
+    display: none;
+    position: absolute;
+    inset: 0;
+    z-index: 9;
+    pointer-events: none;
+  }
+  .iv-studio.guide-on .iv-guide-callouts {
+    display: block;
+  }
+  .iv-guide-note {
+    position: absolute;
+    max-width: 218px;
+    border: 1px solid rgba(91,63,168,0.34);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.94);
+    box-shadow: 0 14px 34px rgba(91,63,168,0.13);
+    padding: 10px 12px 10px 38px;
+    color: var(--ink-2);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .iv-guide-note::before {
+    content: attr(data-step);
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--pro);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 800;
+  }
+  .iv-guide-note strong {
+    display: block;
+    color: var(--pro);
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+  .iv-guide-note.canvas { top: 86px; left: 92px; }
+  .iv-guide-note.tools { top: 216px; left: 74px; max-width: 188px; }
+  .iv-guide-note.node { top: 252px; left: 288px; }
+  .iv-guide-note.link { top: 196px; left: 500px; }
+  .iv-guide-note.video { top: 252px; right: 214px; }
+  .iv-guide-note.materials { left: 270px; bottom: 126px; }
+  .iv-guide-note.topbar { top: 70px; right: 42px; }
+  .iv-guide-note::after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 28px;
+    background: rgba(91,63,168,0.45);
+    left: 20px;
+    bottom: -28px;
+  }
+  .iv-guide-panel {
+    display: none;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 18px 16px;
+    gap: 10px;
+  }
+  .iv-guide-panel.show {
+    display: grid;
+  }
+  .iv-guide-hero {
+    border: 1px solid rgba(91,63,168,0.2);
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(91,63,168,0.1), rgba(26,93,58,0.07));
+    padding: 14px;
+  }
+  .iv-guide-hero h4 {
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+  .iv-guide-hero p {
+    color: var(--ink-3);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .iv-guide-item {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg-elev);
+    padding: 11px 12px 11px 46px;
+    position: relative;
+  }
+  .iv-guide-num {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    background: rgba(91,63,168,0.12);
+    color: var(--pro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 800;
+  }
+  .iv-guide-item strong {
+    display: block;
+    font-size: 13px;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .iv-guide-item p {
+    margin: 0;
+    color: var(--ink-3);
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .run-workspace .iv-canvas-stage {
+    display: block;
+    overflow: auto;
+    padding: 0;
+    background:
+      radial-gradient(circle, rgba(91,63,168,0.18) 1px, transparent 1.2px),
+      #FBFBFE;
+    background-size: 18px 18px;
+    cursor: default;
+  }
+  .run-workspace .iv-canvas-stage.pan-mode {
+    cursor: grab;
+  }
+  .run-workspace .iv-canvas-stage.panning {
+    cursor: grabbing;
+  }
+  .run-workspace .iv-canvas-stage.no-grid {
+    background: #FBFBFE;
+  }
+  .iv-canvas-stage.drag-over {
+    outline: 2px solid rgba(91,63,168,0.42);
+    outline-offset: -2px;
+    box-shadow: inset 0 0 0 9999px rgba(91,63,168,0.035);
+  }
+  .iv-canvas-content {
+    position: relative;
+    width: 1900px;
+    height: 1000px;
+    transform-origin: 0 0;
+    transition: transform 0.12s ease;
+  }
+  .iv-link-layer {
+    position: absolute;
+    inset: 0;
+    width: 1900px;
+    height: 1000px;
+    pointer-events: none;
+    z-index: 1;
+    overflow: visible;
+  }
+  .iv-link-path {
+    fill: none;
+    stroke: rgba(99,80,216,0.82);
+    stroke-width: 2.4;
+  }
+  .iv-link-path.pending {
+    stroke-dasharray: 6 7;
+    opacity: 0.72;
+  }
+  .iv-link-dot {
+    fill: #fff;
+    stroke: rgba(99,80,216,0.9);
+    stroke-width: 2;
+  }
+  .iv-drop-hint {
+    position: absolute;
+    left: 502px;
+    top: 418px;
+    width: 300px;
+    border: 1px dashed rgba(26,93,58,0.36);
+    border-radius: 14px;
+    background: rgba(255,255,255,0.86);
+    color: var(--ink-3);
+    padding: 20px;
+    text-align: center;
+    line-height: 1.6;
+    font-size: 12px;
+    z-index: 2;
+    pointer-events: none;
+  }
+  .iv-drop-hint i {
+    display: block;
+    color: var(--self);
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .run-workspace .iv-flow-node,
+  .run-workspace .iv-shot-node {
+    position: absolute;
+    width: 210px;
+    flex: none;
+    z-index: 3;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+  }
+  .run-workspace .iv-flow-node.video-node {
+    width: 224px;
+  }
+  .run-workspace .iv-flow-node.output-node {
+    width: 170px;
+  }
+  .iv-draggable-node.dragging {
+    z-index: 8;
+    cursor: grabbing;
+  }
+  .iv-draggable-node.dragging .iv-flow-card,
+  .iv-draggable-node.dragging .iv-shot-card,
+  .iv-draggable-node.selected .iv-flow-card,
+  .iv-draggable-node.selected .iv-shot-card {
+    border-color: rgba(91,63,168,0.72);
+    box-shadow: 0 18px 44px rgba(91,63,168,0.16), 0 0 0 3px rgba(91,63,168,0.08);
+  }
+  .iv-node-head .iv-mini-btn {
+    padding: 4px 7px;
+  }
+  .iv-node-grip {
+    color: var(--ink-3);
+    letter-spacing: 1px;
+    cursor: grab;
+  }
+  .iv-shot-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 9px;
+  }
+  .iv-canvas-locked .iv-draggable-node {
+    cursor: default;
+  }
+  .iv-canvas-locked .iv-node-grip {
+    cursor: default;
+  }
+  .iv-upload-input {
+    display: none;
+  }
   .run-workspace .iv-asset-preview {
     min-height: 146px;
   }
@@ -1452,6 +1760,9 @@
   [data-theme="dark"] .iv-asset-card,
   [data-theme="dark"] .iv-shot-card,
   [data-theme="dark"] .iv-flow-card,
+  [data-theme="dark"] .iv-video-chat-card,
+  [data-theme="dark"] .iv-guide-note,
+  [data-theme="dark"] .iv-guide-item,
   [data-theme="dark"] .iv-left-rail,
   [data-theme="dark"] .iv-canvas-toolbar,
   [data-theme="dark"] .iv-minimap,
@@ -5880,12 +6191,15 @@
     .iv-canvas-toolbar::-webkit-scrollbar { display: none; }
     .run-workspace .iv-canvas-stage {
       min-height: 0;
-      padding: 104px 22px 190px 76px;
+      padding: 0;
+      height: 560px;
     }
     .run-workspace .iv-flow-node,
     .run-workspace .iv-shot-node { flex-basis: 206px; }
     .iv-minimap { display: none; }
     .iv-zoom { left: 10px; bottom: 10px; width: 164px; }
+    .iv-guide-callouts { display: none !important; }
+    .iv-guide-panel { padding: 14px 12px; }
     .iv-video-box {
       right: 10px;
       bottom: 60px;
@@ -9111,6 +9425,21 @@ function renderRun() {
   }
 
   document.title = wf.name + ' · 运行中';
+  const isImageVideoRun = wf.id === 'wf_seed_image_video';
+  const topbarActions = isImageVideoRun ? `
+          <button class="run-action-btn icon-only" onclick="undoIvCanvas('${wf.id}')" title="撤销">↶</button>
+          <button class="run-action-btn icon-only" onclick="redoIvCanvas('${wf.id}')" title="重做">↷</button>
+          <button class="run-action-btn" onclick="generateVideo3Preview('${wf.id}')">▶ 运行</button>
+          <button class="run-action-btn" onclick="saveIvProject('${wf.id}')"><i class="fas fa-cloud-arrow-up"></i> 保存</button>
+          <button class="run-action-btn" onclick="exportIvProject('${wf.id}')"><i class="fas fa-download"></i> 导出</button>
+          <button class="run-action-btn" onclick="openIvProjectImport('${wf.id}')"><i class="fas fa-file-import"></i> 导入</button>
+          <button class="run-action-btn" id="iv-guide-top-${wf.id}" onclick="toggleIvGuide('${wf.id}')"><i class="fas fa-circle-info"></i> 功能说明</button>
+          <button class="run-action-btn" onclick="shareIvWorkflow('${wf.id}')">⇧ 分享</button>
+          <button class="run-action-btn" onclick="favoriteIvWorkflow('${wf.id}')">☆ 收藏</button>
+  ` : `
+          <button class="run-action-btn" onclick="shareIvWorkflow('${wf.id}')">⇧ 分享</button>
+          <button class="run-action-btn" onclick="favoriteIvWorkflow('${wf.id}')">☆ 收藏</button>
+  `;
   view.innerHTML = `
     <div class="run-page">
       <div class="run-topbar">
@@ -9122,16 +9451,13 @@ function renderRun() {
           </div>
         </div>
         <div class="run-topbar-center">
-          <button class="run-action-btn icon-only" title="撤销">↶</button>
-          <button class="run-action-btn icon-only" title="重做">↷</button>
-          <button class="run-action-btn" onclick="generateVideo3Preview('${wf.id}')">▶ 运行</button>
-          <button class="run-action-btn">⇧ 分享</button>
-          <button class="run-action-btn">☆ 收藏</button>
+          ${topbarActions}
         </div>
         <div class="run-right">
           <span class="run-status"><span class="dot"></span>${wf.price_model === 'free' ? '免费试用' : 'Pro 工作流'}</span>
+          ${isImageVideoRun ? `<span class="run-status" id="iv-save-status-${wf.id}"><i class="fas fa-check-circle"></i> 已保存</span>` : ''}
           <span class="run-status"><i class="fas fa-bolt"></i>${getClickCount(wf.id).toLocaleString()} 次运行</span>
-          <button class="run-publish-btn">发布工作流</button>
+          ${isImageVideoRun ? `<button class="run-publish-btn" onclick="publishIvWorkflow('${wf.id}')">发布工作流</button>` : ''}
         </div>
       </div>
       <div class="run-workspace">
@@ -9139,6 +9465,96 @@ function renderRun() {
       </div>
     </div>
   `;
+  if (wf.id === 'wf_seed_image_video') {
+    setTimeout(() => {
+      renderImageVideoCanvas(wf.id);
+      renderImageVideoAssets(wf.id);
+      syncIvCanvasControls(wf.id);
+    }, 0);
+  }
+}
+
+function getImageVideoGuideItems() {
+  return [
+    { id: 'canvas', title: '左侧无限画布', copy: '像 Figma 一样自由拖拽、排布和缩放工作流节点。' },
+    { id: 'image', title: 'Image2Image 生图节点', copy: '输入提示词、模型、尺寸和风格,快速生成关键帧图片。' },
+    { id: 'drag', title: '拖拽上画布', copy: '聊天区生成的图片或视频方案可以一键加入画布,也可以拖拽到节点中使用。' },
+    { id: 'link', title: '节点连接工作流', copy: '把生图输出连接到 Grok Video-3 节点,形成完整流程。' },
+    { id: 'video', title: '视频生成节点', copy: '支持上传输入图、填写动态提示词、设置时长与分辨率。' },
+    { id: 'output', title: '视频输出预览', copy: '生成后可预览、下载、重新生成或继续优化。' },
+    { id: 'assistant', title: '右侧 AI 聊天助手', copy: '像 GPT 一样通过自然语言提出需求,直接生成图片、视频方案或节点建议。' },
+    { id: 'advice', title: '工作流建议', copy: 'AI 可自动推荐下一步节点和流程结构。' },
+    { id: 'assets', title: '资源区与参考素材', copy: '场景图、标题图、多参照图可重复拖入画布复用。' },
+    { id: 'topbar', title: '顶部工具栏', copy: '支持运行、分享、收藏、发布工作流和自动保存。' },
+    { id: 'tools', title: '画布操作', copy: '支持选择、对齐、布局、锁定、网格、缩放、迷你地图导航。' },
+    { id: 'scenes', title: '适合的使用场景', copy: '图生视频、内容创作、短视频工作流搭建和可视化 AI 编排。' }
+  ];
+}
+
+function renderImageVideoGuideCallouts() {
+  const callouts = [
+    ['canvas', '1', '左侧无限画布', '自由拖拽、排布、缩放工作流节点。'],
+    ['node', '2', '生图节点', '输入提示词、模型和尺寸生成图片。'],
+    ['link', '4', '连接工作流', '把生图输出连接到视频生成节点。'],
+    ['video', '5', '视频生成节点', '设置时长、比例和动态提示词。'],
+    ['materials', '9', '资源与素材', '参考素材可重复拖入画布复用。'],
+    ['topbar', '10', '顶部工具栏', '运行、分享、收藏和发布工作流。'],
+    ['tools', '11', '画布操作', '选择、对齐、布局、锁定、网格和缩放。']
+  ];
+  return callouts.map(([cls, step, title, copy]) => `
+    <div class="iv-guide-note ${cls}" data-step="${step}">
+      <strong>${escapeHtml(title)}</strong>${escapeHtml(copy)}
+    </div>
+  `).join('');
+}
+
+function renderImageVideoGuidePanel() {
+  return `
+    <div class="iv-guide-hero">
+      <h4>核心功能说明</h4>
+      <p>这个工作流的核心是:右侧用自然语言生成素材,左侧把素材串成可视化流程,最后由 Grok Video-3 生成视频输出。</p>
+    </div>
+    ${getImageVideoGuideItems().map((item, index) => `
+      <div class="iv-guide-item">
+        <span class="iv-guide-num">${index + 1}</span>
+        <strong>${escapeHtml(item.title)}</strong>
+        <p>${escapeHtml(item.copy)}</p>
+      </div>
+    `).join('')}
+  `;
+}
+
+function switchIvAssistantTab(wfId, tab) {
+  const chat = document.getElementById('iv-chat-' + wfId);
+  const guide = document.getElementById('iv-guide-panel-' + wfId);
+  const chatTab = document.getElementById('iv-tab-chat-' + wfId);
+  const guideTab = document.getElementById('iv-tab-guide-' + wfId);
+  if (!chat || !guide) return;
+  const showGuide = tab === 'guide';
+  chat.style.display = showGuide ? 'none' : 'flex';
+  guide.classList.toggle('show', showGuide);
+  if (chatTab) chatTab.classList.toggle('active', !showGuide);
+  if (guideTab) guideTab.classList.toggle('active', showGuide);
+}
+
+function toggleIvGuide(wfId) {
+  const studio = document.getElementById('iv-studio-' + wfId);
+  if (!studio) return;
+  const show = !studio.classList.contains('guide-on');
+  studio.classList.toggle('guide-on', show);
+  const topBtn = document.getElementById('iv-guide-top-' + wfId);
+  if (topBtn) topBtn.classList.toggle('active', show);
+  switchIvAssistantTab(wfId, show ? 'guide' : 'chat');
+  showToast(show ? '已打开功能说明' : '已关闭功能说明');
+}
+
+function closeIvGuide(wfId) {
+  const studio = document.getElementById('iv-studio-' + wfId);
+  if (studio) studio.classList.remove('guide-on');
+  const topBtn = document.getElementById('iv-guide-top-' + wfId);
+  if (topBtn) topBtn.classList.remove('active');
+  switchIvAssistantTab(wfId, 'chat');
+  showToast('已关闭功能说明');
 }
 
 function renderImageVideoRunner(wf) {
@@ -9159,30 +9575,33 @@ function renderImageVideoRunner(wf) {
           <div class="iv-canvas-panel">
             <div class="iv-canvas-shell">
               <div class="iv-left-rail">
-                <button class="iv-tool-btn active" title="选择">⌁</button>
-                <button class="iv-tool-btn" title="拖动画布">☝</button>
-                <button class="iv-tool-btn" title="上传素材">▣</button>
-                <button class="iv-tool-btn" title="文字">T</button>
-                <button class="iv-tool-btn" title="评论">☷</button>
+                <button class="iv-tool-btn active" id="iv-rail-select-${wf.id}" onclick="setIvCanvasTool('${wf.id}','select')" title="选择"><i class="fas fa-arrow-pointer"></i></button>
+                <button class="iv-tool-btn" id="iv-rail-pan-${wf.id}" onclick="setIvCanvasTool('${wf.id}','pan')" title="拖动画布"><i class="fas fa-hand"></i></button>
+                <button class="iv-tool-btn" onclick="openIvImageUpload('${wf.id}')" title="上传素材"><i class="fas fa-image"></i></button>
+                <button class="iv-tool-btn" onclick="addIvTextNote('${wf.id}')" title="文字"><i class="fas fa-font"></i></button>
+                <button class="iv-tool-btn" onclick="showToast('评论已记录在工作流建议中')" title="评论"><i class="far fa-comment-dots"></i></button>
                 <div class="iv-rail-divider"></div>
-                <button class="iv-tool-btn" title="图层">▤</button>
-                <button class="iv-tool-btn" title="适配视图">⌗</button>
+                <button class="iv-tool-btn" onclick="showIvLayerList('${wf.id}')" title="图层"><i class="fas fa-layer-group"></i></button>
+                <button class="iv-tool-btn" onclick="fitIvCanvas('${wf.id}')" title="适配视图"><i class="fas fa-expand"></i></button>
               </div>
+              <input class="iv-upload-input" id="iv-file-${wf.id}" type="file" accept="image/*" multiple onchange="handleIvFileInput(event,'${wf.id}')">
               <div class="iv-canvas-toolbar">
-                <button class="iv-tool-btn active">选择</button>
-                <button class="iv-tool-btn">对齐</button>
-                <button class="iv-tool-btn">布局</button>
-                <button class="iv-tool-btn">缩放</button>
-                <button class="iv-tool-btn">锁定</button>
-                <button class="iv-tool-btn active">网格</button>
+                <button class="iv-tool-btn active" id="iv-toolbar-select-${wf.id}" onclick="setIvCanvasTool('${wf.id}','select')"><i class="fas fa-arrow-pointer"></i> 选择</button>
+                <button class="iv-tool-btn" onclick="alignIvCanvasNodes('${wf.id}')"><i class="fas fa-align-center"></i> 对齐</button>
+                <button class="iv-tool-btn" onclick="autoLayoutIvCanvas('${wf.id}')"><i class="fas fa-diagram-project"></i> 布局</button>
+                <button class="iv-tool-btn" onclick="fitIvCanvas('${wf.id}')"><i class="fas fa-magnifying-glass"></i> 适配</button>
+                <button class="iv-tool-btn" onclick="clearIvCanvas('${wf.id}')"><i class="fas fa-trash-can"></i> 清空</button>
+                <button class="iv-tool-btn" id="iv-lock-${wf.id}" onclick="toggleIvLock('${wf.id}')"><i class="fas fa-lock-open"></i> 锁定</button>
+                <button class="iv-tool-btn active" id="iv-grid-${wf.id}" onclick="toggleIvGrid('${wf.id}')"><i class="fas fa-border-all"></i> 网格</button>
               </div>
-              <div class="iv-canvas-stage" id="iv-canvas-${wf.id}" ondragover="handleIvDragOver(event)" ondragleave="handleIvDragLeave(event)" ondrop="handleIvDrop(event,'${wf.id}')">
+              <div class="iv-canvas-stage" id="iv-canvas-${wf.id}" onpointerdown="startIvCanvasPan(event,'${wf.id}')" ondragover="handleIvDragOver(event)" ondragleave="handleIvDragLeave(event)" ondrop="handleIvDrop(event,'${wf.id}')">
                 <div class="iv-canvas-empty">
                   <i class="fas fa-object-group" style="font-size:22px;color:var(--self);margin-bottom:8px"></i><br>
                   从右侧生成图片后拖到这里<br>
                   或点击图片上的「加入画布」
                 </div>
               </div>
+              <input class="iv-upload-input" id="iv-project-file-${wf.id}" type="file" accept=".json,application/json" onchange="handleIvProjectImport(event,'${wf.id}')">
               <div class="iv-minimap">
                 <div class="iv-minimap-track">
                   <span class="iv-mini-node"></span>
@@ -9191,12 +9610,15 @@ function renderImageVideoRunner(wf) {
                 </div>
               </div>
               <div class="iv-zoom">
-                <button>-</button>
-                <span>100%</span>
-                <button>+</button>
+                <button onclick="zoomIvCanvas('${wf.id}',-0.1)">-</button>
+                <span id="iv-zoom-label-${wf.id}">100%</span>
+                <button onclick="zoomIvCanvas('${wf.id}',0.1)">+</button>
               </div>
               <div class="iv-video-box" id="iv-video-${wf.id}">
                 <div class="iv-video-empty">画布里至少 2 个镜头后,可以生成视频预览</div>
+              </div>
+              <div class="iv-guide-callouts" id="iv-guide-callouts-${wf.id}">
+                ${renderImageVideoGuideCallouts()}
               </div>
             </div>
           </div>
@@ -9204,19 +9626,22 @@ function renderImageVideoRunner(wf) {
             <div class="iv-assistant-head">
               <div class="iv-assistant-tabs">
                 <span class="iv-assistant-title">✦ AI 助手</span>
-                <span class="iv-assistant-tab active">对话</span>
-                <span class="iv-assistant-tab">工作流建议</span>
+                <span class="iv-assistant-tab active" id="iv-tab-chat-${wf.id}" onclick="switchIvAssistantTab('${wf.id}','chat')">对话</span>
+                <span class="iv-assistant-tab" id="iv-tab-guide-${wf.id}" onclick="switchIvAssistantTab('${wf.id}','guide')">功能说明</span>
               </div>
               <div class="iv-assistant-tools">
-                <button class="iv-tool-btn" title="历史">↺</button>
-                <button class="iv-tool-btn" title="设置">≛</button>
-                <button class="iv-tool-btn" title="关闭">×</button>
+                <button class="iv-tool-btn" title="打开功能说明" onclick="toggleIvGuide('${wf.id}')">?</button>
+                <button class="iv-tool-btn" title="工作流建议" onclick="switchIvAssistantTab('${wf.id}','guide')">≛</button>
+                <button class="iv-tool-btn" title="关闭说明" onclick="closeIvGuide('${wf.id}')">×</button>
               </div>
             </div>
             <div class="iv-chat-log" id="iv-chat-${wf.id}">
               <div class="iv-msg bot">描述你要的画面,我会生成一张关键帧。生成后可以拖到左侧画布,再让视频引擎按镜头顺序生成短视频。</div>
               <div class="iv-msg bot">建议先做 3 个镜头:开场建立场景、中段产品/人物动作、结尾品牌或转化画面。</div>
               <div class="iv-assets" id="iv-assets-${wf.id}"></div>
+            </div>
+            <div class="iv-guide-panel" id="iv-guide-panel-${wf.id}">
+              ${renderImageVideoGuidePanel()}
             </div>
             <div class="iv-compose">
               <textarea class="runner-textarea" id="iv-prompt-${wf.id}" placeholder="例如: 赛博城市夜景中,一个穿银色夹克的人走过霓虹街道,电影感,雨夜反光">赛博城市夜景中,一个穿银色夹克的人走过霓虹街道,电影感,雨夜反光</textarea>
@@ -12957,12 +13382,279 @@ const IMAGE_VIDEO_STYLES = {
 };
 
 let _imageVideoBoards = {};
+let _ivDragState = null;
+let _ivPanState = null;
+let _ivHistory = {};
+let _ivBoardsLoaded = false;
+
+const IV_PROJECT_STORAGE_KEY = 'flowhub_image_video_boards_v1';
+const IV_CANVAS = { width: 1900, height: 1000 };
+const IV_NODE_SIZE = {
+  config: { w: 210, h: 206 },
+  shot: { w: 210, h: 266 },
+  video: { w: 224, h: 224 },
+  output: { w: 170, h: 258 },
+  note: { w: 210, h: 120 }
+};
+
+function createEmptyIvBoard() {
+  return {
+    assets: [],
+    shots: [],
+    notes: [],
+    video: null,
+    zoom: 1,
+    grid: true,
+    locked: false,
+    tool: 'select',
+    selectedNode: '',
+    nodePositions: {
+      config: { x: 100, y: 318 },
+      video: { x: 820, y: 296 },
+      output: { x: 1058, y: 286 }
+    }
+  };
+}
+
+function normalizeIvBoardPayload(board) {
+  const source = board && typeof board === 'object' ? JSON.parse(JSON.stringify(board)) : {};
+  const next = {
+    ...createEmptyIvBoard(),
+    ...source
+  };
+  next.assets = Array.isArray(source.assets) ? source.assets.filter(asset => asset && asset.id) : [];
+  next.shots = Array.isArray(source.shots) ? source.shots.filter(shot => shot && shot.id && shot.assetId) : [];
+  next.notes = Array.isArray(source.notes) ? source.notes.filter(note => note && note.id) : [];
+  next.video = source.video && typeof source.video === 'object' ? source.video : null;
+  next.nodePositions = source.nodePositions && typeof source.nodePositions === 'object' ? source.nodePositions : {};
+  next.tool = ['select', 'pan'].includes(source.tool) ? source.tool : 'select';
+  next.selectedNode = typeof source.selectedNode === 'string' ? source.selectedNode : '';
+  ensureImageVideoBoardState(next);
+  return next;
+}
+
+function loadIvBoardsFromStorage() {
+  if (_ivBoardsLoaded) return;
+  _ivBoardsLoaded = true;
+  try {
+    const raw = localStorage.getItem(IV_PROJECT_STORAGE_KEY);
+    if (!raw) return;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return;
+    const loaded = {};
+    Object.keys(parsed).forEach(wfId => {
+      loaded[wfId] = normalizeIvBoardPayload(parsed[wfId]);
+    });
+    _imageVideoBoards = { ...loaded, ..._imageVideoBoards };
+  } catch (err) {
+    console.warn('Image video project storage load failed:', err);
+  }
+}
+
+function saveIvBoardsToStorage(wfId) {
+  try {
+    const payload = {};
+    Object.keys(_imageVideoBoards).forEach(id => {
+      ensureImageVideoBoardState(_imageVideoBoards[id]);
+      payload[id] = cloneIvBoard(_imageVideoBoards[id]);
+    });
+    localStorage.setItem(IV_PROJECT_STORAGE_KEY, JSON.stringify(payload));
+    markIvSaveStatus(wfId, '已保存', 'saved');
+    return true;
+  } catch (err) {
+    console.warn('Image video project storage save failed:', err);
+    markIvSaveStatus(wfId, '保存失败', 'error');
+    showToast('项目太大,保存失败。建议先导出备份或减少本地图片数量。', true);
+    return false;
+  }
+}
+
+function persistIvBoard(wfId, options = {}) {
+  const ok = saveIvBoardsToStorage(wfId);
+  if (ok && !options.silent) showToast('项目已保存到本机');
+  return ok;
+}
+
+function markIvSaveStatus(wfId, text, state = 'saved') {
+  const el = document.getElementById('iv-save-status-' + wfId);
+  if (!el) return;
+  const icon = state === 'error'
+    ? 'fa-circle-exclamation'
+    : state === 'saving'
+      ? 'fa-spinner fa-spin'
+      : 'fa-check-circle';
+  el.classList.toggle('err', state === 'error');
+  el.innerHTML = `<i class="fas ${icon}"></i> ${escapeHtml(text)}`;
+}
 
 function getImageVideoBoard(wfId) {
+  loadIvBoardsFromStorage();
   if (!_imageVideoBoards[wfId]) {
-    _imageVideoBoards[wfId] = { assets: [], shots: [], video: null };
+    _imageVideoBoards[wfId] = createEmptyIvBoard();
   }
+  ensureImageVideoBoardState(_imageVideoBoards[wfId]);
   return _imageVideoBoards[wfId];
+}
+
+function ensureImageVideoBoardState(board) {
+  board.assets = board.assets || [];
+  board.shots = board.shots || [];
+  board.notes = board.notes || [];
+  board.video = board.video || null;
+  board.zoom = board.zoom || 1;
+  board.grid = board.grid !== false;
+  board.locked = !!board.locked;
+  board.tool = board.tool || 'select';
+  board.selectedNode = board.selectedNode || '';
+  board.nodePositions = board.nodePositions || {};
+  board.nodePositions.config = board.nodePositions.config || { x: 100, y: 318 };
+  board.nodePositions.video = board.nodePositions.video || { x: 820, y: 296 };
+  board.nodePositions.output = board.nodePositions.output || { x: 1058, y: 286 };
+  board.shots.forEach((shot, index) => {
+    if (typeof shot.x !== 'number') shot.x = 350 + index * 234;
+    if (typeof shot.y !== 'number') shot.y = 268 + (index % 2) * 34;
+  });
+  board.notes.forEach((note, index) => {
+    if (typeof note.x !== 'number') note.x = 330 + index * 36;
+    if (typeof note.y !== 'number') note.y = 620 + index * 22;
+  });
+}
+
+function cloneIvBoard(board) {
+  return JSON.parse(JSON.stringify({
+    assets: board.assets,
+    shots: board.shots,
+    notes: board.notes,
+    video: board.video,
+    nodePositions: board.nodePositions,
+    zoom: board.zoom,
+    grid: board.grid,
+    locked: board.locked,
+    tool: board.tool,
+    selectedNode: board.selectedNode
+  }));
+}
+
+function getIvHistory(wfId) {
+  if (!_ivHistory[wfId]) _ivHistory[wfId] = { undo: [], redo: [] };
+  return _ivHistory[wfId];
+}
+
+function pushIvHistory(wfId) {
+  const history = getIvHistory(wfId);
+  history.undo.push(cloneIvBoard(getImageVideoBoard(wfId)));
+  if (history.undo.length > 30) history.undo.shift();
+  history.redo = [];
+}
+
+function restoreIvBoardSnapshot(wfId, snapshot) {
+  _imageVideoBoards[wfId] = JSON.parse(JSON.stringify(snapshot));
+  ensureImageVideoBoardState(_imageVideoBoards[wfId]);
+  renderImageVideoCanvas(wfId);
+  renderImageVideoAssets(wfId);
+  syncIvCanvasControls(wfId);
+  persistIvBoard(wfId, { silent: true });
+}
+
+function undoIvCanvas(wfId) {
+  const history = getIvHistory(wfId);
+  if (!history.undo.length) return showToast('没有可撤销的操作', true);
+  history.redo.push(cloneIvBoard(getImageVideoBoard(wfId)));
+  restoreIvBoardSnapshot(wfId, history.undo.pop());
+  showToast('已撤销');
+}
+
+function redoIvCanvas(wfId) {
+  const history = getIvHistory(wfId);
+  if (!history.redo.length) return showToast('没有可重做的操作', true);
+  history.undo.push(cloneIvBoard(getImageVideoBoard(wfId)));
+  restoreIvBoardSnapshot(wfId, history.redo.pop());
+  showToast('已重做');
+}
+
+function saveIvProject(wfId) {
+  markIvSaveStatus(wfId, '保存中', 'saving');
+  persistIvBoard(wfId);
+}
+
+function exportIvProject(wfId) {
+  const board = getImageVideoBoard(wfId);
+  const wf = (getData().workflows || []).find(item => item.id === wfId);
+  const payload = {
+    type: 'flowhub.image2video.project',
+    version: 1,
+    workflow_id: wfId,
+    workflow_name: wf ? wf.name : '',
+    exported_at: new Date().toISOString(),
+    board: cloneIvBoard(board)
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `flowhub-image2video-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 0);
+  showToast('项目 JSON 已导出');
+}
+
+function openIvProjectImport(wfId) {
+  const input = document.getElementById('iv-project-file-' + wfId);
+  if (input) input.click();
+}
+
+function handleIvProjectImport(event, wfId) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const payload = JSON.parse(String(reader.result || '{}'));
+      applyImportedIvProject(wfId, payload);
+    } catch (err) {
+      console.warn('Project import failed:', err);
+      showToast('导入失败,请选择有效的 FlowHub 项目 JSON', true);
+    } finally {
+      event.target.value = '';
+    }
+  };
+  reader.onerror = () => {
+    showToast('读取文件失败', true);
+    event.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function applyImportedIvProject(wfId, payload) {
+  const imported = payload && payload.board ? payload.board : payload;
+  if (!imported || typeof imported !== 'object') {
+    showToast('导入失败,项目结构不正确', true);
+    return;
+  }
+  pushIvHistory(wfId);
+  _imageVideoBoards[wfId] = normalizeIvBoardPayload(imported);
+  _imageVideoBoards[wfId].tool = 'select';
+  _imageVideoBoards[wfId].selectedNode = '';
+  renderImageVideoCanvas(wfId);
+  renderImageVideoAssets(wfId);
+  syncIvCanvasControls(wfId);
+  persistIvBoard(wfId, { silent: true });
+  showToast('项目已导入');
+}
+
+function clearIvCanvas(wfId) {
+  const board = getImageVideoBoard(wfId);
+  if ((board.assets.length || board.shots.length || board.notes.length || board.video) && !confirm('确定清空当前画布项目吗?')) return;
+  pushIvHistory(wfId);
+  _imageVideoBoards[wfId] = createEmptyIvBoard();
+  renderImageVideoCanvas(wfId);
+  renderImageVideoAssets(wfId);
+  renderImageVideoPreviewBox(wfId, { empty: true });
+  syncIvCanvasControls(wfId);
+  persistIvBoard(wfId, { silent: true });
+  showToast('画布已清空');
 }
 
 function applyImageVideoPreset(wfId, presetId) {
@@ -13029,11 +13721,34 @@ function renderIvAssetCard(wfId, asset) {
   `;
 }
 
+function renderIvVideoChatCard(wfId) {
+  const board = getImageVideoBoard(wfId);
+  if (!board.video) return '';
+  const firstShot = board.shots[0];
+  const firstAsset = firstShot ? board.assets.find(item => item.id === firstShot.assetId) : null;
+  const ratio = board.video.ratio || getRunnerValue('iv-ratio-' + wfId, '9:16');
+  const resolution = ratio === '16:9' ? '1280 x 720' : ratio === '1:1' ? '1024 x 1024' : '720 x 1280';
+  return `
+    <div class="iv-video-chat-card">
+      <div class="iv-video-chat-thumb" style="background:${firstAsset ? firstAsset.bg : 'linear-gradient(135deg,#0F0F0E,#1A5D3A)'}"></div>
+      <div class="iv-video-chat-copy">
+        <strong>Grok Video-3 生视频</strong>
+        <p>时长: ${escapeHtml(board.video.duration)}s　分辨率: ${escapeHtml(resolution)}<br>提示词: 镜头连贯切换,光线和氛围逐步增强。</p>
+      </div>
+      <div class="iv-asset-actions">
+        <button class="iv-mini-btn" onclick="generateVideo3Preview('${wfId}')">生视频</button>
+        <button class="iv-mini-btn" onclick="showToast('视频输出节点已在画布中')">加入画布</button>
+        <button class="iv-mini-btn" onclick="showToast('已进入继续优化模式')">继续优化</button>
+      </div>
+    </div>
+  `;
+}
+
 function renderImageVideoAssets(wfId) {
   const board = getImageVideoBoard(wfId);
   const el = document.getElementById('iv-assets-' + wfId);
   if (!el) return;
-  el.innerHTML = board.assets.map(asset => renderIvAssetCard(wfId, asset)).join('');
+  el.innerHTML = board.assets.map(asset => renderIvAssetCard(wfId, asset)).join('') + renderIvVideoChatCard(wfId);
   const chat = document.getElementById('iv-chat-' + wfId);
   if (chat) chat.scrollTop = chat.scrollHeight;
 }
@@ -13070,6 +13785,7 @@ function generateImage2Asset(wfId) {
     board.assets.unshift(asset);
     board.assets = board.assets.slice(0, 8);
     renderImageVideoAssets(wfId);
+    persistIvBoard(wfId, { silent: true });
     appendIvMessage(wfId, 'bot', 'Image2 已生成关键帧。你可以拖到左侧画布,或点击「加入画布」。');
     if (btn) {
       btn.disabled = false;
@@ -13082,10 +13798,12 @@ function generateImage2Asset(wfId) {
 function handleIvDragStart(event, wfId, assetId) {
   event.dataTransfer.setData('text/plain', assetId);
   event.dataTransfer.setData('application/x-flowhub-wf', wfId);
+  event.dataTransfer.effectAllowed = 'copy';
 }
 
 function handleIvDragOver(event) {
   event.preventDefault();
+  event.dataTransfer.dropEffect = 'copy';
   event.currentTarget.classList.add('drag-over');
 }
 
@@ -13096,71 +13814,406 @@ function handleIvDragLeave(event) {
 function handleIvDrop(event, wfId) {
   event.preventDefault();
   event.currentTarget.classList.remove('drag-over');
+  const point = getIvCanvasPoint(event, wfId);
+  const files = Array.from(event.dataTransfer.files || []).filter(file => file.type && file.type.startsWith('image/'));
+  if (files.length) {
+    importIvImageFiles(wfId, files, point);
+    return;
+  }
+
   const assetId = event.dataTransfer.getData('text/plain');
-  addImageAssetToCanvas(wfId, assetId);
+  const board = getImageVideoBoard(wfId);
+  if (assetId && board.assets.some(asset => asset.id === assetId)) {
+    addImageAssetToCanvas(wfId, assetId, point);
+    return;
+  }
+
+  const imageUrl = event.dataTransfer.getData('text/uri-list') || event.dataTransfer.getData('text/plain');
+  if (/^(https?:|data:image\/)/i.test(imageUrl || '')) {
+    pushIvHistory(wfId);
+    createExternalImageAsset(wfId, imageUrl.trim(), '外部拖入图片', point);
+    return;
+  }
+  showToast('请拖入图片文件或右侧生成结果', true);
+}
+
+function openIvImageUpload(wfId) {
+  const input = document.getElementById('iv-file-' + wfId);
+  if (input) input.click();
+}
+
+function handleIvFileInput(event, wfId) {
+  const files = Array.from(event.target.files || []).filter(file => file.type && file.type.startsWith('image/'));
+  if (files.length) {
+    importIvImageFiles(wfId, files, { x: 390, y: 360 });
+  }
+  event.target.value = '';
+}
+
+function importIvImageFiles(wfId, files, point) {
+  pushIvHistory(wfId);
+  files.slice(0, 6).forEach((file, index) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      createExternalImageAsset(wfId, reader.result, file.name || '本地图片', {
+        x: point.x + index * 34,
+        y: point.y + index * 28
+      }, { skipHistory: true });
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+function createExternalImageAsset(wfId, src, name, point, options = {}) {
+  const board = getImageVideoBoard(wfId);
+  const title = summarizePrompt(String(name || '外部图片').replace(/\.[^.]+$/, ''));
+  const asset = {
+    id: 'asset_upload_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
+    prompt: name || '外部拖入图片',
+    title,
+    style: 'uploaded',
+    styleLabel: '上传图片',
+    ratio: '原图',
+    bg: `url("${String(src).replace(/"/g, '%22')}") center / cover`,
+    created_at: new Date().toISOString()
+  };
+  board.assets.unshift(asset);
+  board.assets = board.assets.slice(0, 12);
+  addImageAssetToCanvas(wfId, asset.id, point, { skipHistory: true });
+  renderImageVideoAssets(wfId);
+  persistIvBoard(wfId, { silent: true });
+  appendIvMessage(wfId, 'bot', `已导入图片「${title}」,并放到左侧自由画布。`);
+  showToast('图片已拖入画布');
+}
+
+function renderImageVideoPreviewBox(wfId, options = {}) {
+  const board = getImageVideoBoard(wfId);
+  const videoBox = document.getElementById('iv-video-' + wfId);
+  if (!videoBox) return;
+  if (!board.video) {
+    if (options.empty) {
+      videoBox.innerHTML = '<div class="iv-video-empty">画布里至少 2 个镜头后,可以生成视频预览</div>';
+    }
+    return;
+  }
+  const firstShot = board.shots[0] || null;
+  const firstAsset = firstShot ? board.assets.find(item => item.id === firstShot.assetId) : null;
+  videoBox.innerHTML = `
+    <div class="iv-video-result">
+      <div class="iv-video-thumb" style="background:${firstAsset ? firstAsset.bg : 'linear-gradient(135deg,#0F0F0E,#1A5D3A)'}"></div>
+      <div class="iv-video-copy">
+        <h5>视频预览已生成</h5>
+        <p>${board.shots.length} 个镜头 · ${escapeHtml(board.video.duration)}s · ${escapeHtml(board.video.ratio)}<br>当前为 Grok Video-3 生成链路占位,后续可替换真实 API 返回的视频 URL。</p>
+        <div class="try-actions">
+          <button class="try-btn primary" onclick="showToast('演示版暂不提供下载')"><i class="fas fa-play"></i> 预览</button>
+          <button class="try-btn" onclick="generateVideo3Preview('${wfId}')">重新生成</button>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 function resetImageVideoPreview(wfId) {
   const board = getImageVideoBoard(wfId);
   board.video = null;
-  const videoBox = document.getElementById('iv-video-' + wfId);
-  if (videoBox) {
-    videoBox.innerHTML = '<div class="iv-video-empty">画布里至少 2 个镜头后,可以生成视频预览</div>';
-  }
+  renderImageVideoPreviewBox(wfId, { empty: true });
+  renderImageVideoAssets(wfId);
 }
 
-function addImageAssetToCanvas(wfId, assetId) {
+function getIvCanvasPoint(event, wfId) {
+  const board = getImageVideoBoard(wfId);
+  const canvas = document.getElementById('iv-canvas-' + wfId);
+  if (!canvas) return { x: 360, y: 270 };
+  const rect = canvas.getBoundingClientRect();
+  const zoom = board.zoom || 1;
+  const x = (event.clientX - rect.left + canvas.scrollLeft) / zoom;
+  const y = (event.clientY - rect.top + canvas.scrollTop) / zoom;
+  return {
+    x: Math.max(80, Math.min(IV_CANVAS.width - 260, x - 105)),
+    y: Math.max(110, Math.min(IV_CANVAS.height - 320, y - 120))
+  };
+}
+
+function getIvNodeRects(board, excludeKey = '') {
+  const rects = [
+    { key: 'config:config', type: 'config', ...board.nodePositions.config },
+    { key: 'video:video', type: 'video', ...board.nodePositions.video },
+    ...(board.video ? [{ key: 'output:output', type: 'output', ...board.nodePositions.output }] : []),
+    ...board.shots.map(shot => ({ key: 'shot:' + shot.id, type: 'shot', x: shot.x, y: shot.y })),
+    ...board.notes.map(note => ({ key: 'note:' + note.id, type: 'note', x: note.x, y: note.y }))
+  ].filter(rect => rect.key !== excludeKey);
+  return rects.map(rect => {
+    const size = getIvNodeSize(rect.type);
+    return { ...rect, w: size.w, h: size.h };
+  });
+}
+
+function rectsOverlap(a, b, gap = 22) {
+  return !(
+    a.x + a.w + gap < b.x ||
+    b.x + b.w + gap < a.x ||
+    a.y + a.h + gap < b.y ||
+    b.y + b.h + gap < a.y
+  );
+}
+
+function findIvOpenPosition(board, desired, type, excludeKey = '') {
+  const size = getIvNodeSize(type);
+  const base = {
+    x: Math.max(60, Math.min(IV_CANVAS.width - size.w - 60, desired.x)),
+    y: Math.max(88, Math.min(IV_CANVAS.height - size.h - 50, desired.y))
+  };
+  const occupied = getIvNodeRects(board, excludeKey);
+  const offsets = [
+    [0, 0], [34, 34], [-34, 34], [58, -38], [-58, -38],
+    [112, 0], [-112, 0], [0, 112], [0, -112],
+    [154, 72], [-154, 72], [154, -72], [-154, -72],
+    [238, 0], [0, 190], [238, 116]
+  ];
+  for (const [dx, dy] of offsets) {
+    const candidate = {
+      x: Math.max(60, Math.min(IV_CANVAS.width - size.w - 60, base.x + dx)),
+      y: Math.max(88, Math.min(IV_CANVAS.height - size.h - 50, base.y + dy)),
+      w: size.w,
+      h: size.h
+    };
+    if (!occupied.some(rect => rectsOverlap(candidate, rect))) return { x: candidate.x, y: candidate.y };
+  }
+  const index = occupied.length;
+  return {
+    x: Math.max(60, Math.min(IV_CANVAS.width - size.w - 60, 360 + (index % 4) * 238)),
+    y: Math.max(88, Math.min(IV_CANVAS.height - size.h - 50, 250 + Math.floor(index / 4) * 206))
+  };
+}
+
+function getIvDefaultShotPosition(board) {
+  const index = board.shots.length;
+  return findIvOpenPosition(board, {
+    x: 350 + index * 234,
+    y: 260 + (index % 2) * 34
+  }, 'shot');
+}
+
+function reflowIvSystemNodesForShots(board, shotCount) {
+  const lastShotX = shotCount > 0 ? 350 + (shotCount - 1) * 234 : 350;
+  const videoX = Math.max(820, lastShotX + 236);
+  board.nodePositions.video = {
+    x: Math.min(IV_CANVAS.width - IV_NODE_SIZE.video.w - 80, videoX),
+    y: board.nodePositions.video.y || 296
+  };
+  board.nodePositions.output = {
+    x: Math.min(IV_CANVAS.width - IV_NODE_SIZE.output.w - 80, board.nodePositions.video.x + 238),
+    y: board.nodePositions.output.y || 286
+  };
+}
+
+function addImageAssetToCanvas(wfId, assetId, point, options = {}) {
   const board = getImageVideoBoard(wfId);
   const asset = board.assets.find(item => item.id === assetId);
   if (!asset) return;
+  if (!options.skipHistory) pushIvHistory(wfId);
   resetImageVideoPreview(wfId);
+  if (!point) reflowIvSystemNodesForShots(board, board.shots.length + 1);
+  const pos = findIvOpenPosition(board, point || getIvDefaultShotPosition(board), 'shot');
   board.shots.push({
     id: 'shot_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
     assetId,
     duration: board.shots.length === 0 ? 2.5 : 2,
-    motion: board.shots.length === 0 ? 'push in' : 'match cut'
+    motion: board.shots.length === 0 ? 'push in' : 'match cut',
+    x: pos.x,
+    y: pos.y
   });
   renderImageVideoCanvas(wfId);
+  persistIvBoard(wfId, { silent: true });
   showToast('已加入镜头画布');
 }
 
 function removeIvShot(wfId, shotId) {
   const board = getImageVideoBoard(wfId);
+  pushIvHistory(wfId);
   board.shots = board.shots.filter(shot => shot.id !== shotId);
   resetImageVideoPreview(wfId);
   renderImageVideoCanvas(wfId);
+  persistIvBoard(wfId, { silent: true });
 }
+
+function getIvNodePosition(board, type, id) {
+  if (type === 'shot') return board.shots.find(shot => shot.id === id);
+  if (type === 'note') return board.notes.find(note => note.id === id);
+  return board.nodePositions[type];
+}
+
+function getIvNodeSize(type) {
+  return IV_NODE_SIZE[type] || IV_NODE_SIZE.shot;
+}
+
+function setIvNodePosition(board, type, id, x, y) {
+  const size = getIvNodeSize(type);
+  const nx = Math.max(40, Math.min(IV_CANVAS.width - size.w - 40, x));
+  const ny = Math.max(70, Math.min(IV_CANVAS.height - size.h - 40, y));
+  const node = getIvNodePosition(board, type, id);
+  if (node) {
+    node.x = nx;
+    node.y = ny;
+  }
+  return { x: nx, y: ny };
+}
+
+function getIvNodeCenter(board, type, id, side = 'right') {
+  const pos = getIvNodePosition(board, type, id);
+  const size = getIvNodeSize(type);
+  if (!pos) return { x: 0, y: 0 };
+  return {
+    x: pos.x + (side === 'left' ? 0 : size.w),
+    y: pos.y + size.h * 0.46
+  };
+}
+
+function getIvWorkflowLinks(board) {
+  const links = [];
+  if (board.shots.length) {
+    links.push({ from: ['config', 'config'], to: ['shot', board.shots[0].id] });
+    board.shots.forEach((shot, index) => {
+      const next = board.shots[index + 1];
+      if (next) links.push({ from: ['shot', shot.id], to: ['shot', next.id] });
+    });
+    links.push({ from: ['shot', board.shots[board.shots.length - 1].id], to: ['video', 'video'], pending: !board.video });
+  } else {
+    links.push({ from: ['config', 'config'], to: ['video', 'video'], pending: true });
+  }
+  if (board.video) links.push({ from: ['video', 'video'], to: ['output', 'output'] });
+  return links;
+}
+
+function renderIvLinkSvg(wfId) {
+  const board = getImageVideoBoard(wfId);
+  return getIvWorkflowLinks(board).map(link => {
+    const from = getIvNodeCenter(board, link.from[0], link.from[1], 'right');
+    const to = getIvNodeCenter(board, link.to[0], link.to[1], 'left');
+    const mid = Math.max(from.x + 50, (from.x + to.x) / 2);
+    const d = `M ${from.x} ${from.y} C ${mid} ${from.y}, ${mid} ${to.y}, ${to.x} ${to.y}`;
+    return `
+      <path class="iv-link-path ${link.pending ? 'pending' : ''}" d="${d}"></path>
+      <circle class="iv-link-dot" cx="${from.x}" cy="${from.y}" r="5"></circle>
+      <circle class="iv-link-dot" cx="${to.x}" cy="${to.y}" r="5"></circle>
+    `;
+  }).join('');
+}
+
+function redrawIvLinks(wfId) {
+  const layer = document.getElementById('iv-links-' + wfId);
+  if (layer) layer.innerHTML = renderIvLinkSvg(wfId);
+  updateIvMinimap(wfId);
+}
+
+function startIvNodeDrag(event, wfId, type, id) {
+  if (event.button !== 0 || event.target.closest('button, input, select, textarea')) return;
+  const board = getImageVideoBoard(wfId);
+  if (board.locked) return showToast('画布已锁定,先关闭锁定再移动节点', true);
+  const pos = getIvNodePosition(board, type, id);
+  if (!pos) return;
+  pushIvHistory(wfId);
+  board.selectedNode = type + ':' + id;
+  document.querySelectorAll('#iv-canvas-' + wfId + ' .iv-draggable-node').forEach(node => node.classList.remove('selected'));
+  event.currentTarget.classList.add('selected', 'dragging');
+  _ivDragState = {
+    wfId,
+    type,
+    id,
+    element: event.currentTarget,
+    startX: event.clientX,
+    startY: event.clientY,
+    originX: pos.x,
+    originY: pos.y,
+    zoom: board.zoom || 1
+  };
+  event.preventDefault();
+}
+
+function startIvCanvasPan(event, wfId) {
+  if (event.button !== 0 || event.target.closest('.iv-draggable-node, button, input, select, textarea')) return;
+  const board = getImageVideoBoard(wfId);
+  if (board.tool !== 'pan') return;
+  const canvas = document.getElementById('iv-canvas-' + wfId);
+  if (!canvas) return;
+  _ivPanState = {
+    wfId,
+    canvas,
+    startX: event.clientX,
+    startY: event.clientY,
+    scrollLeft: canvas.scrollLeft,
+    scrollTop: canvas.scrollTop
+  };
+  canvas.classList.add('panning');
+  event.preventDefault();
+}
+
+function moveIvNodeDrag(event) {
+  if (!_ivDragState) return;
+  const board = getImageVideoBoard(_ivDragState.wfId);
+  const dx = (event.clientX - _ivDragState.startX) / _ivDragState.zoom;
+  const dy = (event.clientY - _ivDragState.startY) / _ivDragState.zoom;
+  const pos = setIvNodePosition(board, _ivDragState.type, _ivDragState.id, _ivDragState.originX + dx, _ivDragState.originY + dy);
+  _ivDragState.element.style.left = pos.x + 'px';
+  _ivDragState.element.style.top = pos.y + 'px';
+  redrawIvLinks(_ivDragState.wfId);
+}
+
+function moveIvCanvasPan(event) {
+  if (!_ivPanState) return;
+  _ivPanState.canvas.scrollLeft = _ivPanState.scrollLeft - (event.clientX - _ivPanState.startX);
+  _ivPanState.canvas.scrollTop = _ivPanState.scrollTop - (event.clientY - _ivPanState.startY);
+}
+
+function endIvNodeDrag() {
+  if (!_ivDragState) return;
+  _ivDragState.element.classList.remove('dragging');
+  renderImageVideoCanvas(_ivDragState.wfId);
+  persistIvBoard(_ivDragState.wfId, { silent: true });
+  _ivDragState = null;
+}
+
+function endIvCanvasPan() {
+  if (!_ivPanState) return;
+  _ivPanState.canvas.classList.remove('panning');
+  _ivPanState = null;
+}
+
+document.addEventListener('pointermove', (event) => {
+  moveIvNodeDrag(event);
+  moveIvCanvasPan(event);
+});
+document.addEventListener('pointerup', () => {
+  endIvNodeDrag();
+  endIvCanvasPan();
+});
 
 function renderImageVideoCanvas(wfId) {
   const board = getImageVideoBoard(wfId);
   const canvas = document.getElementById('iv-canvas-' + wfId);
   if (!canvas) return;
-  if (!board.shots.length) {
-    canvas.innerHTML = `
-      <div class="iv-canvas-empty">
-        <i class="fas fa-object-group" style="font-size:22px;color:var(--self);margin-bottom:8px"></i><br>
-        从右侧生成图片后拖到这里<br>
-        或点击图片上的「加入画布」
-      </div>
-    `;
-    return;
-  }
 
-  const firstShot = board.shots[0];
-  const firstAsset = board.assets.find(item => item.id === firstShot.assetId);
+  const firstShot = board.shots[0] || null;
+  const firstAsset = firstShot ? board.assets.find(item => item.id === firstShot.assetId) : null;
   const prompt = firstAsset ? firstAsset.prompt : getRunnerValue('iv-prompt-' + wfId, IMAGE_VIDEO_PRESETS.short.prompt);
   const styleLabel = firstAsset ? firstAsset.styleLabel : IMAGE_VIDEO_STYLES[getRunnerValue('iv-style-' + wfId, 'cinematic')];
   const ratio = firstAsset ? firstAsset.ratio : getRunnerValue('iv-ratio-' + wfId, '9:16');
   const videoPrompt = '镜头连贯切换,保留主体一致性,光线和氛围逐步增强';
-  const nodes = [];
+  const configPos = board.nodePositions.config;
+  const videoPos = board.nodePositions.video;
+  const outputPos = board.nodePositions.output;
+  const selected = board.selectedNode || '';
+  canvas.classList.toggle('no-grid', !board.grid);
+  canvas.classList.toggle('iv-canvas-locked', !!board.locked);
 
-  nodes.push(`
-    <div class="iv-flow-node">
+  const configNode = `
+    <div class="iv-flow-node config-node iv-draggable-node ${selected === 'config:config' ? 'selected' : ''}" style="left:${configPos.x}px;top:${configPos.y}px" onpointerdown="startIvNodeDrag(event,'${wfId}','config','config')">
       <div class="iv-flow-card">
         <div class="iv-node-head">
           <span class="iv-node-index">1</span>
           <strong>Image2Image 生图</strong>
           <span class="iv-node-ok"><i class="fas fa-check-circle"></i></span>
+          <span class="iv-node-grip">••</span>
         </div>
         <div class="iv-node-body">
           <div class="iv-node-row"><span>模型</span><span class="iv-node-pill">Image2</span></div>
@@ -13170,38 +14223,42 @@ function renderImageVideoCanvas(wfId) {
         </div>
       </div>
     </div>
-  `);
+  `;
 
-  board.shots.forEach((shot, index) => {
+  const shotNodes = board.shots.map((shot, index) => {
     const asset = board.assets.find(item => item.id === shot.assetId);
     if (!asset) return '';
-    nodes.push(`
-      <div class="iv-shot-node">
+    return `
+      <div class="iv-shot-node iv-draggable-node ${selected === 'shot:' + shot.id ? 'selected' : ''}" style="left:${shot.x}px;top:${shot.y}px" onpointerdown="startIvNodeDrag(event,'${wfId}','shot','${shot.id}')">
         <div class="iv-shot-card">
           <div class="iv-node-head">
             <span class="iv-node-index">${index + 2}</span>
             <strong>生成图片</strong>
             <span class="iv-node-ok"><i class="fas fa-check-circle"></i></span>
+            <span class="iv-node-grip">••</span>
           </div>
           <div class="iv-shot-preview" data-scene="${escapeHtml(asset.title)}" style="background:${asset.bg}"></div>
           <div class="iv-shot-body">
             <div class="iv-shot-title">镜头 ${index + 1}</div>
             <div class="iv-shot-meta">${escapeHtml(shot.duration)}s · ${escapeHtml(shot.motion)}</div>
-            <button class="iv-mini-btn" style="margin-top:8px" onclick="removeIvShot('${wfId}','${shot.id}')">移除</button>
+            <div class="iv-shot-actions">
+              <button class="iv-mini-btn" onclick="removeIvShot('${wfId}','${shot.id}')">移除</button>
+              <button class="iv-mini-btn" onclick="duplicateIvShot('${wfId}','${shot.id}')">复制</button>
+            </div>
           </div>
         </div>
       </div>
-    `);
-    return '';
-  });
+    `;
+  }).join('');
 
-  nodes.push(`
-    <div class="iv-flow-node">
+  const videoNode = `
+    <div class="iv-flow-node video-node iv-draggable-node ${selected === 'video:video' ? 'selected' : ''}" style="left:${videoPos.x}px;top:${videoPos.y}px" onpointerdown="startIvNodeDrag(event,'${wfId}','video','video')">
       <div class="iv-flow-card video">
         <div class="iv-node-head">
           <span class="iv-node-index">${board.shots.length + 2}</span>
           <strong>Grok Video-3 生视频</strong>
           <span class="iv-node-ok">${board.video ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-circle-notch"></i>'}</span>
+          <span class="iv-node-grip">••</span>
         </div>
         <div class="iv-node-body">
           <div class="iv-node-row"><span>模型</span><span class="iv-node-pill">Grok Video-3</span></div>
@@ -13212,17 +14269,17 @@ function renderImageVideoCanvas(wfId) {
         </div>
       </div>
     </div>
-  `);
+  `;
 
-  if (board.video) {
-    const outputAsset = board.assets.find(item => item.id === board.video.firstAssetId) || firstAsset;
-    nodes.push(`
-      <div class="iv-flow-node">
+  const outputAsset = board.video ? (board.assets.find(item => item.id === board.video.firstAssetId) || firstAsset) : null;
+  const outputNode = board.video ? `
+      <div class="iv-flow-node output-node iv-draggable-node ${selected === 'output:output' ? 'selected' : ''}" style="left:${outputPos.x}px;top:${outputPos.y}px" onpointerdown="startIvNodeDrag(event,'${wfId}','output','output')">
         <div class="iv-flow-card output">
           <div class="iv-node-head">
             <span class="iv-node-index">${board.shots.length + 3}</span>
             <strong>视频输出</strong>
             <span class="iv-node-ok"><i class="fas fa-check-circle"></i></span>
+            <span class="iv-node-grip">••</span>
           </div>
           <div class="iv-shot-preview" data-scene="${escapeHtml(outputAsset ? outputAsset.title : '视频预览')}" style="background:${outputAsset ? outputAsset.bg : 'linear-gradient(135deg,#0F0F0E,#1A5D3A)'}"></div>
           <div class="iv-node-body">
@@ -13232,10 +14289,263 @@ function renderImageVideoCanvas(wfId) {
           </div>
         </div>
       </div>
-    `);
-  }
+    ` : '';
 
-  canvas.innerHTML = nodes.map((node, index) => index === 0 ? node : '<div class="iv-connector"></div>' + node).join('');
+  const noteNodes = (board.notes || []).map((note, index) => `
+    <div class="iv-flow-node note-node iv-draggable-node ${selected === 'note:' + note.id ? 'selected' : ''}" style="left:${note.x}px;top:${note.y}px" onpointerdown="startIvNodeDrag(event,'${wfId}','note','${note.id}')">
+      <div class="iv-flow-card">
+        <div class="iv-node-head">
+          <span class="iv-node-index">T</span>
+          <strong>文字备注</strong>
+          <button class="iv-mini-btn" onclick="removeIvNote('${wfId}','${note.id}')">删</button>
+        </div>
+        <div class="iv-node-body">
+          <div class="iv-node-row" style="display:block;color:var(--ink-2);line-height:1.55">${escapeHtml(note.text)}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  const dropHint = !board.shots.length ? `
+    <div class="iv-drop-hint">
+      <i class="fas fa-images"></i>
+      把右侧生成图拖到这里<br>
+      或直接从电脑拖入图片文件
+    </div>
+  ` : '';
+
+  canvas.innerHTML = `
+    <div class="iv-canvas-content" id="iv-canvas-content-${wfId}" style="transform:scale(${board.zoom})">
+      <svg class="iv-link-layer" id="iv-links-${wfId}" viewBox="0 0 ${IV_CANVAS.width} ${IV_CANVAS.height}" aria-hidden="true">
+        ${renderIvLinkSvg(wfId)}
+      </svg>
+      ${configNode}
+      ${shotNodes}
+      ${videoNode}
+      ${outputNode}
+      ${noteNodes}
+      ${dropHint}
+    </div>
+  `;
+  syncIvCanvasControls(wfId);
+  updateIvMinimap(wfId);
+  renderImageVideoPreviewBox(wfId);
+}
+
+function duplicateIvShot(wfId, shotId) {
+  const board = getImageVideoBoard(wfId);
+  const shot = board.shots.find(item => item.id === shotId);
+  if (!shot) return;
+  pushIvHistory(wfId);
+  resetImageVideoPreview(wfId);
+  board.shots.push({
+    ...JSON.parse(JSON.stringify(shot)),
+    id: 'shot_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
+    x: shot.x + 42,
+    y: shot.y + 42
+  });
+  renderImageVideoCanvas(wfId);
+  persistIvBoard(wfId, { silent: true });
+  showToast('镜头已复制');
+}
+
+function addIvTextNote(wfId) {
+  const board = getImageVideoBoard(wfId);
+  pushIvHistory(wfId);
+  board.notes.push({
+    id: 'note_' + Date.now(),
+    text: '在这里写镜头说明或素材要求',
+    x: 360 + board.notes.length * 34,
+    y: 650 + board.notes.length * 26
+  });
+  renderImageVideoCanvas(wfId);
+  persistIvBoard(wfId, { silent: true });
+  showToast('已添加文字备注');
+}
+
+function removeIvNote(wfId, noteId) {
+  const board = getImageVideoBoard(wfId);
+  pushIvHistory(wfId);
+  board.notes = board.notes.filter(note => note.id !== noteId);
+  renderImageVideoCanvas(wfId);
+  persistIvBoard(wfId, { silent: true });
+}
+
+function setIvCanvasTool(wfId, tool) {
+  const board = getImageVideoBoard(wfId);
+  board.tool = tool;
+  syncIvCanvasControls(wfId);
+  persistIvBoard(wfId, { silent: true });
+  showToast(tool === 'pan' ? '可拖动画布滚动查看' : '已切换为选择工具');
+}
+
+function syncIvCanvasControls(wfId) {
+  const board = getImageVideoBoard(wfId);
+  const canvas = document.getElementById('iv-canvas-' + wfId);
+  if (canvas) {
+    canvas.classList.toggle('no-grid', !board.grid);
+    canvas.classList.toggle('iv-canvas-locked', board.locked);
+    canvas.classList.toggle('pan-mode', board.tool === 'pan');
+  }
+  const zoomLabel = document.getElementById('iv-zoom-label-' + wfId);
+  if (zoomLabel) zoomLabel.textContent = Math.round((board.zoom || 1) * 100) + '%';
+  const gridBtn = document.getElementById('iv-grid-' + wfId);
+  if (gridBtn) gridBtn.classList.toggle('active', board.grid);
+  const lockBtn = document.getElementById('iv-lock-' + wfId);
+  if (lockBtn) {
+    lockBtn.classList.toggle('active', board.locked);
+    lockBtn.innerHTML = `<i class="fas ${board.locked ? 'fa-lock' : 'fa-lock-open'}"></i> 锁定`;
+  }
+  ['select', 'pan'].forEach(tool => {
+    const rail = document.getElementById('iv-rail-' + tool + '-' + wfId);
+    if (rail) rail.classList.toggle('active', board.tool === tool);
+  });
+  const selectBtn = document.getElementById('iv-toolbar-select-' + wfId);
+  if (selectBtn) selectBtn.classList.toggle('active', board.tool === 'select');
+  const content = document.getElementById('iv-canvas-content-' + wfId);
+  if (content) content.style.transform = `scale(${board.zoom || 1})`;
+}
+
+function toggleIvGrid(wfId) {
+  const board = getImageVideoBoard(wfId);
+  pushIvHistory(wfId);
+  board.grid = !board.grid;
+  syncIvCanvasControls(wfId);
+  persistIvBoard(wfId, { silent: true });
+  showToast(board.grid ? '网格已打开' : '网格已关闭');
+}
+
+function toggleIvLock(wfId) {
+  const board = getImageVideoBoard(wfId);
+  pushIvHistory(wfId);
+  board.locked = !board.locked;
+  syncIvCanvasControls(wfId);
+  persistIvBoard(wfId, { silent: true });
+  showToast(board.locked ? '画布已锁定' : '画布已解锁');
+}
+
+function zoomIvCanvas(wfId, delta) {
+  const board = getImageVideoBoard(wfId);
+  board.zoom = Math.max(0.55, Math.min(1.35, Number((board.zoom + delta).toFixed(2))));
+  syncIvCanvasControls(wfId);
+  persistIvBoard(wfId, { silent: true });
+}
+
+function fitIvCanvas(wfId) {
+  const board = getImageVideoBoard(wfId);
+  board.zoom = 0.86;
+  syncIvCanvasControls(wfId);
+  const canvas = document.getElementById('iv-canvas-' + wfId);
+  if (canvas) {
+    canvas.scrollLeft = 0;
+    canvas.scrollTop = 0;
+  }
+  persistIvBoard(wfId, { silent: true });
+  showToast('已适配视图');
+}
+
+function alignIvCanvasNodes(wfId) {
+  const board = getImageVideoBoard(wfId);
+  pushIvHistory(wfId);
+  const y = 300;
+  board.nodePositions.config.y = y + 18;
+  board.shots.forEach((shot, index) => { shot.y = y - 42 + (index % 2) * 10; });
+  board.nodePositions.video.y = y;
+  board.nodePositions.output.y = y - 10;
+  renderImageVideoCanvas(wfId);
+  persistIvBoard(wfId, { silent: true });
+  showToast('节点已对齐');
+}
+
+function autoLayoutIvCanvas(wfId) {
+  const board = getImageVideoBoard(wfId);
+  pushIvHistory(wfId);
+  board.nodePositions.config = { x: 100, y: 318 };
+  board.shots.forEach((shot, index) => {
+    shot.x = 350 + index * 234;
+    shot.y = 262 + (index % 2) * 34;
+  });
+  reflowIvSystemNodesForShots(board, board.shots.length);
+  board.nodePositions.video.y = 296;
+  board.nodePositions.output.y = 286;
+  renderImageVideoCanvas(wfId);
+  persistIvBoard(wfId, { silent: true });
+  showToast('已自动布局');
+}
+
+function updateIvMinimap(wfId) {
+  const board = getImageVideoBoard(wfId);
+  const track = document.querySelector('#iv-studio-' + wfId + ' .iv-minimap-track');
+  if (!track) return;
+  const nodes = [
+    { ...board.nodePositions.config, type: 'config' },
+    ...board.shots.map(shot => ({ x: shot.x, y: shot.y, type: 'shot' })),
+    { ...board.nodePositions.video, type: 'video' }
+  ];
+  if (board.video) nodes.push({ ...board.nodePositions.output, type: 'output' });
+  track.innerHTML = nodes.map(node => {
+    const left = Math.max(4, Math.min(178, node.x / IV_CANVAS.width * 196));
+    const top = Math.max(4, Math.min(68, node.y / IV_CANVAS.height * 78));
+    const color = node.type === 'video' || node.type === 'output' ? 'rgba(26,93,58,0.26)' : 'rgba(91,63,168,0.25)';
+    return `<span class="iv-mini-node" style="left:${left}px;top:${top}px;width:34px;height:24px;background:${color}"></span>`;
+  }).join('');
+}
+
+function showIvLayerList(wfId) {
+  const board = getImageVideoBoard(wfId);
+  const layers = [
+    'Image2Image 生图',
+    ...board.shots.map((shot, index) => `镜头 ${index + 1}`),
+    'Grok Video-3 生视频',
+    ...(board.video ? ['视频输出'] : []),
+    ...board.notes.map((note, index) => `文字备注 ${index + 1}`)
+  ];
+  openModal(`
+    <div style="padding:24px;max-width:420px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <h2 style="font-size:18px;font-weight:800">画布图层</h2>
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times" style="font-size:11px"></i></button>
+      </div>
+      <div style="display:grid;gap:8px">
+        ${layers.map((layer, index) => `<div style="border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--ink-2)">${index + 1}. ${escapeHtml(layer)}</div>`).join('')}
+      </div>
+    </div>
+  `);
+}
+
+function shareIvWorkflow(wfId) {
+  const url = location.origin + location.pathname + '#run=' + encodeURIComponent(wfId);
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(() => showToast('分享链接已复制')).catch(() => showToast('复制失败,请手动复制', true));
+  } else {
+    showToast('当前浏览器不支持自动复制', true);
+  }
+}
+
+function favoriteIvWorkflow(wfId) {
+  const data = getData();
+  data._favorites = data._favorites || [];
+  if (!data._favorites.includes(wfId)) data._favorites.push(wfId);
+  saveData(data);
+  showToast('已收藏工作流');
+}
+
+function publishIvWorkflow(wfId) {
+  const board = getImageVideoBoard(wfId);
+  openModal(`
+    <div style="padding:24px;max-width:460px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <h2 style="font-size:18px;font-weight:800">发布工作流</h2>
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times" style="font-size:11px"></i></button>
+      </div>
+      <p style="font-size:13px;color:var(--ink-2);line-height:1.7;margin-bottom:16px">当前 demo 会把画布结构保存为发布草稿。真实版本可在这里接审核、版本号、权限和 API 配置。</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+        <div class="sql-meta-card"><span>镜头</span><strong>${board.shots.length}</strong></div>
+        <div class="sql-meta-card"><span>素材</span><strong>${board.assets.length}</strong></div>
+      </div>
+      <button class="runner-primary" onclick="closeModal(); showToast('工作流草稿已保存')">保存发布草稿</button>
+    </div>
+  `);
 }
 
 function generateVideo3Preview(wfId) {
@@ -13246,6 +14556,7 @@ function generateVideo3Preview(wfId) {
     showToast('至少需要 2 个镜头才能生成视频', true);
     return;
   }
+  pushIvHistory(wfId);
   videoBox.innerHTML = '<div class="iv-video-empty"><i class="fas fa-spinner fa-spin" style="margin-right:6px"></i>正在调用视频引擎生成预览...</div>';
   recordWorkflowClick(getData(), wfId, { source: 'video3_generation' });
   setTimeout(() => {
@@ -13275,6 +14586,7 @@ function generateVideo3Preview(wfId) {
     `;
     renderImageVideoCanvas(wfId);
     appendIvMessage(wfId, 'bot', `已为你生成 Grok Video-3 方案: ${board.shots.length} 个镜头,${duration}s。左侧画布已出现视频输出节点。`);
+    renderImageVideoAssets(wfId);
     const data = getData();
     data.inline_runs = data.inline_runs || [];
     data.inline_runs.unshift({
@@ -13290,6 +14602,7 @@ function generateVideo3Preview(wfId) {
     });
     data.inline_runs = data.inline_runs.slice(0, 20);
     saveData(data);
+    persistIvBoard(wfId, { silent: true });
     showToast('视频预览已生成');
   }, 850);
 }
