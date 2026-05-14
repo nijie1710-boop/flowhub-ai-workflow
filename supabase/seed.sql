@@ -303,3 +303,9 @@ INSERT INTO ad_applications (id, advertiser_name, contact, workflow_name, workfl
 ('ad_app_1', '北京 XX 科技', 'contact@xxtech.cn', '某 AI 写作工具', 'https://example-writing.com', '专业的 AI 写作平台', 'hero', 'package', 4200, 'pending', NOW() - INTERVAL '2 days'),
 ('ad_app_2', '上海 XX 数据', 'biz@xxdata.com', '某 SaaS 数据平台', 'https://example-data.com', '企业级数据分析平台', 'category_top', 'cpc', 1.5, 'pending', NOW() - INTERVAL '1 day')
 ON CONFLICT (id) DO NOTHING;
+
+-- ========== 用户提交外部工具 ==========
+INSERT INTO tool_submissions (id, submitter_name, contact, tool_name, tool_url, tool_desc, category, tags, price_model, price_amount, status, submitted_at) VALUES
+('tool_sub_1', '陈同学', 'chen@example.com', 'PromptForge 提示词库', 'https://example-promptforge.com', '面向中文运营和设计团队的提示词协作工具,支持团队收藏和版本管理。', '效率 · 办公', ARRAY['提示词','团队协作','效率'], 'free', 0, 'pending', NOW() - INTERVAL '12 hours'),
+('tool_sub_2', '杭州某电商团队', 'ops@example.com', 'ModelShot 商品模特图', 'https://example-modelshot.com', '上传平铺商品图后生成不同人群、场景和姿势的模特穿搭图。', '设计 · 海报', ARRAY['电商','模特图','AI 生图'], 'cpc', 0.8, 'pending', NOW() - INTERVAL '2 hours')
+ON CONFLICT (id) DO NOTHING;

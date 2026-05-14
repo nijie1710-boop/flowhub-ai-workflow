@@ -250,6 +250,1137 @@
     color: var(--bg);
     border-color: var(--ink);
   }
+  .inline-runner {
+    margin-top: 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg-elev);
+    overflow: hidden;
+  }
+  .inline-runner-head {
+    padding: 16px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .inline-runner-kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--self);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+  .inline-runner-head h4 {
+    font-size: 17px;
+    margin-bottom: 4px;
+  }
+  .inline-runner-head p {
+    color: var(--ink-3);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .inline-runner-badge {
+    flex-shrink: 0;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: var(--self-bg);
+    color: var(--self);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .inline-runner-grid {
+    display: grid;
+    grid-template-columns: minmax(240px, 0.86fr) minmax(280px, 1.14fr);
+    gap: 0;
+    min-width: 0;
+  }
+  .runner-form {
+    padding: 16px;
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+  .runner-field label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 11px;
+    color: var(--ink-3);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .runner-input,
+  .runner-select,
+  .runner-textarea {
+    width: 100%;
+    border: 1px solid var(--line-strong);
+    background: var(--bg);
+    color: var(--ink);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    box-sizing: border-box;
+  }
+  .runner-input,
+  .runner-select {
+    height: 40px;
+    padding: 0 12px;
+  }
+  .runner-textarea {
+    min-height: 84px;
+    resize: vertical;
+    padding: 10px 12px;
+    line-height: 1.55;
+  }
+  .runner-two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .runner-presets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .runner-preset {
+    border: 1px solid var(--line);
+    background: var(--bg-elev);
+    color: var(--ink-2);
+    border-radius: 999px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .runner-preset:hover {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  .runner-check {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--ink-2);
+  }
+  .runner-check input { margin-top: 3px; accent-color: var(--self); }
+  .runner-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 2px;
+  }
+  .runner-primary,
+  .runner-secondary {
+    min-height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--line-strong);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+  }
+  .runner-primary {
+    flex: 1;
+    background: var(--self);
+    color: #fff;
+    border-color: var(--self);
+  }
+  .runner-secondary {
+    padding: 0 14px;
+    background: transparent;
+    color: var(--ink-2);
+  }
+  .runner-primary:disabled { opacity: 0.65; cursor: wait; }
+  .runner-output {
+    min-width: 0;
+    min-height: 460px;
+    background: var(--bg-soft);
+    padding: 16px;
+  }
+  .runner-empty {
+    height: 100%;
+    min-height: 428px;
+    border: 1px dashed var(--line-strong);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--ink-3);
+    font-size: 13px;
+    line-height: 1.7;
+    padding: 20px;
+  }
+  .runner-empty i {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 22px;
+    color: var(--self);
+  }
+  .runner-output.loading .runner-empty {
+    color: transparent;
+    position: relative;
+  }
+  .runner-output.loading .runner-empty::after {
+    content: '生成商品图方案中...';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-3);
+    font-family: 'JetBrains Mono', monospace;
+    animation: pulse 1.2s infinite;
+  }
+  .ps-result {
+    display: grid;
+    gap: 14px;
+  }
+  .ps-preview {
+    position: relative;
+    min-height: 260px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: linear-gradient(135deg, #E9EFE7, #FFDAB8);
+  }
+  .ps-preview::before {
+    content: '';
+    position: absolute;
+    inset: 18px;
+    border: 1px solid rgba(255,255,255,0.55);
+    border-radius: 8px;
+  }
+  .ps-product {
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    transform: translate(-50%, -50%);
+    width: 104px;
+    height: 142px;
+    border-radius: 28px 28px 18px 18px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.92), rgba(232,240,226,0.88));
+    box-shadow: 0 22px 40px rgba(15,15,14,0.22), inset -16px -10px 26px rgba(26,93,58,0.12);
+  }
+  .ps-product::before {
+    content: '';
+    position: absolute;
+    top: -14px;
+    left: 33px;
+    width: 38px;
+    height: 18px;
+    border-radius: 10px 10px 3px 3px;
+    background: #0F0F0E;
+  }
+  .ps-product::after {
+    content: attr(data-label);
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    top: 54px;
+    min-height: 40px;
+    border-top: 1px solid rgba(15,15,14,0.12);
+    border-bottom: 1px solid rgba(15,15,14,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 11px;
+    line-height: 1.25;
+    color: #1A5D3A;
+    font-weight: 700;
+  }
+  .ps-scene-chip {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    padding: 6px 9px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.78);
+    color: #0F0F0E;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .ps-preview-copy {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    color: rgba(15,15,14,0.72);
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .ps-result-copy {
+    display: grid;
+    gap: 10px;
+  }
+  .ps-result-block {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px;
+  }
+  .ps-result-block h5 {
+    font-size: 12px;
+    margin-bottom: 7px;
+  }
+  .ps-result-block p,
+  .ps-result-block li {
+    font-size: 12px;
+    line-height: 1.65;
+    color: var(--ink-2);
+  }
+  .ps-result-block ul {
+    margin: 0;
+    padding-left: 16px;
+  }
+  .sql-code {
+    background: #0F0F0E;
+    color: #EDECE8;
+    border-radius: 8px;
+    padding: 14px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.65;
+    white-space: pre;
+  }
+  .sql-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .sql-meta-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px;
+  }
+  .sql-meta-card span {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-3);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .sql-meta-card strong {
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .iv-studio {
+    display: grid;
+    grid-template-columns: minmax(360px, 1.18fr) minmax(320px, 0.82fr);
+    min-height: 620px;
+  }
+  .iv-canvas-panel {
+    padding: 16px;
+    background: var(--bg-soft);
+    border-right: 1px solid var(--line);
+    min-width: 0;
+  }
+  .iv-chat-panel {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    background: var(--bg-elev);
+  }
+  .iv-panel-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .iv-panel-top h5 {
+    font-size: 13px;
+    margin: 0;
+  }
+  .iv-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    color: var(--ink-3);
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  .iv-canvas-stage {
+    min-height: 360px;
+    border: 1px dashed var(--line-strong);
+    border-radius: 10px;
+    background:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px),
+      var(--bg-elev);
+    background-size: 28px 28px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    overflow-x: auto;
+  }
+  .iv-canvas-stage.drag-over {
+    border-color: var(--self);
+    box-shadow: 0 0 0 3px rgba(26,93,58,0.1);
+  }
+  .iv-canvas-empty {
+    width: 100%;
+    text-align: center;
+    color: var(--ink-3);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .iv-shot-node {
+    flex: 0 0 176px;
+    position: relative;
+  }
+  .iv-shot-card {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg-elev);
+    box-shadow: 0 8px 24px rgba(15,15,14,0.08);
+  }
+  .iv-shot-preview,
+  .iv-asset-preview {
+    min-height: 118px;
+    position: relative;
+    overflow: hidden;
+  }
+  .iv-shot-preview::before,
+  .iv-asset-preview::before {
+    content: '';
+    position: absolute;
+    inset: 14px;
+    border: 1px solid rgba(255,255,255,0.52);
+    border-radius: 8px;
+  }
+  .iv-shot-preview::after,
+  .iv-asset-preview::after {
+    content: attr(data-scene);
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 12px;
+    color: rgba(15,15,14,0.72);
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .iv-shot-body {
+    padding: 9px 10px;
+  }
+  .iv-shot-title {
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .iv-shot-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-3);
+  }
+  .iv-connector {
+    flex: 0 0 42px;
+    height: 2px;
+    background: var(--self);
+    position: relative;
+    opacity: 0.8;
+  }
+  .iv-connector::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    border-top: 2px solid var(--self);
+    border-right: 2px solid var(--self);
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .iv-video-box {
+    margin-top: 12px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg-elev);
+    padding: 12px;
+    min-height: 118px;
+  }
+  .iv-video-empty {
+    height: 94px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-3);
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.6;
+  }
+  .iv-video-result {
+    display: grid;
+    grid-template-columns: 132px 1fr;
+    gap: 12px;
+    align-items: center;
+  }
+  .iv-video-thumb {
+    height: 86px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #0F0F0E, #1A5D3A);
+    position: relative;
+    overflow: hidden;
+  }
+  .iv-video-thumb::after {
+    content: '▶';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+  }
+  .iv-video-copy h5 {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  .iv-video-copy p {
+    font-size: 12px;
+    color: var(--ink-3);
+    line-height: 1.6;
+  }
+  .iv-chat-log {
+    flex: 1;
+    min-height: 278px;
+    max-height: 430px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-right: 4px;
+  }
+  .iv-msg {
+    max-width: 92%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 1.65;
+  }
+  .iv-msg.bot {
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    color: var(--ink-2);
+  }
+  .iv-msg.user {
+    align-self: flex-end;
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .iv-assets {
+    display: grid;
+    gap: 10px;
+  }
+  .iv-asset-card {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg-elev);
+    overflow: hidden;
+    cursor: grab;
+  }
+  .iv-asset-card:active { cursor: grabbing; }
+  .iv-asset-body {
+    padding: 9px 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    align-items: center;
+  }
+  .iv-asset-body strong {
+    font-size: 12px;
+  }
+  .iv-asset-body span {
+    display: block;
+    color: var(--ink-3);
+    font-size: 11px;
+    margin-top: 2px;
+  }
+  .iv-mini-btn {
+    border: 1px solid var(--line-strong);
+    background: transparent;
+    color: var(--ink-2);
+    border-radius: 6px;
+    padding: 6px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .iv-compose {
+    border-top: 1px solid var(--line);
+    padding-top: 12px;
+    display: grid;
+    gap: 9px;
+  }
+  .iv-compose textarea {
+    min-height: 90px;
+    resize: vertical;
+  }
+  .iv-compose-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .iv-workflow-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  /* ====================== 沉浸式工作流运行页 ====================== */
+  body.immersive-run {
+    overflow: hidden;
+    padding-bottom: 0;
+  }
+  body.immersive-run .demo-bar,
+  body.immersive-run .mobile-tabbar,
+  body.immersive-run .chatbot-fab,
+  body.immersive-run .scroll-top-btn,
+  body.immersive-run .welcome-pop {
+    display: none !important;
+  }
+  .run-page {
+    height: 100vh;
+    min-height: 620px;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+  }
+  .run-topbar {
+    height: 58px;
+    padding: 0 18px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-elev);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .run-left,
+  .run-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+  .run-back {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: 1px solid var(--line-strong);
+    background: transparent;
+    color: var(--ink);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .run-title {
+    min-width: 0;
+  }
+  .run-title h1 {
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .run-title p {
+    font-size: 11px;
+    color: var(--ink-3);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .run-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--line);
+    background: var(--bg-soft);
+    border-radius: 999px;
+    padding: 6px 10px;
+    color: var(--ink-2);
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  .run-status .dot {
+    width: 7px;
+    height: 7px;
+    background: var(--self);
+    border-radius: 50%;
+  }
+  .run-workspace {
+    flex: 1;
+    min-height: 0;
+    padding: 12px;
+  }
+  .run-workspace .inline-runner {
+    height: 100%;
+    margin: 0;
+    border-radius: 12px;
+  }
+  .run-workspace .inline-runner-head {
+    display: none;
+  }
+  .run-workspace .detail-section {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .run-workspace .detail-section > h3,
+  .run-workspace .detail-section > p {
+    display: none;
+  }
+  .run-workspace .iv-studio {
+    height: 100%;
+    min-height: 0;
+    grid-template-columns: minmax(520px, 1.35fr) minmax(380px, 0.65fr);
+  }
+  .run-workspace .iv-canvas-panel,
+  .run-workspace .iv-chat-panel {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .run-workspace .iv-canvas-panel {
+    display: flex;
+    flex-direction: column;
+  }
+  .run-workspace .iv-canvas-stage {
+    flex: 1;
+    min-height: 0;
+  }
+  .run-workspace .iv-chat-panel {
+    height: 100%;
+  }
+  .run-workspace .iv-chat-log {
+    flex: 1;
+    min-height: 0;
+    max-height: none;
+  }
+
+  /* Image2Video: Figma canvas + GPT chat layout */
+  .run-topbar-center {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    justify-content: center;
+  }
+  .run-action-btn,
+  .run-publish-btn {
+    min-height: 34px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: transparent;
+    color: var(--ink-2);
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .run-action-btn.icon-only {
+    width: 34px;
+    padding: 0;
+  }
+  .run-publish-btn {
+    background: var(--pro);
+    border-color: var(--pro);
+    color: #fff;
+  }
+  .run-workspace {
+    padding: 0;
+  }
+  .run-workspace .inline-runner {
+    border: none;
+    border-radius: 0;
+  }
+  .run-workspace .iv-studio {
+    grid-template-columns: minmax(720px, 1fr) 460px;
+  }
+  .run-workspace .iv-canvas-panel {
+    padding: 0;
+    position: relative;
+    background:
+      radial-gradient(circle, rgba(91,63,168,0.13) 1px, transparent 1.2px),
+      var(--bg);
+    background-size: 18px 18px;
+  }
+  .iv-canvas-shell {
+    position: relative;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .iv-left-rail {
+    position: absolute;
+    top: 20px;
+    left: 18px;
+    width: 48px;
+    padding: 8px 0;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.88);
+    box-shadow: 0 12px 32px rgba(15,15,14,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    z-index: 6;
+  }
+  .iv-tool-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--ink-2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .iv-tool-btn.active {
+    background: rgba(91,63,168,0.12);
+    color: var(--pro);
+  }
+  .iv-rail-divider {
+    width: 26px;
+    height: 1px;
+    background: var(--line);
+    margin: 4px 0;
+  }
+  .iv-canvas-toolbar {
+    position: absolute;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.92);
+    box-shadow: 0 12px 34px rgba(15,15,14,0.09);
+  }
+  .iv-canvas-toolbar .iv-tool-btn {
+    width: auto;
+    padding: 0 10px;
+    gap: 6px;
+    font-size: 12px;
+  }
+  .run-workspace .iv-canvas-stage {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    padding: 145px 100px 190px 132px;
+    align-items: center;
+    gap: 34px;
+  }
+  .run-workspace .iv-canvas-stage::-webkit-scrollbar {
+    height: 8px;
+  }
+  .run-workspace .iv-canvas-stage::-webkit-scrollbar-thumb {
+    background: rgba(15,15,14,0.16);
+    border-radius: 999px;
+  }
+  .iv-flow-node,
+  .iv-shot-node {
+    flex: 0 0 224px;
+    position: relative;
+  }
+  .iv-flow-card,
+  .iv-shot-card {
+    border: 1px solid rgba(91,63,168,0.22);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.94);
+    box-shadow: 0 14px 38px rgba(15,15,14,0.09);
+    overflow: hidden;
+  }
+  .iv-flow-card.video {
+    border-color: rgba(26,93,58,0.34);
+  }
+  .iv-flow-card.output {
+    border-color: rgba(26,93,58,0.34);
+  }
+  .iv-node-head {
+    min-height: 42px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+  .iv-node-index {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(91,63,168,0.12);
+    color: var(--pro);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .iv-node-head strong {
+    font-size: 12px;
+    flex: 1;
+    min-width: 0;
+  }
+  .iv-node-ok {
+    color: var(--self);
+    font-size: 13px;
+  }
+  .iv-node-body {
+    padding: 12px;
+    display: grid;
+    gap: 10px;
+  }
+  .iv-node-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+  .iv-node-pill {
+    max-width: 128px;
+    border-radius: 6px;
+    background: var(--bg-soft);
+    color: var(--ink-2);
+    padding: 5px 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .iv-shot-node {
+    flex-basis: 230px;
+  }
+  .run-workspace .iv-shot-preview {
+    min-height: 170px;
+  }
+  .run-workspace .iv-flow-card.output .iv-shot-preview {
+    min-height: 148px;
+  }
+  .run-workspace .iv-flow-card.output .iv-shot-preview::after {
+    content: '▶ 0:00 / ' attr(data-scene);
+    color: #fff;
+    text-shadow: 0 1px 10px rgba(0,0,0,0.35);
+  }
+  .run-workspace .iv-shot-body {
+    padding: 10px 12px 12px;
+  }
+  .iv-connector {
+    flex: 0 0 54px;
+    background: var(--pro);
+  }
+  .iv-connector::after {
+    border-color: var(--pro);
+  }
+  .iv-video-box {
+    position: absolute;
+    right: 18px;
+    bottom: 18px;
+    width: 320px;
+    z-index: 6;
+    box-shadow: 0 12px 30px rgba(15,15,14,0.08);
+  }
+  .iv-minimap {
+    position: absolute;
+    left: 18px;
+    bottom: 124px;
+    width: 230px;
+    height: 104px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 12px 30px rgba(15,15,14,0.08);
+    z-index: 6;
+    padding: 12px;
+  }
+  .iv-minimap-track {
+    position: relative;
+    height: 100%;
+    border-radius: 8px;
+    background:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px),
+      var(--bg-soft);
+    background-size: 22px 22px;
+  }
+  .iv-mini-node {
+    position: absolute;
+    border-radius: 4px;
+    background: rgba(91,63,168,0.25);
+    border: 1px solid rgba(91,63,168,0.42);
+  }
+  .iv-mini-node:nth-child(1) { left: 8px; top: 22px; width: 38px; height: 28px; }
+  .iv-mini-node:nth-child(2) { left: 58px; top: 14px; width: 34px; height: 48px; }
+  .iv-mini-node:nth-child(3) { left: 108px; top: 24px; width: 48px; height: 32px; background: rgba(26,93,58,0.22); border-color: rgba(26,93,58,0.42); }
+  .iv-zoom {
+    position: absolute;
+    left: 18px;
+    bottom: 18px;
+    z-index: 7;
+    width: 230px;
+    height: 40px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.92);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    box-shadow: 0 12px 30px rgba(15,15,14,0.08);
+  }
+  .iv-zoom button {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    color: var(--ink-2);
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .iv-zoom span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+  .run-workspace .iv-chat-panel {
+    border-left: 1px solid var(--line);
+    padding: 0;
+    background: #fff;
+    box-shadow: -16px 0 36px rgba(15,15,14,0.05);
+  }
+  .iv-assistant-head {
+    height: 58px;
+    border-bottom: 1px solid var(--line);
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .iv-assistant-tabs {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .iv-assistant-title {
+    font-size: 14px;
+    font-weight: 800;
+  }
+  .iv-assistant-tab {
+    height: 58px;
+    display: inline-flex;
+    align-items: center;
+    border-bottom: 2px solid transparent;
+    color: var(--ink-3);
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .iv-assistant-tab.active {
+    color: var(--pro);
+    border-bottom-color: var(--pro);
+  }
+  .iv-assistant-tools {
+    display: flex;
+    gap: 6px;
+  }
+  .iv-assistant-tools .iv-tool-btn {
+    width: 30px;
+    height: 30px;
+  }
+  .run-workspace .iv-chat-log {
+    padding: 18px 16px;
+  }
+  .run-workspace .iv-msg {
+    max-width: 88%;
+    border-radius: 14px;
+    font-size: 13px;
+  }
+  .run-workspace .iv-msg.bot {
+    background: var(--bg-soft);
+  }
+  .run-workspace .iv-msg.user {
+    background: #0F0F0E;
+    color: #fff;
+  }
+  .run-workspace .iv-assets {
+    gap: 12px;
+  }
+  .run-workspace .iv-asset-card {
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(15,15,14,0.07);
+  }
+  .run-workspace .iv-asset-preview {
+    min-height: 146px;
+  }
+  .iv-asset-actions {
+    display: flex;
+    gap: 7px;
+    padding: 0 10px 10px;
+  }
+  .iv-asset-actions .iv-mini-btn {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+  }
+  .run-workspace .iv-compose {
+    padding: 14px 16px;
+    border-top: 1px solid var(--line);
+    background: #fff;
+  }
+  .run-workspace .iv-compose textarea {
+    min-height: 76px;
+    border-color: rgba(91,63,168,0.45);
+    box-shadow: 0 0 0 3px rgba(91,63,168,0.05);
+  }
+  .run-workspace .iv-asset-body > div {
+    min-width: 0;
+  }
 
   /* ====================== 通知红点 ====================== */
   .notification-dot {
@@ -300,6 +1431,35 @@
     background: linear-gradient(135deg, #242422, #1A1A18);
   }
   [data-theme="dark"] .try-panel-head { background: var(--bg-soft); }
+  [data-theme="dark"] .inline-runner,
+  [data-theme="dark"] .ps-result-block {
+    background: var(--bg-elev);
+  }
+  [data-theme="dark"] .runner-input,
+  [data-theme="dark"] .runner-select,
+  [data-theme="dark"] .runner-textarea {
+    background: var(--bg-soft);
+  }
+  [data-theme="dark"] .runner-output {
+    background: rgba(255,255,255,0.04);
+  }
+  [data-theme="dark"] .iv-canvas-panel,
+  [data-theme="dark"] .iv-msg.bot {
+    background: rgba(255,255,255,0.04);
+  }
+  [data-theme="dark"] .iv-canvas-stage,
+  [data-theme="dark"] .iv-video-box,
+  [data-theme="dark"] .iv-asset-card,
+  [data-theme="dark"] .iv-shot-card,
+  [data-theme="dark"] .iv-flow-card,
+  [data-theme="dark"] .iv-left-rail,
+  [data-theme="dark"] .iv-canvas-toolbar,
+  [data-theme="dark"] .iv-minimap,
+  [data-theme="dark"] .iv-zoom,
+  [data-theme="dark"] .run-workspace .iv-chat-panel,
+  [data-theme="dark"] .run-workspace .iv-compose {
+    background-color: var(--bg-elev);
+  }
   [data-theme="dark"] .featured-hero::before {
     background: radial-gradient(circle, rgba(255,214,165,0.18) 0%, transparent 60%);
   }
@@ -351,6 +1511,11 @@
   [data-theme="dark"] .redirect-overlay { background: rgba(0,0,0,0.7); }
   [data-theme="dark"] .theme-toggle { border-color: var(--line); color: var(--ink-2); }
   [data-theme="dark"] .auth-code-btn { background: var(--bg-soft); color: var(--ink-2); border-color: var(--line); }
+  [data-theme="dark"] .auth-rail { background: #111814; }
+  [data-theme="dark"] .auth-rail-card, [data-theme="dark"] .auth-benefit {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.1);
+  }
 
   /* ====================== 全局微交互打磨 ====================== */
   /* 全局按钮按下效果 */
@@ -1633,12 +2798,13 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    max-width: 540px;
-    padding: 8px;
+    width: 100%;
+    max-width: 620px;
+    padding: 9px;
     background: var(--bg-elev);
     border: 1px solid var(--line-strong);
     border-radius: 14px;
-    margin: 0 0 18px;
+    margin: 0 0 14px;
     box-shadow: 0 10px 28px rgba(15,15,14,0.06);
   }
   .home-search-panel i {
@@ -1653,7 +2819,7 @@
     outline: none;
     background: transparent;
     color: var(--ink);
-    font-size: 14px;
+    font-size: 15px;
     font-family: inherit;
   }
   .home-search-panel input::placeholder { color: var(--ink-4); }
@@ -1662,13 +2828,60 @@
     background: var(--ink);
     color: var(--bg);
     border-radius: 10px;
-    height: 36px;
-    padding: 0 16px;
+    height: 40px;
+    padding: 0 18px;
     font-size: 13px;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
     gap: 7px;
+  }
+  .hero-task-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 0 0 20px;
+  }
+  .hero-task-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .hero-task-chip {
+    border: 1px solid var(--line);
+    background: var(--bg-elev);
+    color: var(--ink-2);
+    border-radius: 999px;
+    padding: 5px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .hero-task-chip:hover {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  .hero-trust-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    margin-top: 14px;
+    color: var(--ink-3);
+    font-size: 12px;
+  }
+  .hero-trust-row span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .hero-trust-row i {
+    color: var(--self);
+    font-size: 10px;
   }
 
   .search-page {
@@ -2014,17 +3227,22 @@
     50% { box-shadow: 0 0 0 8px rgba(93, 202, 165, 0.05); }
   }
   .hero {
-    padding: 34px 0 18px;
+    padding: 36px 0 18px;
     border-bottom: 1px solid var(--line);
   }
   .hero-inner {
     display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 44px;
+    grid-template-columns: minmax(0, 1.08fr) 440px;
+    gap: 38px;
     align-items: center;
     margin-bottom: 20px;
   }
-  .hero-content { max-width: 580px; }
+  .hero-inner > * { min-width: 0; }
+  .hero-content {
+    width: 100%;
+    max-width: 650px;
+    min-width: 0;
+  }
   .hero-eyebrow {
     font-size: 10px;
     letter-spacing: 0.2em;
@@ -2044,9 +3262,9 @@
   }
   .hero h1 {
     font-family: 'Noto Serif SC', serif;
-    font-size: 44px;
+    font-size: 48px;
     line-height: 1.08;
-    letter-spacing: -0.025em;
+    letter-spacing: 0;
     margin-bottom: 14px;
     font-weight: 700;
   }
@@ -2056,9 +3274,10 @@
     font-weight: 500;
   }
   .hero-sub {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--ink-2);
     line-height: 1.65;
+    max-width: 590px;
     margin-bottom: 22px;
   }
   .hero-cta-row {
@@ -2103,56 +3322,140 @@
     background: var(--bg-soft);
   }
 
-  /* Hero 右侧视觉栈 */
+  /* Hero 右侧市场预览 */
   .hero-visual {
     position: relative;
-    height: 236px;
+    min-height: 360px;
+    min-width: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
+    overflow: visible;
   }
-  .hero-visual-stack {
-    position: relative;
+  .hero-product-panel {
     width: 100%;
-    height: 100%;
-  }
-  .hero-vstack-card {
-    position: absolute;
-    left: 0;
-    width: 92%;
-    max-width: 320px;
+    max-width: 100%;
+    box-sizing: border-box;
     background: var(--bg-elev);
     border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 12px 14px;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 18px 55px rgba(15,15,14,0.08);
+  }
+  .hero-product-top {
     display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+  }
+  .hero-product-kicker {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-bottom: 4px;
+  }
+  .hero-product-top h3 {
+    font-size: 17px;
+    letter-spacing: 0;
+  }
+  .hero-product-action {
+    border: 1px solid var(--line-strong);
+    background: transparent;
+    color: var(--ink-2);
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
     align-items: center;
-    gap: 12px;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .hero-feature-workflow {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 14px;
+    align-items: stretch;
+    padding: 12px;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 12px;
     cursor: pointer;
-    box-shadow: 0 4px 16px rgba(15,15,14,0.06);
-    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    animation: floatIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
-    animation-delay: calc(var(--i) * 0.08s);
+    transition: all 0.18s ease;
   }
-  @keyframes floatIn {
-    from { opacity: 0; transform: translateY(20px) translateX(-20px); }
-    to { opacity: 1; transform: translateY(0) translateX(0); }
-  }
-  .hero-vstack-card:nth-child(1) { top: 0; transform: rotate(-1.5deg) translateX(-8px); z-index: 1; }
-  .hero-vstack-card:nth-child(2) { top: 44px; transform: rotate(0.8deg) translateX(24px); z-index: 2; }
-  .hero-vstack-card:nth-child(3) { top: 88px; transform: rotate(-0.4deg) translateX(0); z-index: 3; }
-  .hero-vstack-card:nth-child(4) { top: 132px; transform: rotate(1.2deg) translateX(20px); z-index: 4; }
-  .hero-vstack-card:nth-child(5) { top: 176px; transform: rotate(-0.8deg) translateX(-4px); z-index: 5; }
-  .hero-vstack-card:nth-child(6) { top: 220px; transform: rotate(0.6deg) translateX(16px); z-index: 6; display: none; }
-  .hero-vstack-card:hover {
-    transform: translateY(-4px) rotate(0deg) translateX(0) !important;
-    z-index: 10 !important;
-    box-shadow: 0 12px 32px rgba(15,15,14,0.15);
+  .hero-feature-workflow:hover,
+  .hero-mini-workflow:hover {
     border-color: var(--line-strong);
+    transform: translateY(-1px);
+  }
+  .hero-feature-thumb {
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg-elev);
+    min-height: 112px;
+  }
+  .hero-feature-thumb svg {
+    width: 100%;
+    height: 100%;
+    min-height: 112px;
+    display: block;
+  }
+  .hero-feature-body {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .hero-feature-body h4 {
+    font-size: 16px;
+    line-height: 1.35;
+    margin: 8px 0 5px;
+  }
+  .hero-feature-body p {
+    color: var(--ink-3);
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .hero-feature-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+  .hero-feature-foot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    color: var(--ink-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+  }
+  .hero-mini-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .hero-mini-workflow {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 9px;
+    align-items: center;
+    min-width: 0;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    background: var(--bg-elev);
+    transition: all 0.18s ease;
   }
   .hvc-icon {
-    width: 32px; height: 32px;
+    width: 34px; height: 34px;
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -2164,7 +3467,7 @@
   }
   .hvc-info { flex: 1; min-width: 0; }
   .hvc-name {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: -0.01em;
     margin-bottom: 4px;
@@ -2175,7 +3478,32 @@
   .hvc-meta {
     display: flex;
     align-items: center;
+    gap: 6px;
+    color: var(--ink-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+  }
+  .hero-path-row {
+    margin-top: 14px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     gap: 8px;
+    border: 1px dashed var(--line-strong);
+    border-radius: 10px;
+    color: var(--ink-3);
+    font-size: 11px;
+  }
+  .hero-path-row span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+  .hero-path-row i {
+    color: var(--self);
+    font-size: 10px;
   }
 
   /* Hero 底部 meta bar */
@@ -3258,13 +4586,23 @@
   }
 
   /* ====================== 登录 / 注册 ====================== */
-  .auth-modal-head {
-    padding: 16px 18px;
-    border-bottom: 1px solid var(--line);
+  .modal.auth-modal {
+    max-width: 820px;
+    padding: 0;
+    overflow: hidden;
+  }
+  .auth-shell {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    min-height: 560px;
+  }
+  .auth-rail {
+    background: #E8F2EC;
+    padding: 28px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: space-between;
-    margin: -28px -28px 0;
+    border-right: 1px solid var(--line);
   }
   .auth-modal-logo {
     display: flex;
@@ -3285,8 +4623,144 @@
     font-weight: 700;
     font-size: 13px;
   }
+  .auth-rail-copy {
+    margin-top: 34px;
+  }
+  .auth-rail-kicker {
+    font-size: 11px;
+    color: var(--self);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .auth-rail h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 28px;
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+  .auth-rail-copy p {
+    color: var(--ink-2);
+    font-size: 13px;
+    line-height: 1.75;
+  }
+  .auth-rail-card {
+    margin-top: 24px;
+    padding: 14px;
+    background: rgba(255,255,255,0.55);
+    border: 1px solid rgba(15,15,14,0.08);
+    border-radius: 12px;
+  }
+  .auth-rail-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .auth-rail-card-title {
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .auth-rail-card-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--self);
+  }
+  .auth-workflow-row {
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 0;
+    border-top: 1px solid rgba(15,15,14,0.08);
+  }
+  .auth-workflow-row:first-of-type { border-top: none; }
+  .auth-workflow-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    background: var(--self);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+  }
+  .auth-workflow-name {
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .auth-workflow-meta {
+    font-size: 10px;
+    color: var(--ink-3);
+  }
+  .auth-workflow-score {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--ink-3);
+    font-size: 10px;
+  }
+  .auth-benefits {
+    display: grid;
+    gap: 8px;
+  }
+  .auth-benefit {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 10px;
+    background: rgba(255,255,255,0.45);
+    border: 1px solid rgba(15,15,14,0.08);
+    border-radius: 9px;
+    color: var(--ink-2);
+    font-size: 12px;
+  }
+  .auth-benefit i {
+    color: var(--self);
+    width: 14px;
+    text-align: center;
+  }
   .auth-modal-body {
-    padding: 28px 4px 0;
+    position: relative;
+    padding: 36px 38px 28px;
+  }
+  .auth-modal-body .modal-close {
+    top: 18px;
+    right: 18px;
+  }
+  .auth-copy {
+    margin: 14px 0 22px;
+  }
+  .auth-copy h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 26px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .auth-copy p {
+    color: var(--ink-3);
+    font-size: 13px;
+    line-height: 1.65;
+  }
+  .auth-soft-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 10px 12px;
+    margin-bottom: 18px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--bg-soft);
+    color: var(--ink-2);
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .auth-soft-note i {
+    color: var(--self);
+    margin-top: 2px;
   }
   .auth-tabs {
     display: flex;
@@ -3324,6 +4798,18 @@
     font-family: inherit;
     white-space: nowrap;
     transition: all 0.15s;
+  }
+  .auth-form-hint {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: -3px 0 13px;
+    color: var(--ink-3);
+    font-size: 11px;
+  }
+  .auth-form-hint i {
+    color: var(--self);
+    font-size: 10px;
   }
   .auth-code-btn:hover {
     background: var(--ink);
@@ -3370,7 +4856,7 @@
   }
   .auth-third-party {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
   }
   .third-party-btn {
@@ -3394,6 +4880,22 @@
   }
   .third-party-btn i {
     font-size: 15px;
+  }
+  .auth-guest-btn {
+    width: 100%;
+    margin-top: 14px;
+    border: 1px dashed var(--line-strong);
+    background: transparent;
+    color: var(--ink-3);
+    border-radius: 10px;
+    padding: 11px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .auth-guest-btn:hover {
+    color: var(--ink);
+    border-style: solid;
+    background: var(--bg-soft);
   }
 
   /* ====================== 订阅方案模态框 ====================== */
@@ -3598,6 +5100,42 @@
     padding: 24px 32px 48px;
     overflow-y: auto;
   }
+  .admin-gate {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .admin-gate-card {
+    width: min(520px, 100%);
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+  }
+  .admin-gate-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    margin: 0 auto 14px;
+    background: var(--pro-bg);
+    color: var(--pro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .admin-gate-card h2 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .admin-gate-card p {
+    color: var(--ink-3);
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
   .admin-head {
     display: flex;
     align-items: center;
@@ -3704,6 +5242,63 @@
     margin-top: 6px;
     font-family: 'JetBrains Mono', monospace;
     color: var(--self);
+  }
+  .admin-rank-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .rank-list {
+    padding: 6px 0;
+  }
+  .rank-row {
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-top: 1px solid var(--line);
+  }
+  .rank-row:first-child { border-top: none; }
+  .rank-no {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: var(--bg-soft);
+    color: var(--ink-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+  }
+  .rank-title {
+    font-size: 12px;
+    font-weight: 700;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .rank-sub {
+    font-size: 10px;
+    color: var(--ink-3);
+    margin-top: 2px;
+  }
+  .rank-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-2);
+  }
+  .admin-note {
+    margin-top: 6px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--bg-soft);
+    color: var(--ink-3);
+    font-size: 11px;
+    line-height: 1.5;
   }
 
   /* 表格 */
@@ -4084,7 +5679,8 @@
     .featured-hero { grid-template-columns: 1fr; }
     .featured-hero .fh-thumb { display: none; }
     .hero-inner { grid-template-columns: 1fr; gap: 32px; }
-    .hero-visual { display: none; }
+    .hero-visual { min-height: 0; }
+    .hero-product-panel { max-width: 720px; }
     .hero h1 { font-size: 40px; }
     .market-controls { grid-template-columns: 1fr; }
     .hero-meta-bar { flex-wrap: wrap; gap: 16px; }
@@ -4094,9 +5690,28 @@
     .footer-cols { grid-template-columns: 1fr 1fr; gap: 28px; }
     .stats-row-hero { grid-template-columns: 1fr 1fr; }
     .stat-card.stat-hero { grid-column: 1 / -1; }
+    .admin-rank-grid { grid-template-columns: 1fr; }
+    .modal.auth-modal { max-width: 720px; }
+    .auth-shell { grid-template-columns: 280px 1fr; }
+    .auth-rail { padding: 24px; }
+    .auth-modal-body { padding: 34px 30px 26px; }
   }
   @media (max-width: 768px) {
-    .mobile-tabbar { display: block; }
+    .mobile-tabbar {
+      display: block;
+      right: auto;
+      width: 100dvw;
+      max-width: 100dvw;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .mobile-tabbar-row { width: 100%; }
+    .mobile-drawer-bg {
+      right: auto;
+      width: 100dvw;
+      max-width: 100dvw;
+      box-sizing: border-box;
+    }
     .chatbot-fab { bottom: 76px; }
     .scroll-top-btn { bottom: 76px; right: 80px; }
     .demo-bar { display: none; }
@@ -4113,7 +5728,20 @@
     .hero-cta-row { flex-direction: column; }
     .hero-cta-primary, .hero-cta-secondary { width: 100%; justify-content: center; }
     .home-search-panel { max-width: none; }
-    .home-search-panel button span { display: none; }
+    .home-search-panel button { padding: 0 14px; }
+    .home-search-panel button i { display: none; }
+    .hero-task-row { max-width: 100%; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 3px; margin-bottom: 16px; }
+    .hero-task-row::-webkit-scrollbar { display: none; }
+    .hero-task-label, .hero-task-chip { flex: 0 0 auto; }
+    .hero-trust-row { display: none; }
+    .hero-product-panel { padding: 12px; border-radius: 14px; }
+    .hero-product-top { align-items: center; }
+    .hero-feature-workflow { grid-template-columns: 1fr; }
+    .hero-feature-thumb { display: none; }
+    .hero-mini-grid { grid-template-columns: 1fr; }
+    .hero-mini-workflow:nth-child(n+4) { display: none; }
+    .hero-path-row { max-width: 100%; overflow-x: auto; justify-content: flex-start; }
+    .hero-path-row::-webkit-scrollbar { display: none; }
     .search-hero { grid-template-columns: 1fr; gap: 10px; padding-top: 18px; }
     .search-hero h1 { font-size: 28px; }
     .search-hero-count { justify-content: flex-start; }
@@ -4125,17 +5753,32 @@
     .search-results-head { align-items: flex-start; flex-direction: column; }
     .search-result-card { grid-template-columns: 1fr; gap: 12px; }
     .search-result-card .result-action { grid-column: auto; width: 100%; }
-    .hero-meta-bar { padding: 14px 16px; }
-    .hero-meta-stats { gap: 14px; }
+    .hero-meta-bar { padding: 14px 16px; overflow: hidden; }
+    .hero-meta-stats {
+      width: 100%;
+      flex: 1 1 100%;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+    }
+    .hero-meta-stat {
+      flex: 1 1 calc(50% - 14px);
+      min-width: 118px;
+    }
     .hero-meta-stat .num { font-size: 14px; }
     .hero-meta-divider { display: none; }
     .market-controls { padding: 12px 0 16px; margin-bottom: 16px; }
-    .hot-bar { padding-bottom: 2px; }
+    .hot-bar { max-width: 100%; padding-bottom: 2px; }
     .me-head-v2 { grid-template-columns: 1fr; gap: 18px; padding: 22px; text-align: center; }
     .me-head-left { flex-direction: column; gap: 14px; }
     .me-head-actions { justify-content: center; }
     .me-avatar { width: 72px; height: 72px; font-size: 28px; }
     .market-side { flex-direction: column; }
+    .site-footer {
+      margin-left: -16px;
+      margin-right: -16px;
+      padding-left: 16px;
+      padding-right: 16px;
+    }
     .wf-grid, .wf-grid-full, .market-grid-with-side .wf-grid { grid-template-columns: 1fr; gap: 12px; }
     .wf-card { padding: 14px; min-height: auto; }
     .detail-layout { grid-template-columns: 1fr; }
@@ -4164,8 +5807,93 @@
     .redirect-actions { flex-direction: column; }
     .redirect-go, .redirect-cancel { width: 100%; justify-content: center; }
     .skeleton-grid { grid-template-columns: 1fr; }
+    .modal.auth-modal {
+      max-width: 420px;
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+    .auth-shell {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+    .auth-rail {
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+      padding: 20px;
+    }
+    .auth-rail-copy { margin-top: 18px; }
+    .auth-rail h3 { font-size: 22px; }
+    .auth-rail-card { display: none; }
+    .auth-benefits { grid-template-columns: 1fr 1fr; margin-top: 16px; }
+    .auth-benefit { padding: 8px; font-size: 11px; }
+    .auth-modal-body { padding: 26px 20px 22px; }
+    .auth-copy h2 { font-size: 23px; }
+    .auth-third-party { grid-template-columns: 1fr; }
+    .inline-runner-head { flex-direction: column; gap: 10px; }
+    .inline-runner-grid { grid-template-columns: 1fr; }
+    .runner-form { border-right: none; border-bottom: 1px solid var(--line); }
+    .runner-two { grid-template-columns: 1fr; }
+    .runner-actions { flex-direction: column; }
+    .runner-secondary { width: 100%; }
+    .runner-output { min-height: 0; }
+    .runner-empty { min-height: 260px; }
+    .ps-preview { min-height: 220px; }
+    .sql-meta-grid { grid-template-columns: 1fr; }
+    .iv-studio { grid-template-columns: 1fr; min-height: 0; }
+    .iv-canvas-panel { border-right: none; border-bottom: 1px solid var(--line); }
+    .iv-canvas-stage { min-height: 260px; align-items: stretch; }
+    .iv-shot-node { flex-basis: 156px; }
+    .iv-chat-log { max-height: none; }
+    .iv-compose-row, .iv-workflow-actions, .iv-video-result { grid-template-columns: 1fr; }
+    .iv-video-thumb { height: 120px; }
+    .run-page { min-height: 100vh; height: 100dvh; }
+    .run-topbar { height: auto; min-height: 58px; padding: 10px 12px; flex-wrap: wrap; }
+    .run-topbar-center {
+      order: 3;
+      width: 100%;
+      flex: 1 1 100%;
+      justify-content: flex-start;
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+    .run-topbar-center::-webkit-scrollbar { display: none; }
+    .run-publish-btn,
+    .run-right .run-status:last-child { display: none; }
+    .run-workspace { padding: 8px; overflow-y: auto; }
+    .run-workspace .inline-runner { height: auto; }
+    .run-workspace .iv-studio { height: auto; grid-template-columns: 1fr; }
+    .run-workspace .iv-canvas-panel,
+    .run-workspace .iv-chat-panel {
+      overflow: visible;
+    }
+    .run-workspace .iv-canvas-panel { min-height: 560px; }
+    .iv-canvas-shell { height: 560px; }
+    .iv-left-rail { top: 16px; left: 10px; }
+    .iv-canvas-toolbar {
+      top: 16px;
+      left: 68px;
+      right: 10px;
+      transform: none;
+      overflow-x: auto;
+      justify-content: flex-start;
+    }
+    .iv-canvas-toolbar::-webkit-scrollbar { display: none; }
+    .run-workspace .iv-canvas-stage {
+      min-height: 0;
+      padding: 104px 22px 190px 76px;
+    }
+    .run-workspace .iv-flow-node,
+    .run-workspace .iv-shot-node { flex-basis: 206px; }
+    .iv-minimap { display: none; }
+    .iv-zoom { left: 10px; bottom: 10px; width: 164px; }
+    .iv-video-box {
+      right: 10px;
+      bottom: 60px;
+      width: calc(100% - 20px);
+      max-width: 320px;
+    }
     .me-stats { grid-template-columns: 1fr 1fr; }
-    .filter-row { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; }
+    .filter-row { max-width: 100%; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; }
     .cat-pill { white-space: nowrap; flex-shrink: 0; }
     .panel-table { font-size: 11px; }
     .panel-table th, .panel-table td { padding: 8px 10px; }
@@ -4193,7 +5921,7 @@
   <span class="demo-pill" data-view="wizard">接入向导</span>
   <div class="spacer"></div>
   <div class="right-controls">
-    <span id="user-status">未登录</span>
+    <span id="user-status">游客模式</span>
     <button class="theme-toggle" onclick="toggleTheme()" title="切换主题"><i class="fas fa-moon" id="theme-icon"></i></button>
     <button class="reset-btn" onclick="resetAll()">重置数据</button>
   </div>
@@ -4203,6 +5931,7 @@
 <div class="view active" id="view-market"></div>
 <div class="view" id="view-search"></div>
 <div class="view" id="view-detail"></div>
+<div class="view" id="view-run"></div>
 <div class="view" id="view-me"></div>
 <div class="view" id="view-admin"></div>
 <div class="view" id="view-creator"></div>
@@ -4574,6 +6303,26 @@ const SEED_DATA = {
       created_at: '2026-04-26'
     },
     {
+      id: 'wf_seed_image_video',
+      name: 'Image2Video 画布导演',
+      tagline: 'Image2 生关键帧,拖入画布连线,再生成短视频分镜',
+      description: 'FlowHub 自营的图生视频创作工作流。右侧像聊天一样用 Image2 生成关键帧,左侧画布拖拽排镜头并建立顺序,最后交给视频引擎生成 6-12 秒短视频预览。适合商品广告、短剧分镜、社媒视频和动态海报。',
+      target_url: 'https://flowhub.cn/run/image-video',
+      type: 'self',
+      category: '设计 · 海报',
+      tags: ['Image2', '图生视频', '画布'],
+      price_model: 'free',
+      price_amount: 0,
+      cover_color: '#0F766E',
+      status: 'active',
+      rating: 4.9,
+      review_count: 328,
+      examples: [],
+      seed_clicks: 1180,
+      seed_clicks_7d: 224,
+      created_at: '2026-05-14'
+    },
+    {
       id: 'wf_seed_sql',
       name: 'SQL 查询生成器',
       tagline: '用自然语言描述需求,自动生成 SQL 查询',
@@ -4615,6 +6364,7 @@ const SEED_DATA = {
     }
   ],
   clicks: [],
+  inline_runs: [],
   reviews: [
     { id: 'rv_1', workflow_id: 'wf_seed_picspark', user_name: '电商小赵', avatar: '赵', rating: 5, text: '主图换背景效果非常自然,比之前用 PS 抠图省了 80% 时间。强推!', date: '3 天前' },
     { id: 'rv_2', workflow_id: 'wf_seed_picspark', user_name: '跨境老王', avatar: '王', rating: 5, text: '节日海报这块尤其好用,春节促销前批量生成了 200+ 张图,客户验收一次过。', date: '1 周前' },
@@ -4674,6 +6424,42 @@ const SEED_DATA = {
       status: 'pending',
       applied_at: new Date(Date.now() - 86400000).toISOString()
     }
+  ],
+  tool_submissions: [
+    {
+      id: 'tool_sub_1',
+      submitter_name: '陈同学',
+      contact: 'chen@example.com',
+      tool_name: 'PromptForge 提示词库',
+      tool_url: 'https://example-promptforge.com',
+      tool_desc: '面向中文运营和设计团队的提示词协作工具,支持团队收藏和版本管理。',
+      category: '效率 · 办公',
+      tags: ['提示词', '团队协作', '效率'],
+      price_model: 'free',
+      price_amount: 0,
+      status: 'pending',
+      admin_note: '',
+      workflow_id: null,
+      submitted_at: new Date(Date.now() - 43200000).toISOString(),
+      reviewed_at: null
+    },
+    {
+      id: 'tool_sub_2',
+      submitter_name: '杭州某电商团队',
+      contact: 'ops@example.com',
+      tool_name: 'ModelShot 商品模特图',
+      tool_url: 'https://example-modelshot.com',
+      tool_desc: '上传平铺商品图后生成不同人群、场景和姿势的模特穿搭图。',
+      category: '设计 · 海报',
+      tags: ['电商', '模特图', 'AI 生图'],
+      price_model: 'cpc',
+      price_amount: 0.8,
+      status: 'pending',
+      admin_note: '',
+      workflow_id: null,
+      submitted_at: new Date(Date.now() - 7200000).toISOString(),
+      reviewed_at: null
+    }
   ]
 };
 
@@ -4686,6 +6472,26 @@ const AD_SLOTS = [
   { id: 'sidebar', name: '工作流详情页侧栏', desc: '所有详情页右侧推荐栏', daily_impressions: 8800, ctr_baseline: '3-7%', package_price: 1200, package_unit: '周', cpc_min: 0.4 },
 ];
 
+function normalizeDataShape(data) {
+  if (!data || typeof data !== 'object') return JSON.parse(JSON.stringify(SEED_DATA));
+  if (!Array.isArray(data.workflows)) data.workflows = [];
+  const existingWorkflowIds = new Set(data.workflows.map(w => w && w.id).filter(Boolean));
+  (SEED_DATA.workflows || []).forEach(seedWf => {
+    if (!existingWorkflowIds.has(seedWf.id)) {
+      data.workflows.push(JSON.parse(JSON.stringify(seedWf)));
+    }
+  });
+  if (!Array.isArray(data.clicks)) data.clicks = [];
+  if (!Array.isArray(data.inline_runs)) data.inline_runs = [];
+  if (!Array.isArray(data.reviews)) data.reviews = [];
+  if (!Array.isArray(data.ad_applications)) data.ad_applications = [];
+  if (!Array.isArray(data.ad_slots)) data.ad_slots = [];
+  if (!Array.isArray(data.tool_submissions)) {
+    data.tool_submissions = JSON.parse(JSON.stringify(SEED_DATA.tool_submissions || []));
+  }
+  return data;
+}
+
 function getData() {
   if (_apiCache) {
     const localUser = localStorage.getItem('flowhub_user');
@@ -4693,22 +6499,25 @@ function getData() {
     const merged = Object.assign({}, _apiCache);
     if (localUser) merged.user = JSON.parse(localUser);
     if (localNotifs) merged._notifs = JSON.parse(localNotifs);
-    return merged;
+    return normalizeDataShape(merged);
   }
   const raw = localStorage.getItem(STORAGE_KEY);
   if (!raw) {
     saveData(JSON.parse(JSON.stringify(SEED_DATA)));
-    return JSON.parse(JSON.stringify(SEED_DATA));
+    return normalizeDataShape(JSON.parse(JSON.stringify(SEED_DATA)));
   }
   try {
-    return JSON.parse(raw);
+    const data = normalizeDataShape(JSON.parse(raw));
+    if (!Array.isArray(JSON.parse(raw).tool_submissions)) saveData(data);
+    return data;
   } catch {
     saveData(JSON.parse(JSON.stringify(SEED_DATA)));
-    return JSON.parse(JSON.stringify(SEED_DATA));
+    return normalizeDataShape(JSON.parse(JSON.stringify(SEED_DATA)));
   }
 }
 
 function saveData(data) {
+  normalizeDataShape(data);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   if (data.user !== undefined) {
     localStorage.setItem('flowhub_user', JSON.stringify(data.user));
@@ -4720,6 +6529,7 @@ function saveData(data) {
 
 let _clickStats = null;
 let _reviewsCache = {};
+let _adminDataLoaded = false;
 
 function authHeaders(extra) {
   const headers = Object.assign({}, extra || {});
@@ -4751,6 +6561,7 @@ async function loadDataFromAPI() {
         reviews: [],
         ad_applications: [],
         ad_slots: [],
+        tool_submissions: [],
         user: null,
         _notifs: null
       };
@@ -4762,6 +6573,31 @@ async function loadDataFromAPI() {
   } catch (err) {
     console.warn('[FlowHub] API unavailable, using localStorage fallback:', err.message);
     _apiCache = null;
+  }
+}
+
+async function loadAdminDataAsync() {
+  if (!_apiLoaded || !_apiCache) return;
+  try {
+    const resp = await fetch(API_BASE + '/data', { headers: authHeaders() });
+    const json = await resp.json();
+    if (json.ok) {
+      _apiCache = normalizeDataShape({
+        ..._apiCache,
+        workflows: (json.data.workflows || []).map(_parseWorkflow),
+        reviews: json.data.reviews || [],
+        clicks: json.data.clicks || [],
+        ad_applications: json.data.ad_applications || [],
+        ad_slots: json.data.ad_slots || [],
+        tool_submissions: json.data.tool_submissions || [],
+        user: _apiCache.user,
+        _notifs: _apiCache._notifs
+      });
+      _adminDataLoaded = true;
+      console.log('[FlowHub] Admin data loaded');
+    }
+  } catch (err) {
+    console.warn('[FlowHub] Admin data load failed:', err.message);
   }
 }
 
@@ -4787,6 +6623,7 @@ async function loadAdDataAsync() {
     const [appsJson, slotsJson] = await Promise.all([appsResp.json(), slotsResp.json()]);
     if (appsJson.ok) _apiCache.ad_applications = appsJson.data.applications || [];
     if (slotsJson.ok) _apiCache.ad_slots = slotsJson.data.slots || [];
+    normalizeDataShape(_apiCache);
     console.log('[FlowHub] Ad data loaded');
   } catch (err) {
     console.warn('[FlowHub] Ad data load failed:', err.message);
@@ -4858,6 +6695,7 @@ function resetAll() {
 const state = {
   view: 'market',
   currentDetailId: null,
+  currentRunId: null,
   adminView: 'overview',
   searchQuery: '',
   searchCategory: '全部',
@@ -4876,7 +6714,8 @@ const VIEW_TITLES = {
   admin: '管理后台 · FlowHub',
   creator: '创作者后台 · FlowHub',
   advertiser: '广告主入驻 · FlowHub',
-  wizard: '接入向导 · FlowHub'
+  wizard: '接入向导 · FlowHub',
+  run: '运行工作流 · FlowHub'
 };
 
 function getViewPath(view) {
@@ -4899,7 +6738,7 @@ function switchView(view, skipPush) {
   render();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  if (view !== 'detail') document.title = VIEW_TITLES[view] || 'FlowHub';
+  if (view !== 'detail' && view !== 'run') document.title = VIEW_TITLES[view] || 'FlowHub';
 
   if (!skipPush) {
     history.pushState({ view }, '', getViewPath(view));
@@ -4915,7 +6754,7 @@ window.addEventListener('popstate', (e) => {
 });
 
 (function initRoute() {
-  const validViews = ['market', 'search', 'me', 'admin', 'creator', 'advertiser', 'wizard', 'detail'];
+  const validViews = ['market', 'search', 'me', 'admin', 'creator', 'advertiser', 'wizard', 'detail', 'run'];
   const hashView = location.hash.replace(/^#\/?/, '');
   const pathView = location.pathname.replace(/^\//, '').replace(/\.html$/, '') || 'market';
   const initialView = validViews.includes(hashView)
@@ -5021,7 +6860,9 @@ function showToast(msg, err) {
 }
 
 function openModal(html) {
-  document.getElementById('modal-content').innerHTML = html;
+  const modalContent = document.getElementById('modal-content');
+  modalContent.className = 'modal';
+  modalContent.innerHTML = html;
   document.getElementById('modal').classList.add('show');
 }
 
@@ -5035,7 +6876,7 @@ function updateUserStatus() {
   if (data.user) {
     status.textContent = `${data.user.name} · ${data.user.tier === 'pro' ? 'Pro' : '免费用户'}`;
   } else {
-    status.textContent = '未登录';
+    status.textContent = '游客模式';
   }
 }
 
@@ -5054,12 +6895,55 @@ function goToDetail(wfId) {
   switchView('detail');
 }
 
+function goToRun(wfId) {
+  state.currentRunId = wfId;
+  state.currentDetailId = wfId;
+  localStorage.setItem('flowhub_current_run', wfId);
+  switchView('run');
+}
+
 function isPromotedWorkflow(wf) {
   return wf && wf.type === 'recommend' && ['cpc', 'cps', 'package'].includes(wf.price_model);
 }
 
 function getWorkflowTypeLabel(wf) {
   return wf.type === 'self' ? '站内工作流' : '外部工具';
+}
+
+function isInlineRunnerWorkflow(wf) {
+  return !!wf && (wf.id === 'wf_seed_sql' || wf.id === 'wf_seed_image_video');
+}
+
+function scrollToInlineRunner(wfId) {
+  goToRun(wfId);
+}
+
+function scrollToInlineRunnerLegacy(wfId) {
+  const data = getData();
+  const wf = data.workflows.find(w => w.id === wfId);
+  if (!wf || !isInlineRunnerWorkflow(wf)) return;
+  if (state.view !== 'detail' || state.currentDetailId !== wfId) {
+    state.currentDetailId = wfId;
+    state.detailTab = 'about';
+    switchView('detail');
+    setTimeout(() => scrollToInlineRunner(wfId), 120);
+    return;
+  }
+  if (state.detailTab !== 'about') {
+    state.detailTab = 'about';
+    renderDetail();
+    setTimeout(() => scrollToInlineRunner(wfId), 80);
+    return;
+  }
+  const runner = document.getElementById('inline-runner-' + wfId);
+  if (!runner) return;
+  runner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const input = runner.querySelector('input, textarea, select');
+  if (input) setTimeout(() => input.focus({ preventScroll: true }), 360);
+}
+
+function openExternalWorkflow(wfId) {
+  runWorkflow(wfId, { external: true, source: 'external_visit' });
 }
 
 function recordWorkflowClick(data, wfId, options = {}) {
@@ -5101,6 +6985,12 @@ function runWorkflow(wfId, options = {}) {
   const data = getData();
   const wf = data.workflows.find(w => w.id === wfId);
   if (!wf) return;
+
+  if (isInlineRunnerWorkflow(wf) && !options.external) {
+    scrollToInlineRunner(wfId);
+    showToast('已打开自营工作流执行面板');
+    return;
+  }
 
   // 权限校验:自营 + Pro 工作流需要 Pro 会员
   if (wf.type === 'self' && wf.price_model === 'pro') {
@@ -5239,8 +7129,8 @@ function renderMarket() {
         <div class="hero-inner">
           <div class="hero-content">
             <div class="hero-eyebrow">A WORKFLOW MARKETPLACE</div>
-            <h1>一个订阅,<span class="accent">用尽全场工作流</span></h1>
-            <p class="hero-sub">自营工作流会员可用,合作伙伴推荐位带你直达精品 AI 工具。</p>
+            <h1>先逛工作流,<span class="accent">需要时再登录</span></h1>
+            <p class="hero-sub">不用登录也可以浏览、搜索和查看详情。收藏、评价或使用 Pro 工作流时,再用邮箱验证码登录。</p>
             <div class="home-search-panel">
               <i class="fas fa-search"></i>
               <input id="home-search-input" type="text" placeholder="搜索 AI 工作流、外部工具或任务场景…" value="${escapeHtml(state.searchQuery)}" />
@@ -5249,21 +7139,47 @@ function renderMarket() {
                 <i class="fas fa-arrow-right" style="margin:0;color:inherit"></i>
               </button>
             </div>
+            <div class="hero-task-row">
+              <span class="hero-task-label">热门任务</span>
+              ${[
+                ['商品图', '商品图换背景'],
+                ['小红书', '小红书笔记'],
+                ['SQL', 'SQL 查询'],
+                ['会议纪要', '会议纪要'],
+                ['简历', '简历优化']
+              ].map(([q, label]) => `<span class="hero-task-chip" onclick="quickSearch('${q}')">${label}</span>`).join('')}
+            </div>
             <div class="hero-cta-row">
               ${data.user && data.user.tier === 'pro' ? `
                 <button class="hero-cta-primary" onclick="switchView('me')">
                   <i class="fas fa-arrow-right" style="font-size:11px"></i>
                   开始你的工作流
                 </button>
-              ` : `
+              ` : data.user ? `
                 <button class="hero-cta-primary" onclick="openPricing()">
                   <i class="fas fa-crown" style="font-size:11px"></i>
-                  开通 Pro · ¥39/月
+                  升级 Pro · ¥39/月
+                </button>
+              ` : `
+                <button class="hero-cta-primary" onclick="document.querySelector('.section').scrollIntoView({behavior:'smooth'})">
+                  <i class="fas fa-compass" style="font-size:11px"></i>
+                  先逛逛工作流
                 </button>
               `}
-              <button class="hero-cta-secondary" onclick="document.querySelector('.section').scrollIntoView({behavior:'smooth'})">
-                浏览全部工作流 →
-              </button>
+              ${data.user ? `
+                <button class="hero-cta-secondary" onclick="document.querySelector('.section').scrollIntoView({behavior:'smooth'})">
+                  浏览全部工作流 →
+                </button>
+              ` : `
+                <button class="hero-cta-secondary" onclick="openLogin()">
+                  登录保存记录 →
+                </button>
+              `}
+            </div>
+            <div class="hero-trust-row">
+              <span><i class="fas fa-circle-check"></i> 游客可浏览</span>
+              <span><i class="fas fa-circle-check"></i> 免费工作流可试用</span>
+              <span><i class="fas fa-circle-check"></i> 第三方工具直达</span>
             </div>
           </div>
           <div class="hero-visual">
@@ -5560,22 +7476,64 @@ document.addEventListener('click', (e) => {
 
 // Hero 右侧动态视觉
 function renderHeroVisual(data) {
-  const featured = data.workflows.filter(w => w.status === 'active').slice(0, 6);
+  const featured = data.workflows
+    .filter(w => w.status === 'active')
+    .map(w => ({ ...w, _score: getClickCount(w.id) + (w.review_count || 0) * 8 }))
+    .sort((a, b) => b._score - a._score)
+    .slice(0, 5);
+  const hero = featured[0];
+  if (!hero) return '';
+  const secondary = featured.slice(1, 5);
   return `
-    <div class="hero-visual-stack">
-      ${featured.map((w, i) => `
-        <div class="hero-vstack-card" style="--i:${i};--c:${w.cover_color}" onclick="goToDetail('${w.id}')">
-          <div class="hvc-icon" style="background:${w.cover_color}22; color:${w.cover_color}">${w.name.charAt(0)}</div>
-          <div class="hvc-info">
-            <div class="hvc-name">${escapeHtml(w.name)}</div>
-            <div class="hvc-meta">
-              <span class="wf-badge ${w.type === 'self' ? 'self' : 'ad'}" style="font-size:9px;padding:1px 5px">${w.type === 'self' ? '自营' : '推荐'}</span>
-              <span style="font-size:10px;color:var(--ink-3);font-family:'JetBrains Mono', monospace">${getClickCount(w.id) + (w.review_count || 0) * 12} 次调用</span>
+    <div class="hero-product-panel">
+      <div class="hero-product-top">
+        <div>
+          <span class="hero-product-kicker">Trending now</span>
+          <h3>今天先从这些开始</h3>
+        </div>
+        <button class="hero-product-action" onclick="document.querySelector('.section').scrollIntoView({behavior:'smooth'})">
+          <i class="fas fa-arrow-trend-up"></i> 看热门
+        </button>
+      </div>
+      <div class="hero-feature-workflow" onclick="goToDetail('${hero.id}')">
+        <div class="hero-feature-thumb">
+          ${getThumbSvg(hero, 'card')}
+        </div>
+        <div class="hero-feature-body">
+          <div class="hero-feature-meta">
+            <span class="wf-badge ${hero.type === 'self' ? 'self' : 'ad'}">${hero.type === 'self' ? '自营' : '推荐'}</span>
+            <span class="wf-price ${priceClass(hero)}">${formatPrice(hero)}</span>
+          </div>
+          <h4>${escapeHtml(hero.name)}</h4>
+          <p>${escapeHtml(hero.tagline || hero.description.slice(0, 72))}</p>
+          <div class="hero-feature-foot">
+            <span><i class="fas fa-star" style="color:#F4B400"></i> ${hero.rating}</span>
+            <span>${getClickCount(hero.id).toLocaleString()} 次调用</span>
+            <span>${escapeHtml(hero.category)}</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-mini-grid">
+        ${secondary.map(w => `
+          <div class="hero-mini-workflow" onclick="goToDetail('${w.id}')">
+            <div class="hvc-icon" style="background:${w.cover_color}22; color:${w.cover_color}">${escapeHtml(w.name.charAt(0))}</div>
+            <div class="hvc-info">
+              <div class="hvc-name">${escapeHtml(w.name)}</div>
+              <div class="hvc-meta">
+                <span>${w.type === 'self' ? '站内' : '外部'}</span>
+                <span>${w.rating} ★</span>
+              </div>
             </div>
           </div>
-          <i class="fas fa-arrow-right" style="font-size:11px;color:var(--ink-4)"></i>
-        </div>
-      `).join('')}
+        `).join('')}
+      </div>
+      <div class="hero-path-row">
+        <span><i class="fas fa-search"></i> 搜索任务</span>
+        <span><i class="fas fa-arrow-right"></i></span>
+        <span><i class="fas fa-play"></i> 试用工作流</span>
+        <span><i class="fas fa-arrow-right"></i></span>
+        <span><i class="fas fa-bookmark"></i> 登录后保存记录</span>
+      </div>
     </div>
   `;
 }
@@ -7118,6 +9076,359 @@ function clearSearch() {
   render();
 }
 
+function renderInlineRunner(wf) {
+  if (!isInlineRunnerWorkflow(wf)) return '';
+  if (wf.id === 'wf_seed_image_video') return renderImageVideoRunner(wf);
+  if (wf.id === 'wf_seed_sql') return renderSqlRunner(wf);
+  return '';
+}
+
+function renderRun() {
+  const data = getData();
+  const runId = state.currentRunId || localStorage.getItem('flowhub_current_run');
+  const wf = data.workflows.find(w => w.id === runId);
+  if (wf) {
+    state.currentRunId = wf.id;
+    state.currentDetailId = wf.id;
+  }
+  const view = document.getElementById('view-run');
+  if (!wf || !isInlineRunnerWorkflow(wf)) {
+    view.innerHTML = `
+      <div class="run-page">
+        <div class="run-topbar">
+          <div class="run-left">
+            <button class="run-back" onclick="switchView('market')" title="返回市场">←</button>
+            <div class="run-title">
+              <h1>工作流不存在</h1>
+              <p>请返回市场重新选择一个自营工作流</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    document.title = '运行工作流 · FlowHub';
+    return;
+  }
+
+  document.title = wf.name + ' · 运行中';
+  view.innerHTML = `
+    <div class="run-page">
+      <div class="run-topbar">
+        <div class="run-left">
+          <button class="run-back" onclick="goToDetail('${wf.id}')" title="返回详情">←</button>
+          <div class="run-title">
+            <h1>${escapeHtml(wf.name)}</h1>
+            <p>${escapeHtml(wf.tagline || '沉浸式自营工作流')}</p>
+          </div>
+        </div>
+        <div class="run-topbar-center">
+          <button class="run-action-btn icon-only" title="撤销">↶</button>
+          <button class="run-action-btn icon-only" title="重做">↷</button>
+          <button class="run-action-btn" onclick="generateVideo3Preview('${wf.id}')">▶ 运行</button>
+          <button class="run-action-btn">⇧ 分享</button>
+          <button class="run-action-btn">☆ 收藏</button>
+        </div>
+        <div class="run-right">
+          <span class="run-status"><span class="dot"></span>${wf.price_model === 'free' ? '免费试用' : 'Pro 工作流'}</span>
+          <span class="run-status"><i class="fas fa-bolt"></i>${getClickCount(wf.id).toLocaleString()} 次运行</span>
+          <button class="run-publish-btn">发布工作流</button>
+        </div>
+      </div>
+      <div class="run-workspace">
+        ${renderInlineRunner(wf)}
+      </div>
+    </div>
+  `;
+}
+
+function renderImageVideoRunner(wf) {
+  return `
+    <div class="detail-section" id="inline-runner-${wf.id}">
+      <h3>站内执行 · Image2Video 画布导演</h3>
+      <p>优化后的结构是左侧画布、右侧对话:先用 Image2 生成关键帧,再把图片拖进画布排成镜头链路,最后生成视频预览。这里先做完整交互 demo,后续把生成按钮接真实 Image2 和视频 API。</p>
+      <div class="inline-runner">
+        <div class="inline-runner-head">
+          <div>
+            <div class="inline-runner-kicker">Self-run Workflow</div>
+            <h4>图生视频创作台</h4>
+            <p>画布负责结构,聊天负责生成。用户不用理解复杂参数,但能清楚看到每张图如何连接成视频。</p>
+          </div>
+          <span class="inline-runner-badge">自营 · Beta</span>
+        </div>
+        <div class="iv-studio" id="iv-studio-${wf.id}">
+          <div class="iv-canvas-panel">
+            <div class="iv-canvas-shell">
+              <div class="iv-left-rail">
+                <button class="iv-tool-btn active" title="选择">⌁</button>
+                <button class="iv-tool-btn" title="拖动画布">☝</button>
+                <button class="iv-tool-btn" title="上传素材">▣</button>
+                <button class="iv-tool-btn" title="文字">T</button>
+                <button class="iv-tool-btn" title="评论">☷</button>
+                <div class="iv-rail-divider"></div>
+                <button class="iv-tool-btn" title="图层">▤</button>
+                <button class="iv-tool-btn" title="适配视图">⌗</button>
+              </div>
+              <div class="iv-canvas-toolbar">
+                <button class="iv-tool-btn active">选择</button>
+                <button class="iv-tool-btn">对齐</button>
+                <button class="iv-tool-btn">布局</button>
+                <button class="iv-tool-btn">缩放</button>
+                <button class="iv-tool-btn">锁定</button>
+                <button class="iv-tool-btn active">网格</button>
+              </div>
+              <div class="iv-canvas-stage" id="iv-canvas-${wf.id}" ondragover="handleIvDragOver(event)" ondragleave="handleIvDragLeave(event)" ondrop="handleIvDrop(event,'${wf.id}')">
+                <div class="iv-canvas-empty">
+                  <i class="fas fa-object-group" style="font-size:22px;color:var(--self);margin-bottom:8px"></i><br>
+                  从右侧生成图片后拖到这里<br>
+                  或点击图片上的「加入画布」
+                </div>
+              </div>
+              <div class="iv-minimap">
+                <div class="iv-minimap-track">
+                  <span class="iv-mini-node"></span>
+                  <span class="iv-mini-node"></span>
+                  <span class="iv-mini-node"></span>
+                </div>
+              </div>
+              <div class="iv-zoom">
+                <button>-</button>
+                <span>100%</span>
+                <button>+</button>
+              </div>
+              <div class="iv-video-box" id="iv-video-${wf.id}">
+                <div class="iv-video-empty">画布里至少 2 个镜头后,可以生成视频预览</div>
+              </div>
+            </div>
+          </div>
+          <div class="iv-chat-panel">
+            <div class="iv-assistant-head">
+              <div class="iv-assistant-tabs">
+                <span class="iv-assistant-title">✦ AI 助手</span>
+                <span class="iv-assistant-tab active">对话</span>
+                <span class="iv-assistant-tab">工作流建议</span>
+              </div>
+              <div class="iv-assistant-tools">
+                <button class="iv-tool-btn" title="历史">↺</button>
+                <button class="iv-tool-btn" title="设置">≛</button>
+                <button class="iv-tool-btn" title="关闭">×</button>
+              </div>
+            </div>
+            <div class="iv-chat-log" id="iv-chat-${wf.id}">
+              <div class="iv-msg bot">描述你要的画面,我会生成一张关键帧。生成后可以拖到左侧画布,再让视频引擎按镜头顺序生成短视频。</div>
+              <div class="iv-msg bot">建议先做 3 个镜头:开场建立场景、中段产品/人物动作、结尾品牌或转化画面。</div>
+              <div class="iv-assets" id="iv-assets-${wf.id}"></div>
+            </div>
+            <div class="iv-compose">
+              <textarea class="runner-textarea" id="iv-prompt-${wf.id}" placeholder="例如: 赛博城市夜景中,一个穿银色夹克的人走过霓虹街道,电影感,雨夜反光">赛博城市夜景中,一个穿银色夹克的人走过霓虹街道,电影感,雨夜反光</textarea>
+              <div class="iv-compose-row">
+                <select class="runner-select" id="iv-style-${wf.id}">
+                  <option value="cinematic">电影感</option>
+                  <option value="product">商品广告</option>
+                  <option value="anime">动画分镜</option>
+                  <option value="realistic">真实摄影</option>
+                </select>
+                <select class="runner-select" id="iv-ratio-${wf.id}">
+                  <option value="9:16">9:16 竖屏</option>
+                  <option value="16:9">16:9 横屏</option>
+                  <option value="1:1">1:1 方形</option>
+                </select>
+              </div>
+              <div class="iv-workflow-actions">
+                <button class="runner-primary" id="iv-image-btn-${wf.id}" onclick="generateImage2Asset('${wf.id}')">
+                  <i class="fas fa-image"></i> 生成图片
+                </button>
+                <button class="runner-secondary" onclick="generateVideo3Preview('${wf.id}')">
+                  <i class="fas fa-video"></i> 生成视频
+                </button>
+              </div>
+              <div class="runner-presets">
+                <button class="runner-preset" onclick="applyImageVideoPreset('${wf.id}','product')">商品广告</button>
+                <button class="runner-preset" onclick="applyImageVideoPreset('${wf.id}','short')">短剧分镜</button>
+                <button class="runner-preset" onclick="applyImageVideoPreset('${wf.id}','poster')">动态海报</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderSqlRunner(wf) {
+  const presets = [
+    { id: 'gmv', label: 'GMV 排行' },
+    { id: 'retention', label: '用户留存' },
+    { id: 'sku', label: 'SKU 动销' }
+  ];
+  return `
+    <div class="detail-section" id="inline-runner-${wf.id}">
+      <h3>站内执行 · SQL 查询生成器</h3>
+      <p>这是 FlowHub 自营工作流的第一版:输入业务问题和表结构,直接生成可复制 SQL、解释和检查建议。免费用户也能试用。</p>
+      <div class="inline-runner">
+        <div class="inline-runner-head">
+          <div>
+            <div class="inline-runner-kicker">Self-run Workflow</div>
+            <h4>自然语言转 SQL 工作台</h4>
+            <p>适合运营、产品和数据同学把业务问题快速转成查询草稿,后续可接真实数据库权限和执行沙箱。</p>
+          </div>
+          <span class="inline-runner-badge">自营 · 免费</span>
+        </div>
+        <div class="inline-runner-grid">
+          <div class="runner-form">
+            <div class="runner-field">
+              <label for="sql-question-${wf.id}">业务问题</label>
+              <textarea class="runner-textarea" id="sql-question-${wf.id}" style="min-height:98px" placeholder="例如: 查询近 30 天每个店铺 GMV、订单数和客单价,按 GMV 降序取前 20">查询近 30 天每个店铺 GMV、订单数和客单价,按 GMV 降序取前 20</textarea>
+            </div>
+            <div class="runner-two">
+              <div class="runner-field">
+                <label for="sql-dialect-${wf.id}">数据库</label>
+                <select class="runner-select" id="sql-dialect-${wf.id}">
+                  <option value="postgres">PostgreSQL</option>
+                  <option value="mysql">MySQL 8</option>
+                  <option value="bigquery">BigQuery</option>
+                </select>
+              </div>
+              <div class="runner-field">
+                <label for="sql-output-${wf.id}">输出目标</label>
+                <select class="runner-select" id="sql-output-${wf.id}">
+                  <option value="analysis">分析报表</option>
+                  <option value="dashboard">BI 看板</option>
+                  <option value="api">后端接口</option>
+                </select>
+              </div>
+            </div>
+            <div class="runner-field">
+              <label for="sql-schema-${wf.id}">表结构 / 字段说明</label>
+              <textarea class="runner-textarea" id="sql-schema-${wf.id}" style="min-height:118px" placeholder="粘贴表结构或字段说明">orders(order_id, shop_id, user_id, paid_amount, paid_at, status)
+shops(shop_id, shop_name, category)</textarea>
+            </div>
+            <div class="runner-field">
+              <label>快速样例</label>
+              <div class="runner-presets">
+                ${presets.map(p => `<button class="runner-preset" onclick="applySqlPreset('${wf.id}','${p.id}')">${escapeHtml(p.label)}</button>`).join('')}
+              </div>
+            </div>
+            <label class="runner-check">
+              <input id="sql-safe-${wf.id}" type="checkbox" checked>
+              <span>只生成只读查询,自动排除 DELETE / UPDATE / DROP 等高风险语句</span>
+            </label>
+            <div class="runner-actions">
+              <button class="runner-primary" id="sql-run-${wf.id}" onclick="runSqlWorkflow('${wf.id}')">
+                <i class="fas fa-play"></i> 生成 SQL
+              </button>
+              <button class="runner-secondary" onclick="applySqlPreset('${wf.id}','gmv')">
+                重置样例
+              </button>
+            </div>
+          </div>
+          <div class="runner-output" id="sql-output-box-${wf.id}">
+            <div class="runner-empty">
+              <div>
+                <i class="fas fa-database"></i>
+                输入业务问题后生成 SQL 草稿<br>
+                输出包含查询、解释、风险检查和优化建议
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderPicsparkRunner(wf) {
+  const presets = [
+    { id: 'skincare', label: '护肤精华', product: '玻尿酸精华瓶', selling: '补水修护,敏感肌可用,清爽不黏腻', scene: 'kitchen', style: 'tmall' },
+    { id: 'coffee', label: '咖啡礼盒', product: '精品挂耳咖啡礼盒', selling: '深烘坚果香,办公室下午茶,送礼有质感', scene: 'desk', style: 'xhs' },
+    { id: 'pet', label: '宠物零食', product: '冻干鸡肉宠物零食', selling: '高蛋白,无谷配方,适合猫狗训练奖励', scene: 'outdoor', style: 'real' }
+  ];
+  return `
+    <div class="detail-section" id="inline-runner-${wf.id}">
+      <h3>站内执行 · PicSpark 商品图试用</h3>
+      <p>输入商品信息后,FlowHub 会生成一套商品图方向、画面预览和可复制的 PicSpark 提示词。演示版不上传真实图片,不消耗额度。</p>
+      <div class="inline-runner">
+        <div class="inline-runner-head">
+          <div>
+            <div class="inline-runner-kicker">Inline Workflow</div>
+            <h4>商品图换背景工作台</h4>
+            <p>先在站内验证任务配置,满意后再带归因参数访问 PicSpark 完成高清生成。</p>
+          </div>
+          <span class="inline-runner-badge">免费演示</span>
+        </div>
+        <div class="inline-runner-grid">
+          <div class="runner-form">
+            <div class="runner-field">
+              <label for="picspark-product-${wf.id}">商品名称</label>
+              <input class="runner-input" id="picspark-product-${wf.id}" value="玻尿酸精华瓶" placeholder="例如: 玻尿酸精华瓶">
+            </div>
+            <div class="runner-two">
+              <div class="runner-field">
+                <label for="picspark-scene-${wf.id}">生成场景</label>
+                <select class="runner-select" id="picspark-scene-${wf.id}">
+                  <option value="kitchen">温暖厨房 · 新鲜水果</option>
+                  <option value="festival">红金节日 · 促销海报</option>
+                  <option value="desk">木质桌面 · 生活方式</option>
+                  <option value="studio">极简棚拍 · 高级灰</option>
+                  <option value="outdoor">户外自然光 · 清新绿植</option>
+                </select>
+              </div>
+              <div class="runner-field">
+                <label for="picspark-ratio-${wf.id}">画幅比例</label>
+                <select class="runner-select" id="picspark-ratio-${wf.id}">
+                  <option value="1:1">1:1 主图</option>
+                  <option value="4:5">4:5 信息流</option>
+                  <option value="3:4">3:4 小红书</option>
+                  <option value="16:9">16:9 横幅</option>
+                </select>
+              </div>
+            </div>
+            <div class="runner-field">
+              <label for="picspark-style-${wf.id}">文案风格</label>
+              <select class="runner-select" id="picspark-style-${wf.id}">
+                <option value="tmall">天猫主图 · 清晰卖点</option>
+                <option value="xhs">小红书种草 · 生活感</option>
+                <option value="real">真实摄影 · 少文字</option>
+                <option value="crossborder">跨境独立站 · 英文质感</option>
+              </select>
+            </div>
+            <div class="runner-field">
+              <label for="picspark-selling-${wf.id}">核心卖点</label>
+              <textarea class="runner-textarea" id="picspark-selling-${wf.id}" placeholder="写 2-3 个卖点,系统会转成画面指令">补水修护,敏感肌可用,清爽不黏腻</textarea>
+            </div>
+            <div class="runner-field">
+              <label>快速样例</label>
+              <div class="runner-presets">
+                ${presets.map(p => `<button class="runner-preset" onclick="applyPicsparkPreset('${wf.id}','${p.id}')">${escapeHtml(p.label)}</button>`).join('')}
+              </div>
+            </div>
+            <label class="runner-check">
+              <input id="picspark-lock-${wf.id}" type="checkbox" checked>
+              <span>保持商品主体不变,只替换背景和营销氛围</span>
+            </label>
+            <div class="runner-actions">
+              <button class="runner-primary" id="picspark-run-${wf.id}" onclick="runPicsparkWorkflow('${wf.id}')">
+                <i class="fas fa-wand-magic-sparkles"></i> 生成演示结果
+              </button>
+              <button class="runner-secondary" onclick="openExternalWorkflow('${wf.id}')">
+                访问官网
+              </button>
+            </div>
+          </div>
+          <div class="runner-output" id="picspark-output-${wf.id}">
+            <div class="runner-empty">
+              <div>
+                <i class="fas fa-image"></i>
+                填好商品信息后生成预览方案<br>
+                输出包含画面方向、提示词和投放建议
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 /* =============================================================
    渲染 · 详情页
    ============================================================= */
@@ -7189,7 +9500,13 @@ function renderDetail() {
               <h3>关于这个工作流</h3>
               <p>${escapeHtml(wf.description)}</p>
             </div>
-            ${wf.examples && wf.examples.length > 0 ? `
+            ${isInlineRunnerWorkflow(wf) ? `
+              <div class="detail-section">
+                <h3>沉浸式工作台</h3>
+                <p>点击右侧「立即使用」会进入全屏运行模式,隐藏市场详情、价格侧栏和标签信息,只保留当前工作流本身。</p>
+              </div>
+            ` : ''}
+            ${!isInlineRunnerWorkflow(wf) && wf.examples && wf.examples.length > 0 ? `
               <div class="detail-section">
                 <h3>在线试用</h3>
                 <p style="font-size:12px;color:var(--ink-3);margin-bottom:14px">点「试一下」看看效果(演示版,不消耗调用额度)</p>
@@ -7272,18 +9589,36 @@ function renderDetail() {
 
         <aside class="side-panel">
           ${wf.type === 'recommend' ? `
-          <div class="price-row">
-            <span class="price-num" style="font-size:18px">第三方工具</span>
-          </div>
-          <div class="price-hint">
-            由合作伙伴提供 · 点击将跳转至第三方网站
-          </div>
-          <button class="side-cta" onclick="runWorkflow('${wf.id}')" style="background:linear-gradient(135deg,#B85C00,#9A4D00)">
-            <i class="fas fa-external-link-alt"></i> 访问官网
-          </button>
-          <button class="side-cta outline" onclick="toggleFavorite('${wf.id}')">
-            <i class="far fa-bookmark"></i> 收藏
-          </button>
+          ${isInlineRunnerWorkflow(wf) ? `
+            <div class="price-row">
+              <span class="price-num" style="font-size:18px">站内试用</span>
+            </div>
+            <div class="price-hint">
+              先在 FlowHub 生成演示方案,再带归因参数访问 PicSpark 官网
+            </div>
+            <button class="side-cta" onclick="runWorkflow('${wf.id}')" style="background:linear-gradient(135deg,#1A5D3A,#0F4D2A)">
+              <i class="fas fa-wand-magic-sparkles"></i> 免费站内试用
+            </button>
+            <button class="side-cta outline" onclick="openExternalWorkflow('${wf.id}')">
+              <i class="fas fa-external-link-alt"></i> 访问官网
+            </button>
+            <button class="side-cta outline" onclick="toggleFavorite('${wf.id}')">
+              <i class="far fa-bookmark"></i> 收藏
+            </button>
+          ` : `
+            <div class="price-row">
+              <span class="price-num" style="font-size:18px">第三方工具</span>
+            </div>
+            <div class="price-hint">
+              由合作伙伴提供 · 点击将跳转至第三方网站
+            </div>
+            <button class="side-cta" onclick="runWorkflow('${wf.id}')" style="background:linear-gradient(135deg,#B85C00,#9A4D00)">
+              <i class="fas fa-external-link-alt"></i> 访问官网
+            </button>
+            <button class="side-cta outline" onclick="toggleFavorite('${wf.id}')">
+              <i class="far fa-bookmark"></i> 收藏
+            </button>
+          `}
           ` : `
           ${locked ? `
             <div class="lock-banner">
@@ -7455,39 +9790,97 @@ function submitReview(wfId) {
    ============================================================= */
 function openLogin() {
   openModal(`
-    <div class="auth-modal-head">
-      <div class="auth-modal-logo">
-        <div class="auth-logo-mark">流</div>
-        <span>FlowHub</span>
-      </div>
-      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times" style="font-size:11px"></i></button>
-    </div>
-    <div class="auth-modal-body">
-      <h2 style="font-family:'Noto Serif SC', serif;font-size:24px;font-weight:700;margin-bottom:6px;text-align:center">欢迎回来</h2>
-      <p style="font-size:13px;color:var(--ink-3);text-align:center;margin-bottom:24px">登录后享受全场工作流</p>
-      <div class="auth-tabs">
-        <div class="auth-tab active" onclick="switchAuthTab(this, 'login')">登录</div>
-        <div class="auth-tab" onclick="switchAuthTab(this, 'register')">注册</div>
-      </div>
-      <div id="auth-content">
-        ${renderAuthForm('login')}
-      </div>
-      <div class="auth-divider"><span>或者</span></div>
-      <div class="auth-third-party">
-        <button class="third-party-btn" onclick="showToast('演示版本 · 真实接入需配置 OAuth')">
-          <i class="fab fa-weixin" style="color:#07C160"></i>
-          <span>微信登录</span>
+    <div class="auth-shell">
+      <aside class="auth-rail">
+        <div>
+          <div class="auth-modal-logo">
+            <div class="auth-logo-mark">流</div>
+            <span>FlowHub</span>
+          </div>
+          <div class="auth-rail-copy">
+            <div class="auth-rail-kicker">Guest friendly</div>
+            <h3>可以先浏览,账号只在需要时出现。</h3>
+            <p>登录用于保存你的收藏、评价和订阅状态。市场浏览、搜索和详情页保持开放。</p>
+          </div>
+          <div class="auth-rail-card">
+            <div class="auth-rail-card-head">
+              <span class="auth-rail-card-title">最近在用</span>
+              <span class="auth-rail-card-badge">LIVE</span>
+            </div>
+            <div class="auth-workflow-row">
+              <div class="auth-workflow-icon"><i class="fas fa-wand-magic-sparkles"></i></div>
+              <div>
+                <div class="auth-workflow-name">商品图 AI</div>
+                <div class="auth-workflow-meta">刚刚完成 1 次生成</div>
+              </div>
+              <div class="auth-workflow-score">4.9</div>
+            </div>
+            <div class="auth-workflow-row">
+              <div class="auth-workflow-icon" style="background:var(--pro)"><i class="fas fa-pen"></i></div>
+              <div>
+                <div class="auth-workflow-name">小红书笔记</div>
+                <div class="auth-workflow-meta">已保存到个人中心</div>
+              </div>
+              <div class="auth-workflow-score">Pro</div>
+            </div>
+            <div class="auth-workflow-row">
+              <div class="auth-workflow-icon" style="background:var(--ad)"><i class="fas fa-arrow-up-right-from-square"></i></div>
+              <div>
+                <div class="auth-workflow-name">合作工具</div>
+                <div class="auth-workflow-meta">外跳前保留归因</div>
+              </div>
+              <div class="auth-workflow-score">CPC</div>
+            </div>
+          </div>
+        </div>
+        <div class="auth-benefits">
+          <div class="auth-benefit"><i class="fas fa-bookmark"></i><span>同步收藏</span></div>
+          <div class="auth-benefit"><i class="fas fa-receipt"></i><span>保留账单</span></div>
+          <div class="auth-benefit"><i class="fas fa-star"></i><span>发布评价</span></div>
+        </div>
+      </aside>
+      <div class="auth-modal-body">
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times" style="font-size:11px"></i></button>
+        <div class="auth-copy">
+          <h2>登录 FlowHub</h2>
+          <p>继续用游客模式也可以。登录只用于保存个人数据和解锁订阅权益。</p>
+        </div>
+        <div class="auth-soft-note">
+          <i class="fas fa-circle-check"></i>
+          <span>邮箱验证码登录,不用记密码。验证码 5 分钟内有效。</span>
+        </div>
+        <div class="auth-tabs">
+          <div class="auth-tab active" onclick="switchAuthTab(this, 'login')">登录</div>
+          <div class="auth-tab" onclick="switchAuthTab(this, 'register')">注册</div>
+        </div>
+        <div id="auth-content">
+          ${renderAuthForm('login')}
+        </div>
+        <div class="auth-divider"><span>其他方式</span></div>
+        <div class="auth-third-party">
+          <button class="third-party-btn" onclick="showToast('演示版本 · 真实接入需配置 OAuth')">
+            <i class="fab fa-github" style="color:var(--ink)"></i>
+            <span>GitHub</span>
+          </button>
+          <button class="third-party-btn" onclick="showToast('演示版本 · 真实接入需配置 OAuth')">
+            <i class="fab fa-weixin" style="color:#07C160"></i>
+            <span>微信</span>
+          </button>
+          <button class="third-party-btn" onclick="showToast('演示版本 · 真实接入需配置 OAuth')">
+            <i class="fab fa-apple" style="color:var(--ink)"></i>
+            <span>Apple</span>
+          </button>
+        </div>
+        <button class="auth-guest-btn" onclick="closeModal(); showToast('已继续使用游客模式')">
+          先不登录,继续浏览
         </button>
-        <button class="third-party-btn" onclick="showToast('演示版本 · 真实接入需配置 OAuth')">
-          <i class="fab fa-apple" style="color:var(--ink)"></i>
-          <span>Apple 登录</span>
-        </button>
+        <p style="font-size:11px;color:var(--ink-4);text-align:center;margin-top:16px;line-height:1.6">
+          登录即代表你同意 <a style="color:var(--ink-2);cursor:pointer;text-decoration:underline">服务条款</a> 和 <a style="color:var(--ink-2);cursor:pointer;text-decoration:underline">隐私政策</a>
+        </p>
       </div>
-      <p style="font-size:11px;color:var(--ink-4);text-align:center;margin-top:18px;line-height:1.6">
-        登录即代表你同意 <a style="color:var(--ink-2);cursor:pointer;text-decoration:underline">服务条款</a> 和 <a style="color:var(--ink-2);cursor:pointer;text-decoration:underline">隐私政策</a>
-      </p>
     </div>
   `);
+  document.getElementById('modal-content').classList.add('auth-modal');
 }
 
 function switchAuthTab(el, type) {
@@ -7498,20 +9891,24 @@ function switchAuthTab(el, type) {
 
 function renderAuthForm(type) {
   return `
+    <div class="auth-form-hint">
+      <i class="fas fa-shield-halved"></i>
+      <span>${type === 'login' ? '输入已注册邮箱,获取验证码后继续。' : '注册后可获得 50 次免费调用额度。'}</span>
+    </div>
     <div class="field">
       <label>邮箱</label>
-      <input id="auth-email" type="email" placeholder="请输入邮箱地址">
+      <input id="auth-email" type="email" autocomplete="email" placeholder="name@example.com">
     </div>
     ${type === 'register' ? `
       <div class="field">
         <label>昵称</label>
-        <input id="auth-name" placeholder="设置你的昵称">
+        <input id="auth-name" autocomplete="nickname" placeholder="设置你的昵称">
       </div>
     ` : ''}
     <div class="field">
       <label>验证码</label>
       <div style="display:flex;gap:8px">
-        <input id="auth-code" placeholder="请输入 6 位验证码" maxlength="6" style="flex:1">
+        <input id="auth-code" inputmode="numeric" autocomplete="one-time-code" placeholder="6 位验证码" maxlength="6" style="flex:1">
         <button class="auth-code-btn" id="auth-sms-btn" onclick="sendEmailCode()">获取验证码</button>
       </div>
     </div>
@@ -7607,7 +10004,7 @@ async function doAuth(type) {
       closeModal();
       render();
       updateUserStatus();
-      if (result.data.user.role === 'admin') loadAdDataAsync().then(render);
+      if (result.data.user.role === 'admin') loadAdminDataAsync().then(render);
       setTimeout(() => showWelcomePop(result.data.user.name, type === 'register'), 400);
       return;
     } catch (e) {
@@ -7646,7 +10043,7 @@ async function restoreSession() {
       saveData(data);
       render();
       updateUserStatus();
-      if (result.data.user.role === 'admin') loadAdDataAsync().then(render);
+      if (result.data.user.role === 'admin') loadAdminDataAsync().then(render);
     }
   } catch (e) {
     console.warn('Session restore failed:', e.message);
@@ -8203,6 +10600,33 @@ function timeAgo(iso) {
 function renderAdmin() {
   const data = getData();
   const subView = state.adminView;
+  const isAdmin = data.user && data.user.role === 'admin';
+
+  if (!isAdmin) {
+    document.getElementById('view-admin').innerHTML = `
+      ${renderNav()}
+      <div class="container admin-gate">
+        <div class="admin-gate-card">
+          <div class="admin-gate-icon"><i class="fas fa-lock"></i></div>
+          <h2>需要管理员权限</h2>
+          <p>后台统计、工具审核和投放审核只对管理员开放。请登录管理员账号后继续。</p>
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+            <button class="btn-primary" onclick="openLogin()">登录管理员账号</button>
+            <button class="btn-secondary" onclick="switchView('market')">返回市场</button>
+          </div>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  if (_apiLoaded && !_adminDataLoaded) {
+    loadAdminDataAsync().then(() => {
+      if (state.view === 'admin') render();
+    });
+  }
+
+  const pendingToolSubmissions = (data.tool_submissions || []).filter(a => a.status === 'pending').length;
 
   document.getElementById('view-admin').innerHTML = `
     <div class="admin-layout">
@@ -8224,6 +10648,10 @@ function renderAdmin() {
         <div class="nav-item ${subView === 'ad_slots' ? 'active' : ''}" onclick="setAdminView('ad_slots')">
           <i class="fas fa-bullhorn"></i>推广位审核
           ${data.ad_applications.filter(a => a.status === 'pending').length > 0 ? `<span class="badge-num" style="background:#FF4D4D;color:white">${data.ad_applications.filter(a => a.status === 'pending').length}<span class="notification-dot" style="margin-left:4px;width:5px;height:5px"></span></span>` : `<span class="badge-num">0</span>`}
+        </div>
+        <div class="nav-item ${subView === 'tool_submissions' ? 'active' : ''}" onclick="setAdminView('tool_submissions')">
+          <i class="fas fa-screwdriver-wrench"></i>工具审核
+          ${pendingToolSubmissions > 0 ? `<span class="badge-num" style="background:#FF4D4D;color:white">${pendingToolSubmissions}<span class="notification-dot" style="margin-left:4px;width:5px;height:5px"></span></span>` : `<span class="badge-num">0</span>`}
         </div>
         <div class="nav-item ${subView === 'analytics' ? 'active' : ''}" onclick="setAdminView('analytics')"><i class="fas fa-chart-line"></i>深度分析</div>
 
@@ -8250,13 +10678,86 @@ function renderAdminContent(subView) {
   if (subView === 'overview') return renderAdminOverview();
   if (subView === 'workflows') return renderAdminWorkflows();
   if (subView === 'ad_slots') return renderAdminAdSlots();
+  if (subView === 'tool_submissions') return renderAdminToolSubmissions();
   if (subView === 'analytics') return renderAdminAnalytics();
   if (subView === 'users') return renderAdminUsers();
   return '';
 }
 
+function getAdminClickStats(data) {
+  const activeWfs = data.workflows.filter(w => w.status === 'active');
+  const total = activeWfs.reduce((sum, w) => sum + getClickCount(w.id), 0);
+  const last7 = activeWfs.reduce((sum, w) => sum + getClickCountInDays(w.id, 7), 0);
+  const todayStart = new Date();
+  todayStart.setHours(0, 0, 0, 0);
+  const today = data.clicks.filter(c => new Date(c.clicked_at).getTime() >= todayStart.getTime()).length;
+  return { total, today, last7 };
+}
+
+function getSearchTermRanking(data) {
+  const map = new Map();
+  data.clicks.forEach(c => {
+    const q = (c.search_query || '').trim();
+    if (!q) return;
+    map.set(q, (map.get(q) || 0) + 1);
+  });
+  const rows = Array.from(map.entries())
+    .map(([name, clicks]) => ({ name, sub: 'search_query', clicks }))
+    .sort((a, b) => b.clicks - a.clicks)
+    .slice(0, 6);
+  if (rows.length) return rows;
+  return ['商品图', 'SQL', '小红书', '翻译', '简历', '海报'].map((name, i) => ({
+    name,
+    sub: '等待真实搜索点击',
+    clicks: i === 0 ? '—' : '—'
+  }));
+}
+
+function getWorkflowClickRanking(data, onlyExternal) {
+  return data.workflows
+    .filter(w => w.status === 'active' && (!onlyExternal || w.type === 'recommend'))
+    .map(w => ({
+      id: w.id,
+      name: w.name,
+      sub: onlyExternal ? shortUrl(w.target_url || '') : w.category,
+      clicks: getClickCount(w.id)
+    }))
+    .sort((a, b) => b.clicks - a.clicks)
+    .slice(0, 6);
+}
+
+function renderAdminRankPanel(title, rows, emptyText) {
+  return `
+    <div class="panel" style="margin-bottom:0">
+      <div class="panel-head">
+        <h3>${title}</h3>
+        <span style="font-size:11px;color:var(--ink-3);font-family:'JetBrains Mono', monospace">TOP ${Math.min(rows.length, 6)}</span>
+      </div>
+      <div class="rank-list">
+        ${rows.length === 0 ? `
+          <div style="padding:28px;text-align:center;color:var(--ink-3);font-size:13px">${emptyText || '暂无数据'}</div>
+        ` : rows.map((row, i) => `
+          <div class="rank-row">
+            <div class="rank-no">${i + 1}</div>
+            <div style="min-width:0">
+              <div class="rank-title">${escapeHtml(row.name)}</div>
+              <div class="rank-sub">${escapeHtml(row.sub || '')}</div>
+            </div>
+            <div class="rank-value">${typeof row.clicks === 'number' ? row.clicks.toLocaleString() : row.clicks}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
 function renderAdminOverview() {
   const data = getData();
+  const clickStats = getAdminClickStats(data);
+  const searchRanking = getSearchTermRanking(data);
+  const toolClickRanking = getWorkflowClickRanking(data, false);
+  const externalRanking = getWorkflowClickRanking(data, true);
+  const pendingTools = (data.tool_submissions || []).filter(s => s.status === 'pending').length;
   const seedClickTotal = data.workflows.reduce((sum, w) => sum + (w.seed_clicks || 0), 0);
   const totalClicks = data.clicks.length + seedClickTotal;
   const selfWfs = data.workflows.filter(w => w.type === 'self');
@@ -8300,6 +10801,35 @@ function renderAdminOverview() {
         <button class="btn-secondary"><i class="fas fa-calendar-week"></i> 近 30 天</button>
         <button class="btn-secondary"><i class="fas fa-download"></i> 导出</button>
       </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="lbl">总点击量</div>
+        <div class="val">${clickStats.total.toLocaleString()}</div>
+        <div class="delta">含种子点击 + 真实点击</div>
+      </div>
+      <div class="stat-card">
+        <div class="lbl">今日点击</div>
+        <div class="val green">${clickStats.today.toLocaleString()}</div>
+        <div class="delta">来自实时 click 记录</div>
+      </div>
+      <div class="stat-card">
+        <div class="lbl">近 7 天点击</div>
+        <div class="val orange">${clickStats.last7.toLocaleString()}</div>
+        <div class="delta">含 7 天种子基数</div>
+      </div>
+      <div class="stat-card">
+        <div class="lbl">待审核工具</div>
+        <div class="val">${pendingTools}</div>
+        <div class="delta">tool_submissions</div>
+      </div>
+    </div>
+
+    <div class="admin-rank-grid">
+      ${renderAdminRankPanel('工具点击排行', toolClickRanking, '暂无工具点击')}
+      ${renderAdminRankPanel('搜索词排行', searchRanking, '暂无搜索词')}
+      ${renderAdminRankPanel('外部跳转排行', externalRanking, '暂无外部跳转')}
     </div>
 
     <div class="stats-row stats-row-hero">
@@ -8935,6 +11465,203 @@ function rejectAd(appId) {
     apiPatch('/ad-applications/' + appId + '/status', { status: 'rejected' })
       .then(() => loadAdDataAsync());
   }
+  showToast('已驳回');
+  renderAdmin();
+}
+
+/* ----- 工具提交审核 ----- */
+function renderAdminToolSubmissions() {
+  const data = getData();
+  const submissions = data.tool_submissions || [];
+  const pending = submissions.filter(s => s.status === 'pending');
+  const approved = submissions.filter(s => s.status === 'approved');
+  const rejected = submissions.filter(s => s.status === 'rejected');
+
+  return `
+    <div class="admin-head">
+      <div>
+        <h1>工具审核</h1>
+        <div class="sub">用户提交的外部工具 · 通过后自动创建正式工具并上架</div>
+      </div>
+      <button class="btn-secondary" onclick="${_apiLoaded ? "loadAdminDataAsync().then(render)" : "renderAdmin()"}">
+        <i class="fas fa-rotate"></i> 刷新
+      </button>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card"><div class="lbl">待审核</div><div class="val orange">${pending.length}</div></div>
+      <div class="stat-card"><div class="lbl">已通过</div><div class="val green">${approved.length}</div></div>
+      <div class="stat-card"><div class="lbl">已驳回</div><div class="val" style="color:var(--danger)">${rejected.length}</div></div>
+      <div class="stat-card"><div class="lbl">总提交</div><div class="val">${submissions.length}</div></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-head">
+        <h3>Pending Tool Submissions</h3>
+        <span style="font-size:11px;color:var(--ink-3);font-family:'JetBrains Mono', monospace">${pending.length} pending</span>
+      </div>
+      ${pending.length === 0 ? `
+        <div style="padding:44px;text-align:center;color:var(--ink-3);font-size:13px">没有待审核的工具提交</div>
+      ` : `
+        <table class="panel-table">
+          <thead>
+            <tr>
+              <th>工具</th>
+              <th>提交人</th>
+              <th>分类 / 标签</th>
+              <th>链接</th>
+              <th>提交时间</th>
+              <th class="right">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${pending.map(sub => `
+              <tr>
+                <td>
+                  <div class="nm">${escapeHtml(sub.tool_name)}</div>
+                  <div class="sub">${escapeHtml(sub.tool_desc || '暂无描述')}</div>
+                </td>
+                <td>
+                  <div class="nm">${escapeHtml(sub.submitter_name || '匿名提交')}</div>
+                  <div class="sub">${escapeHtml(sub.contact)}</div>
+                </td>
+                <td>
+                  <div class="nm">${escapeHtml(sub.category || '其他')}</div>
+                  <div class="sub">${escapeHtml((sub.tags || []).join(', ') || '无标签')}</div>
+                </td>
+                <td>
+                  <a href="${escapeHtml(sub.tool_url)}" target="_blank" style="font-family:'JetBrains Mono', monospace;font-size:11px;color:var(--ink-2);text-decoration:underline">
+                    ${escapeHtml(shortUrl(sub.tool_url))}
+                  </a>
+                </td>
+                <td><span class="num">${timeAgo(sub.submitted_at)}</span></td>
+                <td class="right">
+                  <button class="row-btn" onclick="approveToolSubmission('${sub.id}')" style="color:var(--self)">Approve</button>
+                  <button class="row-btn danger" onclick="rejectToolSubmission('${sub.id}')">Reject</button>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `}
+    </div>
+
+    ${(approved.length || rejected.length) ? `
+      <div class="panel">
+        <div class="panel-head"><h3>审核记录</h3></div>
+        <table class="panel-table">
+          <thead>
+            <tr><th>工具</th><th>状态</th><th>正式工作流</th><th>管理员备注</th><th class="right">处理时间</th></tr>
+          </thead>
+          <tbody>
+            ${submissions.filter(s => s.status !== 'pending').map(sub => `
+              <tr>
+                <td>
+                  <div class="nm">${escapeHtml(sub.tool_name)}</div>
+                  <div class="sub">${escapeHtml(shortUrl(sub.tool_url))}</div>
+                </td>
+                <td><span class="${sub.status === 'approved' ? 'badge-active' : 'badge-rejected'}">${sub.status === 'approved' ? '已通过' : '已驳回'}</span></td>
+                <td><span class="num">${sub.workflow_id || '-'}</span></td>
+                <td>${sub.admin_note ? `<div class="admin-note">${escapeHtml(sub.admin_note)}</div>` : '<span style="color:var(--ink-4)">-</span>'}</td>
+                <td class="right"><span class="num">${sub.reviewed_at ? timeAgo(sub.reviewed_at) : '-'}</span></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    ` : ''}
+  `;
+}
+
+function workflowFromToolSubmission(sub) {
+  return {
+    id: 'wf_tool_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+    name: sub.tool_name,
+    tagline: (sub.tool_desc || '用户提交的外部 AI 工具').slice(0, 80),
+    description: sub.tool_desc || '用户提交的外部 AI 工具',
+    target_url: sub.tool_url,
+    type: 'recommend',
+    category: sub.category || '其他',
+    tags: sub.tags || [],
+    price_model: sub.price_model || 'free',
+    price_amount: parseFloat(sub.price_amount) || 0,
+    cover_color: '#B85C00',
+    status: 'active',
+    rating: 4.5,
+    review_count: 0,
+    seed_clicks: 0,
+    seed_clicks_7d: 0,
+    examples: [],
+    created_at: new Date().toISOString()
+  };
+}
+
+async function approveToolSubmission(id) {
+  const data = getData();
+  const sub = (data.tool_submissions || []).find(s => s.id === id);
+  if (!sub) return showToast('提交记录不存在', true);
+  if (sub.status !== 'pending') return showToast('该提交已处理', true);
+
+  if (_apiLoaded) {
+    const result = await apiPost('/admin/tool-submissions/' + id + '/approve', {});
+    if (!result.ok) return showToast(result.error?.message || '审核失败', true);
+    await loadAdminDataAsync();
+    showToast('已通过 · 工具已上架');
+    renderAdmin();
+    return;
+  }
+
+  const wf = workflowFromToolSubmission(sub);
+  data.workflows.unshift(wf);
+  sub.status = 'approved';
+  sub.workflow_id = wf.id;
+  sub.reviewed_at = new Date().toISOString();
+  saveData(data);
+  showToast('已通过 · 工具已上架');
+  renderAdmin();
+}
+
+function rejectToolSubmission(id) {
+  const data = getData();
+  const sub = (data.tool_submissions || []).find(s => s.id === id);
+  if (!sub) return showToast('提交记录不存在', true);
+  if (sub.status !== 'pending') return showToast('该提交已处理', true);
+  openModal(`
+    <h2>驳回工具提交</h2>
+    <p class="modal-sub">${escapeHtml(sub.tool_name)} · 给提交人留下清晰的处理说明</p>
+    <div class="field">
+      <label>管理员备注</label>
+      <textarea id="tool-admin-note" placeholder="例如: 官网无法访问 / 描述不完整 / 与现有工具重复"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button onclick="closeModal()">取消</button>
+      <button class="primary" style="background:var(--danger)" onclick="doRejectToolSubmission('${id}')">确认驳回</button>
+    </div>
+  `);
+}
+
+async function doRejectToolSubmission(id) {
+  const note = document.getElementById('tool-admin-note').value.trim();
+  const data = getData();
+  const sub = (data.tool_submissions || []).find(s => s.id === id);
+  if (!sub) return showToast('提交记录不存在', true);
+  if (sub.status !== 'pending') return showToast('该提交已处理', true);
+
+  if (_apiLoaded) {
+    const result = await apiPost('/admin/tool-submissions/' + id + '/reject', { admin_note: note });
+    if (!result.ok) return showToast(result.error?.message || '驳回失败', true);
+    await loadAdminDataAsync();
+    closeModal();
+    showToast('已驳回');
+    renderAdmin();
+    return;
+  }
+
+  sub.status = 'rejected';
+  sub.admin_note = note;
+  sub.reviewed_at = new Date().toISOString();
+  saveData(data);
+  closeModal();
   showToast('已驳回');
   renderAdmin();
 }
@@ -10089,6 +12816,7 @@ function getChatReply(q) {
    主渲染
    ============================================================= */
 function render() {
+  document.body.classList.toggle('immersive-run', state.view === 'run');
   if (state.view === 'market') {
     renderMarket();
     setTimeout(startLiveFeed, 200);
@@ -10097,6 +12825,7 @@ function render() {
   }
 
   if (state.view === 'detail') renderDetail();
+  else if (state.view === 'run') renderRun();
   else if (state.view === 'search') renderSearch();
   else if (state.view === 'me') renderMe();
   else if (state.view === 'admin') renderAdmin();
@@ -10199,6 +12928,814 @@ function tryClearOutput(wfId) {
   if (outputEl) {
     outputEl.classList.remove('loading');
     outputEl.textContent = '点击「试一下」查看示例输出';
+  }
+}
+
+const IMAGE_VIDEO_PRESETS = {
+  product: {
+    prompt: '一瓶高端护肤精华在水面和柔光中旋转,透明玻璃质感,干净高级的电商广告画面',
+    style: 'product',
+    ratio: '9:16'
+  },
+  short: {
+    prompt: '雨夜街角,年轻主角回头看向镜头,身后霓虹灯闪烁,悬疑短剧开场镜头',
+    style: 'cinematic',
+    ratio: '9:16'
+  },
+  poster: {
+    prompt: '夏日音乐节主视觉海报,舞台灯光、人群剪影、强烈色彩冲击,适合动态海报',
+    style: 'anime',
+    ratio: '1:1'
+  }
+};
+
+const IMAGE_VIDEO_STYLES = {
+  cinematic: '电影感',
+  product: '商品广告',
+  anime: '动画分镜',
+  realistic: '真实摄影'
+};
+
+let _imageVideoBoards = {};
+
+function getImageVideoBoard(wfId) {
+  if (!_imageVideoBoards[wfId]) {
+    _imageVideoBoards[wfId] = { assets: [], shots: [], video: null };
+  }
+  return _imageVideoBoards[wfId];
+}
+
+function applyImageVideoPreset(wfId, presetId) {
+  const preset = IMAGE_VIDEO_PRESETS[presetId];
+  if (!preset) return;
+  const set = (id, value) => {
+    const el = document.getElementById(id);
+    if (el) el.value = value;
+  };
+  set('iv-prompt-' + wfId, preset.prompt);
+  set('iv-style-' + wfId, preset.style);
+  set('iv-ratio-' + wfId, preset.ratio);
+  showToast('已填入创作样例');
+}
+
+function hashText(text) {
+  let hash = 0;
+  for (let i = 0; i < text.length; i++) hash = ((hash << 5) - hash + text.charCodeAt(i)) | 0;
+  return Math.abs(hash);
+}
+
+function getImageVideoGradient(prompt, style) {
+  const palettes = {
+    cinematic: [['#101820', '#1A5D3A', '#D8A24A'], ['#0F0F0E', '#4B2E83', '#CFAF6A']],
+    product: [['#E9F4EF', '#B7D7C6', '#F4B183'], ['#F7F2E8', '#C6D4C1', '#C88B5A']],
+    anime: [['#2E1065', '#DB2777', '#FDE68A'], ['#0F172A', '#2563EB', '#F9A8D4']],
+    realistic: [['#D7D2C8', '#7C8C75', '#2E2A24'], ['#E6E1D8', '#8A9A8D', '#CBB79D']]
+  };
+  const list = palettes[style] || palettes.cinematic;
+  const colors = list[hashText(prompt) % list.length];
+  return `linear-gradient(135deg, ${colors[0]} 0%, ${colors[1]} 52%, ${colors[2]} 100%)`;
+}
+
+function summarizePrompt(prompt) {
+  const clean = String(prompt || '').replace(/\s+/g, ' ').trim();
+  if (!clean) return '未命名镜头';
+  return clean.length > 18 ? clean.slice(0, 18) + '...' : clean;
+}
+
+function appendIvMessage(wfId, type, text) {
+  const assets = document.getElementById('iv-assets-' + wfId);
+  if (!assets) return;
+  assets.insertAdjacentHTML('beforebegin', `<div class="iv-msg ${type}">${escapeHtml(text)}</div>`);
+  const chat = document.getElementById('iv-chat-' + wfId);
+  if (chat) chat.scrollTop = chat.scrollHeight;
+}
+
+function renderIvAssetCard(wfId, asset) {
+  return `
+    <div class="iv-asset-card" draggable="true" ondragstart="handleIvDragStart(event,'${wfId}','${asset.id}')">
+      <div class="iv-asset-preview" data-scene="${escapeHtml(asset.title)}" style="background:${asset.bg}"></div>
+      <div class="iv-asset-body">
+        <div>
+          <strong>${escapeHtml(asset.title)}</strong>
+          <span>${escapeHtml(asset.styleLabel)} · ${escapeHtml(asset.ratio)}</span>
+        </div>
+      </div>
+      <div class="iv-asset-actions">
+        <button class="iv-mini-btn" onclick="addImageAssetToCanvas('${wfId}','${asset.id}')">加入画布</button>
+        <button class="iv-mini-btn" onclick="generateVideo3Preview('${wfId}')">生视频</button>
+        <button class="iv-mini-btn" onclick="showToast('已进入继续优化模式')">继续优化</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderImageVideoAssets(wfId) {
+  const board = getImageVideoBoard(wfId);
+  const el = document.getElementById('iv-assets-' + wfId);
+  if (!el) return;
+  el.innerHTML = board.assets.map(asset => renderIvAssetCard(wfId, asset)).join('');
+  const chat = document.getElementById('iv-chat-' + wfId);
+  if (chat) chat.scrollTop = chat.scrollHeight;
+}
+
+function generateImage2Asset(wfId) {
+  const prompt = getRunnerValue('iv-prompt-' + wfId, IMAGE_VIDEO_PRESETS.short.prompt);
+  const style = getRunnerValue('iv-style-' + wfId, 'cinematic');
+  const ratio = getRunnerValue('iv-ratio-' + wfId, '9:16');
+  if (prompt.length < 8) {
+    showToast('画面描述太短,请写具体一点', true);
+    return;
+  }
+
+  const btn = document.getElementById('iv-image-btn-' + wfId);
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 生成中';
+  }
+  appendIvMessage(wfId, 'user', prompt);
+  recordWorkflowClick(getData(), wfId, { source: 'image2_generation' });
+
+  setTimeout(() => {
+    const board = getImageVideoBoard(wfId);
+    const asset = {
+      id: 'asset_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
+      prompt,
+      title: summarizePrompt(prompt),
+      style,
+      styleLabel: IMAGE_VIDEO_STYLES[style] || style,
+      ratio,
+      bg: getImageVideoGradient(prompt, style),
+      created_at: new Date().toISOString()
+    };
+    board.assets.unshift(asset);
+    board.assets = board.assets.slice(0, 8);
+    renderImageVideoAssets(wfId);
+    appendIvMessage(wfId, 'bot', 'Image2 已生成关键帧。你可以拖到左侧画布,或点击「加入画布」。');
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-image"></i> 生成图片';
+    }
+    showToast('关键帧已生成');
+  }, 650);
+}
+
+function handleIvDragStart(event, wfId, assetId) {
+  event.dataTransfer.setData('text/plain', assetId);
+  event.dataTransfer.setData('application/x-flowhub-wf', wfId);
+}
+
+function handleIvDragOver(event) {
+  event.preventDefault();
+  event.currentTarget.classList.add('drag-over');
+}
+
+function handleIvDragLeave(event) {
+  event.currentTarget.classList.remove('drag-over');
+}
+
+function handleIvDrop(event, wfId) {
+  event.preventDefault();
+  event.currentTarget.classList.remove('drag-over');
+  const assetId = event.dataTransfer.getData('text/plain');
+  addImageAssetToCanvas(wfId, assetId);
+}
+
+function resetImageVideoPreview(wfId) {
+  const board = getImageVideoBoard(wfId);
+  board.video = null;
+  const videoBox = document.getElementById('iv-video-' + wfId);
+  if (videoBox) {
+    videoBox.innerHTML = '<div class="iv-video-empty">画布里至少 2 个镜头后,可以生成视频预览</div>';
+  }
+}
+
+function addImageAssetToCanvas(wfId, assetId) {
+  const board = getImageVideoBoard(wfId);
+  const asset = board.assets.find(item => item.id === assetId);
+  if (!asset) return;
+  resetImageVideoPreview(wfId);
+  board.shots.push({
+    id: 'shot_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
+    assetId,
+    duration: board.shots.length === 0 ? 2.5 : 2,
+    motion: board.shots.length === 0 ? 'push in' : 'match cut'
+  });
+  renderImageVideoCanvas(wfId);
+  showToast('已加入镜头画布');
+}
+
+function removeIvShot(wfId, shotId) {
+  const board = getImageVideoBoard(wfId);
+  board.shots = board.shots.filter(shot => shot.id !== shotId);
+  resetImageVideoPreview(wfId);
+  renderImageVideoCanvas(wfId);
+}
+
+function renderImageVideoCanvas(wfId) {
+  const board = getImageVideoBoard(wfId);
+  const canvas = document.getElementById('iv-canvas-' + wfId);
+  if (!canvas) return;
+  if (!board.shots.length) {
+    canvas.innerHTML = `
+      <div class="iv-canvas-empty">
+        <i class="fas fa-object-group" style="font-size:22px;color:var(--self);margin-bottom:8px"></i><br>
+        从右侧生成图片后拖到这里<br>
+        或点击图片上的「加入画布」
+      </div>
+    `;
+    return;
+  }
+
+  const firstShot = board.shots[0];
+  const firstAsset = board.assets.find(item => item.id === firstShot.assetId);
+  const prompt = firstAsset ? firstAsset.prompt : getRunnerValue('iv-prompt-' + wfId, IMAGE_VIDEO_PRESETS.short.prompt);
+  const styleLabel = firstAsset ? firstAsset.styleLabel : IMAGE_VIDEO_STYLES[getRunnerValue('iv-style-' + wfId, 'cinematic')];
+  const ratio = firstAsset ? firstAsset.ratio : getRunnerValue('iv-ratio-' + wfId, '9:16');
+  const videoPrompt = '镜头连贯切换,保留主体一致性,光线和氛围逐步增强';
+  const nodes = [];
+
+  nodes.push(`
+    <div class="iv-flow-node">
+      <div class="iv-flow-card">
+        <div class="iv-node-head">
+          <span class="iv-node-index">1</span>
+          <strong>Image2Image 生图</strong>
+          <span class="iv-node-ok"><i class="fas fa-check-circle"></i></span>
+        </div>
+        <div class="iv-node-body">
+          <div class="iv-node-row"><span>模型</span><span class="iv-node-pill">Image2</span></div>
+          <div class="iv-node-row"><span>风格</span><span class="iv-node-pill">${escapeHtml(styleLabel || '电影感')}</span></div>
+          <div class="iv-node-row"><span>提示词</span><span class="iv-node-pill">${escapeHtml(summarizePrompt(prompt))}</span></div>
+          <div class="iv-node-row"><span>尺寸</span><span class="iv-node-pill">${escapeHtml(ratio)}</span></div>
+        </div>
+      </div>
+    </div>
+  `);
+
+  board.shots.forEach((shot, index) => {
+    const asset = board.assets.find(item => item.id === shot.assetId);
+    if (!asset) return '';
+    nodes.push(`
+      <div class="iv-shot-node">
+        <div class="iv-shot-card">
+          <div class="iv-node-head">
+            <span class="iv-node-index">${index + 2}</span>
+            <strong>生成图片</strong>
+            <span class="iv-node-ok"><i class="fas fa-check-circle"></i></span>
+          </div>
+          <div class="iv-shot-preview" data-scene="${escapeHtml(asset.title)}" style="background:${asset.bg}"></div>
+          <div class="iv-shot-body">
+            <div class="iv-shot-title">镜头 ${index + 1}</div>
+            <div class="iv-shot-meta">${escapeHtml(shot.duration)}s · ${escapeHtml(shot.motion)}</div>
+            <button class="iv-mini-btn" style="margin-top:8px" onclick="removeIvShot('${wfId}','${shot.id}')">移除</button>
+          </div>
+        </div>
+      </div>
+    `);
+    return '';
+  });
+
+  nodes.push(`
+    <div class="iv-flow-node">
+      <div class="iv-flow-card video">
+        <div class="iv-node-head">
+          <span class="iv-node-index">${board.shots.length + 2}</span>
+          <strong>Grok Video-3 生视频</strong>
+          <span class="iv-node-ok">${board.video ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-circle-notch"></i>'}</span>
+        </div>
+        <div class="iv-node-body">
+          <div class="iv-node-row"><span>模型</span><span class="iv-node-pill">Grok Video-3</span></div>
+          <div class="iv-node-row"><span>输入图像</span><span class="iv-node-pill">${board.shots.length} 张关键帧</span></div>
+          <div class="iv-node-row"><span>提示词</span><span class="iv-node-pill">${escapeHtml(videoPrompt)}</span></div>
+          <div class="iv-node-row"><span>时长</span><span class="iv-node-pill">${board.video ? escapeHtml(board.video.duration + 's') : '待生成'}</span></div>
+          <div class="iv-node-row"><span>分辨率</span><span class="iv-node-pill">${escapeHtml(ratio === '16:9' ? '1280 x 720' : ratio === '1:1' ? '1024 x 1024' : '720 x 1280')}</span></div>
+        </div>
+      </div>
+    </div>
+  `);
+
+  if (board.video) {
+    const outputAsset = board.assets.find(item => item.id === board.video.firstAssetId) || firstAsset;
+    nodes.push(`
+      <div class="iv-flow-node">
+        <div class="iv-flow-card output">
+          <div class="iv-node-head">
+            <span class="iv-node-index">${board.shots.length + 3}</span>
+            <strong>视频输出</strong>
+            <span class="iv-node-ok"><i class="fas fa-check-circle"></i></span>
+          </div>
+          <div class="iv-shot-preview" data-scene="${escapeHtml(outputAsset ? outputAsset.title : '视频预览')}" style="background:${outputAsset ? outputAsset.bg : 'linear-gradient(135deg,#0F0F0E,#1A5D3A)'}"></div>
+          <div class="iv-node-body">
+            <div class="iv-node-row"><span>格式</span><span class="iv-node-pill">MP4 预览</span></div>
+            <div class="iv-node-row"><span>时长</span><span class="iv-node-pill">${escapeHtml(board.video.duration)}s</span></div>
+            <div class="iv-node-row"><span>比例</span><span class="iv-node-pill">${escapeHtml(board.video.ratio)}</span></div>
+          </div>
+        </div>
+      </div>
+    `);
+  }
+
+  canvas.innerHTML = nodes.map((node, index) => index === 0 ? node : '<div class="iv-connector"></div>' + node).join('');
+}
+
+function generateVideo3Preview(wfId) {
+  const board = getImageVideoBoard(wfId);
+  const videoBox = document.getElementById('iv-video-' + wfId);
+  if (!videoBox) return;
+  if (board.shots.length < 2) {
+    showToast('至少需要 2 个镜头才能生成视频', true);
+    return;
+  }
+  videoBox.innerHTML = '<div class="iv-video-empty"><i class="fas fa-spinner fa-spin" style="margin-right:6px"></i>正在调用视频引擎生成预览...</div>';
+  recordWorkflowClick(getData(), wfId, { source: 'video3_generation' });
+  setTimeout(() => {
+    const duration = board.shots.reduce((sum, shot) => sum + Number(shot.duration || 2), 0).toFixed(1);
+    const firstAsset = board.assets.find(item => item.id === board.shots[0].assetId);
+    const ratio = getRunnerValue('iv-ratio-' + wfId, '9:16');
+    board.video = {
+      id: 'video_' + Date.now(),
+      duration,
+      ratio,
+      firstAssetId: firstAsset ? firstAsset.id : '',
+      engine: 'Grok Video-3',
+      created_at: new Date().toISOString()
+    };
+    videoBox.innerHTML = `
+      <div class="iv-video-result">
+        <div class="iv-video-thumb" style="background:${firstAsset ? firstAsset.bg : 'linear-gradient(135deg,#0F0F0E,#1A5D3A)'}"></div>
+        <div class="iv-video-copy">
+          <h5>视频预览已生成</h5>
+          <p>${board.shots.length} 个镜头 · ${duration}s · ${escapeHtml(ratio)}<br>当前为 Grok Video-3 生成链路占位,后续可替换真实 API 返回的视频 URL。</p>
+          <div class="try-actions">
+            <button class="try-btn primary" onclick="showToast('演示版暂不提供下载')"><i class="fas fa-play"></i> 预览</button>
+            <button class="try-btn" onclick="generateVideo3Preview('${wfId}')">重新生成</button>
+          </div>
+        </div>
+      </div>
+    `;
+    renderImageVideoCanvas(wfId);
+    appendIvMessage(wfId, 'bot', `已为你生成 Grok Video-3 方案: ${board.shots.length} 个镜头,${duration}s。左侧画布已出现视频输出节点。`);
+    const data = getData();
+    data.inline_runs = data.inline_runs || [];
+    data.inline_runs.unshift({
+      id: 'run_' + Date.now(),
+      workflow_id: wfId,
+      input: {
+        shots: board.shots.length,
+        engine: 'image2 + video3',
+        ratio
+      },
+      output: 'video_preview_demo',
+      created_at: new Date().toISOString()
+    });
+    data.inline_runs = data.inline_runs.slice(0, 20);
+    saveData(data);
+    showToast('视频预览已生成');
+  }, 850);
+}
+
+const SQL_PRESETS = {
+  gmv: {
+    question: '查询近 30 天每个店铺 GMV、订单数和客单价,按 GMV 降序取前 20',
+    schema: 'orders(order_id, shop_id, user_id, paid_amount, paid_at, status)\nshops(shop_id, shop_name, category)',
+    output: 'analysis'
+  },
+  retention: {
+    question: '统计 5 月新注册用户的次日留存、7 日留存和 30 日留存',
+    schema: 'users(user_id, created_at, channel)\nevents(user_id, event_name, event_time)',
+    output: 'dashboard'
+  },
+  sku: {
+    question: '查询近 7 天每个 SKU 的销量、销售额和库存周转率,过滤销量为 0 的商品',
+    schema: 'order_items(order_id, sku_id, quantity, item_amount, created_at)\nproducts(sku_id, sku_name, category, stock_qty)',
+    output: 'analysis'
+  }
+};
+
+let _sqlResultCache = {};
+
+function applySqlPreset(wfId, presetId) {
+  const preset = SQL_PRESETS[presetId];
+  if (!preset) return;
+  const set = (id, value) => {
+    const el = document.getElementById(id);
+    if (el) el.value = value;
+  };
+  set('sql-question-' + wfId, preset.question);
+  set('sql-schema-' + wfId, preset.schema);
+  set('sql-output-' + wfId, preset.output);
+  showToast('已填入 SQL 样例');
+}
+
+function getSqlDateExpr(dialect, days) {
+  if (dialect === 'mysql') return `CURRENT_DATE - INTERVAL ${days} DAY`;
+  if (dialect === 'bigquery') return `DATE_SUB(CURRENT_DATE(), INTERVAL ${days} DAY)`;
+  return `CURRENT_DATE - INTERVAL '${days} days'`;
+}
+
+function buildSqlResult(input) {
+  const q = input.question.toLowerCase();
+  const date30 = getSqlDateExpr(input.dialect, 30);
+  const date7 = getSqlDateExpr(input.dialect, 7);
+
+  if (q.includes('留存') || q.includes('retention')) {
+    return {
+      title: '用户留存查询',
+      risk: '只读查询',
+      complexity: '中',
+      sql: `WITH cohort AS (
+  SELECT
+    user_id,
+    DATE(created_at) AS signup_date
+  FROM users
+  WHERE created_at >= DATE '2026-05-01'
+    AND created_at < DATE '2026-06-01'
+),
+activity AS (
+  SELECT
+    c.user_id,
+    c.signup_date,
+    DATE(e.event_time) - c.signup_date AS day_offset
+  FROM cohort c
+  LEFT JOIN events e
+    ON e.user_id = c.user_id
+   AND e.event_time >= c.signup_date
+   AND e.event_time < c.signup_date + INTERVAL '31 days'
+)
+SELECT
+  signup_date,
+  COUNT(DISTINCT user_id) AS new_users,
+  COUNT(DISTINCT CASE WHEN day_offset = 1 THEN user_id END) AS d1_retained,
+  COUNT(DISTINCT CASE WHEN day_offset = 7 THEN user_id END) AS d7_retained,
+  COUNT(DISTINCT CASE WHEN day_offset = 30 THEN user_id END) AS d30_retained,
+  ROUND(COUNT(DISTINCT CASE WHEN day_offset = 1 THEN user_id END)::numeric / NULLIF(COUNT(DISTINCT user_id), 0), 4) AS d1_rate
+FROM activity
+GROUP BY signup_date
+ORDER BY signup_date;`,
+      explain: [
+        '先用 cohort 固定新用户口径,避免后续 join 扩大样本。',
+        'activity 只统计注册后 31 天内行为,减少扫描成本。',
+        'NULLIF 防止某天没有新用户时除零。'
+      ],
+      optimize: '如果 events 表很大,建议给 (user_id, event_time) 建复合索引,或按 event_time 分区。'
+    };
+  }
+
+  if (q.includes('sku') || q.includes('库存') || q.includes('销量')) {
+    return {
+      title: 'SKU 动销查询',
+      risk: '只读查询',
+      complexity: '低',
+      sql: `SELECT
+  p.sku_id,
+  p.sku_name,
+  p.category,
+  SUM(oi.quantity) AS units_sold,
+  SUM(oi.item_amount) AS sales_amount,
+  ROUND(SUM(oi.quantity)::numeric / NULLIF(p.stock_qty, 0), 4) AS turnover_rate
+FROM order_items oi
+JOIN products p
+  ON p.sku_id = oi.sku_id
+WHERE oi.created_at >= ${date7}
+GROUP BY p.sku_id, p.sku_name, p.category, p.stock_qty
+HAVING SUM(oi.quantity) > 0
+ORDER BY sales_amount DESC;`,
+      explain: [
+        '以 order_items 为事实表聚合 SKU 销量和销售额。',
+        'HAVING 过滤 0 销量商品,适合看动销表现。',
+        '库存周转率使用销量 / 当前库存做近似指标。'
+      ],
+      optimize: '建议给 order_items(created_at, sku_id) 建索引,产品维表保持 sku_id 唯一。'
+    };
+  }
+
+  return {
+    title: '店铺 GMV 排行查询',
+    risk: '只读查询',
+    complexity: '低',
+    sql: `SELECT
+  s.shop_id,
+  s.shop_name,
+  s.category,
+  COUNT(DISTINCT o.order_id) AS order_count,
+  SUM(o.paid_amount) AS gmv,
+  ROUND(SUM(o.paid_amount) / NULLIF(COUNT(DISTINCT o.order_id), 0), 2) AS avg_order_value
+FROM orders o
+JOIN shops s
+  ON s.shop_id = o.shop_id
+WHERE o.status = 'paid'
+  AND o.paid_at >= ${date30}
+GROUP BY s.shop_id, s.shop_name, s.category
+ORDER BY gmv DESC
+LIMIT 20;`,
+    explain: [
+      'orders 作为交易事实表,shops 补充店铺名称和分类。',
+      '只统计已支付订单,避免未支付和取消订单污染 GMV。',
+      '客单价使用 GMV / 订单数,并用 NULLIF 防止除零。'
+    ],
+    optimize: '建议给 orders(status, paid_at, shop_id) 建复合索引,大表可以按 paid_at 分区。'
+  };
+}
+
+function runSqlWorkflow(wfId) {
+  const data = getData();
+  const wf = data.workflows.find(w => w.id === wfId);
+  if (!wf) return;
+
+  const output = document.getElementById('sql-output-box-' + wfId);
+  const runBtn = document.getElementById('sql-run-' + wfId);
+  if (!output) return;
+
+  const input = {
+    question: getRunnerValue('sql-question-' + wfId, SQL_PRESETS.gmv.question),
+    schema: getRunnerValue('sql-schema-' + wfId, SQL_PRESETS.gmv.schema),
+    dialect: getRunnerValue('sql-dialect-' + wfId, 'postgres'),
+    output: getRunnerValue('sql-output-' + wfId, 'analysis'),
+    safe: !!document.getElementById('sql-safe-' + wfId)?.checked
+  };
+
+  if (!input.question || input.question.length < 6) {
+    showToast('业务问题太短,请再写具体一点', true);
+    return;
+  }
+
+  output.classList.add('loading');
+  output.innerHTML = '<div class="runner-empty"><div><i class="fas fa-database"></i>正在生成 SQL 查询</div></div>';
+  if (runBtn) {
+    runBtn.disabled = true;
+    runBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 生成中';
+  }
+
+  recordWorkflowClick(data, wfId, { source: 'inline_execution' });
+
+  setTimeout(() => {
+    const result = buildSqlResult(input);
+    _sqlResultCache[wfId] = result.sql;
+
+    const runRecordData = getData();
+    runRecordData.inline_runs = runRecordData.inline_runs || [];
+    runRecordData.inline_runs.unshift({
+      id: 'run_' + Date.now(),
+      workflow_id: wfId,
+      input,
+      output: result.sql,
+      created_at: new Date().toISOString()
+    });
+    runRecordData.inline_runs = runRecordData.inline_runs.slice(0, 20);
+    saveData(runRecordData);
+
+    output.classList.remove('loading');
+    output.innerHTML = `
+      <div class="ps-result">
+        <div class="sql-meta-grid">
+          <div class="sql-meta-card"><span>类型</span><strong>${escapeHtml(result.title)}</strong></div>
+          <div class="sql-meta-card"><span>风险</span><strong>${escapeHtml(input.safe ? result.risk : '未启用安全限制')}</strong></div>
+          <div class="sql-meta-card"><span>复杂度</span><strong>${escapeHtml(result.complexity)}</strong></div>
+        </div>
+        <pre class="sql-code">${escapeHtml(result.sql)}</pre>
+        <div class="ps-result-block">
+          <h5>生成解释</h5>
+          <ul>${result.explain.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>
+        </div>
+        <div class="ps-result-block">
+          <h5>优化建议</h5>
+          <p>${escapeHtml(result.optimize)}</p>
+          <div class="try-actions">
+            <button class="try-btn primary" onclick="copySqlResult('${wfId}')"><i class="fas fa-copy"></i> 复制 SQL</button>
+            <button class="try-btn" onclick="runSqlWorkflow('${wfId}')">重新生成</button>
+          </div>
+        </div>
+      </div>
+    `;
+    if (runBtn) {
+      runBtn.disabled = false;
+      runBtn.innerHTML = '<i class="fas fa-play"></i> 重新生成';
+    }
+    showToast('SQL 查询已生成');
+  }, 700);
+}
+
+function copySqlResult(wfId) {
+  const sql = _sqlResultCache[wfId];
+  if (!sql) return;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(sql)
+      .then(() => showToast('SQL 已复制'))
+      .catch(() => showToast('复制失败,可手动选中文本', true));
+  } else {
+    showToast('当前浏览器不支持自动复制', true);
+  }
+}
+
+const PICSPARK_PRESETS = {
+  skincare: {
+    product: '玻尿酸精华瓶',
+    selling: '补水修护,敏感肌可用,清爽不黏腻',
+    scene: 'kitchen',
+    style: 'tmall'
+  },
+  coffee: {
+    product: '精品挂耳咖啡礼盒',
+    selling: '深烘坚果香,办公室下午茶,送礼有质感',
+    scene: 'desk',
+    style: 'xhs'
+  },
+  pet: {
+    product: '冻干鸡肉宠物零食',
+    selling: '高蛋白,无谷配方,适合猫狗训练奖励',
+    scene: 'outdoor',
+    style: 'real'
+  }
+};
+
+const PICSPARK_SCENES = {
+  kitchen: {
+    label: '温暖厨房',
+    bg: 'linear-gradient(135deg, #EAF4E6 0%, #FFD7AD 100%)',
+    prompt: '自然晨光,温暖家庭厨房,新鲜水果和浅色木质台面',
+    tip: '适合食品、母婴、护肤等需要亲近感的商品'
+  },
+  festival: {
+    label: '红金节日',
+    bg: 'linear-gradient(135deg, #7D1222 0%, #D99B43 100%)',
+    prompt: '春节红金主题,灯笼、金色纸屑、促销氛围,预留标题区域',
+    tip: '适合大促主图、节日海报和直播间封面'
+  },
+  desk: {
+    label: '木质桌面',
+    bg: 'linear-gradient(135deg, #EBD8C0 0%, #8A6A4E 100%)',
+    prompt: '木质桌面,咖啡杯、笔记本和柔和侧光,生活方式摄影',
+    tip: '适合礼盒、数码配件、家居小物和内容种草'
+  },
+  studio: {
+    label: '极简棚拍',
+    bg: 'linear-gradient(135deg, #EDECE8 0%, #B8BBB6 100%)',
+    prompt: '高级灰背景,柔光棚拍,干净阴影,商业摄影质感',
+    tip: '适合主图、详情页首屏和品牌升级素材'
+  },
+  outdoor: {
+    label: '自然绿植',
+    bg: 'linear-gradient(135deg, #DCEEDB 0%, #6EA27B 100%)',
+    prompt: '户外自然光,绿植、石材和清新空气感,浅景深',
+    tip: '适合宠物、运动、健康和户外生活方式商品'
+  }
+};
+
+const PICSPARK_STYLES = {
+  tmall: {
+    label: '天猫主图',
+    copy: '三秒看懂卖点,主体居中,文字区清晰克制',
+    cta: '主图转化'
+  },
+  xhs: {
+    label: '小红书种草',
+    copy: '生活化构图,弱营销感,适合笔记封面和收藏传播',
+    cta: '内容种草'
+  },
+  real: {
+    label: '真实摄影',
+    copy: '少文字,保留真实光影和材质细节,像实拍图',
+    cta: '品牌质感'
+  },
+  crossborder: {
+    label: '跨境独立站',
+    copy: '英文留白,高级生活方式视觉,适合 Shopify 首屏',
+    cta: 'DTC 落地页'
+  }
+};
+
+let _picsparkPromptCache = {};
+
+function getRunnerValue(id, fallback) {
+  const el = document.getElementById(id);
+  return el ? String(el.value || '').trim() || fallback : fallback;
+}
+
+function applyPicsparkPreset(wfId, presetId) {
+  const preset = PICSPARK_PRESETS[presetId];
+  if (!preset) return;
+  const set = (id, value) => {
+    const el = document.getElementById(id);
+    if (el) el.value = value;
+  };
+  set('picspark-product-' + wfId, preset.product);
+  set('picspark-selling-' + wfId, preset.selling);
+  set('picspark-scene-' + wfId, preset.scene);
+  set('picspark-style-' + wfId, preset.style);
+  showToast('已填入样例参数');
+}
+
+function buildPicsparkPrompt(input, scene, style) {
+  const lockText = input.lockProduct
+    ? '严格保持商品主体、包装形状、Logo 位置和颜色不变'
+    : '允许轻微优化商品光影和材质质感';
+  return [
+    `为「${input.product}」生成一张电商商品图。`,
+    lockText + '。',
+    `场景:${scene.prompt}。`,
+    `画幅:${input.ratio}, 风格:${style.label}, 目标:${style.copy}。`,
+    `核心卖点:${input.selling}。`,
+    '要求:主体清晰、边缘自然、背景真实、中文文字不要变形、预留可读文案区域。'
+  ].join('\n');
+}
+
+function runPicsparkWorkflow(wfId) {
+  const data = getData();
+  const wf = data.workflows.find(w => w.id === wfId);
+  if (!wf) return;
+
+  const output = document.getElementById('picspark-output-' + wfId);
+  const runBtn = document.getElementById('picspark-run-' + wfId);
+  if (!output) return;
+
+  const input = {
+    product: getRunnerValue('picspark-product-' + wfId, '玻尿酸精华瓶'),
+    scene: getRunnerValue('picspark-scene-' + wfId, 'kitchen'),
+    ratio: getRunnerValue('picspark-ratio-' + wfId, '1:1'),
+    style: getRunnerValue('picspark-style-' + wfId, 'tmall'),
+    selling: getRunnerValue('picspark-selling-' + wfId, '补水修护,敏感肌可用,清爽不黏腻'),
+    lockProduct: !!document.getElementById('picspark-lock-' + wfId)?.checked
+  };
+  const scene = PICSPARK_SCENES[input.scene] || PICSPARK_SCENES.kitchen;
+  const style = PICSPARK_STYLES[input.style] || PICSPARK_STYLES.tmall;
+  const prompt = buildPicsparkPrompt(input, scene, style);
+  const label = input.product.length > 8 ? input.product.slice(0, 8) : input.product;
+
+  output.classList.add('loading');
+  output.innerHTML = '<div class="runner-empty"><div><i class="fas fa-wand-magic-sparkles"></i>正在生成商品图方向</div></div>';
+  if (runBtn) {
+    runBtn.disabled = true;
+    runBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 生成中';
+  }
+
+  recordWorkflowClick(data, wfId, { source: 'inline_execution' });
+
+  setTimeout(() => {
+    _picsparkPromptCache[wfId] = prompt;
+    const runRecordData = getData();
+    runRecordData.inline_runs = runRecordData.inline_runs || [];
+    runRecordData.inline_runs.unshift({
+      id: 'run_' + Date.now(),
+      workflow_id: wfId,
+      input,
+      prompt,
+      created_at: new Date().toISOString()
+    });
+    runRecordData.inline_runs = runRecordData.inline_runs.slice(0, 20);
+    saveData(runRecordData);
+
+    output.classList.remove('loading');
+    output.innerHTML = `
+      <div class="ps-result">
+        <div class="ps-preview" style="background:${scene.bg}">
+          <span class="ps-scene-chip">${escapeHtml(scene.label)} · ${escapeHtml(style.cta)}</span>
+          <div class="ps-product" data-label="${escapeHtml(label)}"></div>
+          <div class="ps-preview-copy">
+            <span>${escapeHtml(input.ratio)}</span>
+            <span>${escapeHtml(input.lockProduct ? 'LOCK PRODUCT' : 'LIGHT RETOUCH')}</span>
+          </div>
+        </div>
+        <div class="ps-result-copy">
+          <div class="ps-result-block">
+            <h5>生成方向</h5>
+            <p>${escapeHtml(input.product)} 放在「${escapeHtml(scene.label)}」中,保留主体识别度,用「${escapeHtml(style.label)}」表达 ${escapeHtml(input.selling)}。</p>
+          </div>
+          <div class="ps-result-block">
+            <h5>投放建议</h5>
+            <ul>
+              <li>${escapeHtml(scene.tip)}</li>
+              <li>${escapeHtml(style.copy)}</li>
+              <li>建议同时生成 3 张变体:纯主图、带卖点版、详情页首屏版。</li>
+            </ul>
+          </div>
+          <div class="ps-result-block">
+            <h5>PicSpark 提示词</h5>
+            <p>${escapeHtml(prompt)}</p>
+            <div class="try-actions">
+              <button class="try-btn primary" onclick="copyPicsparkPrompt('${wfId}')"><i class="fas fa-copy"></i> 复制提示词</button>
+              <button class="try-btn" onclick="openExternalWorkflow('${wfId}')">去 PicSpark 高清生成</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    if (runBtn) {
+      runBtn.disabled = false;
+      runBtn.innerHTML = '<i class="fas fa-wand-magic-sparkles"></i> 重新生成';
+    }
+    showToast('PicSpark 演示结果已生成');
+  }, 900);
+}
+
+function copyPicsparkPrompt(wfId) {
+  const prompt = _picsparkPromptCache[wfId];
+  if (!prompt) return;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(prompt)
+      .then(() => showToast('提示词已复制'))
+      .catch(() => showToast('复制失败,可手动选中文本', true));
+  } else {
+    showToast('当前浏览器不支持自动复制', true);
   }
 }
 

@@ -72,6 +72,19 @@ function fail(code, message, details) {
   return { ok: false, error: { code, message, ...(details && { details }) } };
 }
 
+function slugify(input) {
+  const slug = String(input || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9\u4e00-\u9fa5]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  return slug || 'tool';
+}
+
+function createWorkflowId(prefix = 'wf_tool') {
+  return `${prefix}_${Date.now()}_${crypto.randomBytes(3).toString('hex')}`;
+}
+
 async function getUserFromToken(req) {
   const token = (req.headers.authorization || '').replace('Bearer ', '');
   if (!token) return null;
@@ -357,6 +370,154 @@ app.patch('/api/ad-applications/:id/status', requireAdmin, async (req, res) => {
   }
 });
 
+// ==================== 外部工具提交审核 ====================
+
+app.post('/api/tool-submissions', async (req, res) => {
+  try {
+    const { submitter_name, contact, tool_name, tool_url, tool_desc, category, tags, price_model, price_amount } = req.body;
+    if (!contact || !tool_name || !tool_url) {
+      return res.status(400).json(fail('INVALID_PARAMS', '缺少必填字段'));
+    }
+    try { new URL(tool_url); } catch {
+      return res.status(400).json(fail('INVALID_PARAMS', '工具 URL 格式不正确'));
+    }
+
+    const result = await pool.query(
+      `INSERT INTO tool_submissions
+        (submitter_name, contact, tool_name, tool_url, tool_desc, category, tags, price_model, price_amount)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+       RETURNING *`,
+      [
+        submitter_name || '',
+        contact,
+        tool_name,
+        tool_url,
+        tool_desc || '',
+        category || '其他',
+        Array.isArray(tags) ? tags : [],
+        price_model || 'free',
+        price_amount || 0
+      ]
+    );
+    res.status(201).json(ok({ submission: result.rows[0] }));
+  } catch (err) {
+    console.error('POST /api/tool-submissions error:', err.message);
+    res.status(500).json(fail('SERVER_ERROR', '服务器错误'));
+  }
+});
+
+app.get('/api/admin/tool-submissions', requireAdmin, async (req, res) => {
+  try {
+    const { status } = req.query;
+    if (status && !['pending', 'approved', 'rejected'].includes(status)) {
+      return res.status(400).json(fail('INVALID_PARAMS', '无效审核状态'));
+    }
+    const params = [];
+    let query = 'SELECT * FROM tool_submissions';
+    if (status) {
+      query += ' WHERE status = $1';
+      params.push(status);
+    }
+    query += ' ORDER BY submitted_at DESC';
+    const result = await pool.query(query, params);
+    res.json(ok({ submissions: result.rows }));
+  } catch (err) {
+    console.error('GET /api/admin/tool-submissions error:', err.message);
+    res.status(500).json(fail('SERVER_ERROR', '服务器错误'));
+  }
+});
+
+app.post('/api/admin/tool-submissions/:id/approve', requireAdmin, async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const { id } = req.params;
+    await client.query('BEGIN');
+
+    const submissionResult = await client.query(
+      `SELECT * FROM tool_submissions WHERE id = $1 FOR UPDATE`,
+      [id]
+    );
+    if (!submissionResult.rows.length) {
+      await client.query('ROLLBACK');
+      return res.status(404).json(fail('RESOURCE_NOT_FOUND', '提交记录不存在'));
+    }
+    const submission = submissionResult.rows[0];
+    if (submission.status !== 'pending') {
+      await client.query('ROLLBACK');
+      return res.status(400).json(fail('INVALID_STATUS', '该提交已处理'));
+    }
+
+    const workflowId = createWorkflowId('wf_tool');
+    const slug = `${slugify(submission.tool_name)}-${workflowId.slice(-6)}`;
+    const workflowResult = await client.query(
+      `INSERT INTO workflows
+        (id, name, slug, tagline, description, category, tags, type, target_url,
+         cover_color, status, rating, review_count, price_model, price_amount,
+         is_free, pro_only, examples, created_at, updated_at)
+       VALUES
+        ($1, $2, $3, $4, $5, $6, $7, 'recommend', $8,
+         '#B85C00', 'active', 4.5, 0, $9, $10,
+         $11, false, '[]'::jsonb, NOW(), NOW())
+       RETURNING *`,
+      [
+        workflowId,
+        submission.tool_name,
+        slug,
+        (submission.tool_desc || '用户提交的外部 AI 工具').slice(0, 80),
+        submission.tool_desc || '用户提交的外部 AI 工具',
+        submission.category || '其他',
+        submission.tags || [],
+        submission.tool_url,
+        submission.price_model || 'free',
+        submission.price_amount || 0,
+        (submission.price_model || 'free') === 'free'
+      ]
+    );
+
+    const updatedSubmission = await client.query(
+      `UPDATE tool_submissions
+       SET status = 'approved', workflow_id = $1, reviewed_at = NOW(), admin_note = COALESCE($2, admin_note)
+       WHERE id = $3
+       RETURNING *`,
+      [workflowId, req.body.admin_note || null, id]
+    );
+
+    await client.query('COMMIT');
+    res.json(ok({ submission: updatedSubmission.rows[0], workflow: workflowResult.rows[0] }));
+  } catch (err) {
+    await client.query('ROLLBACK');
+    console.error('POST /api/admin/tool-submissions/:id/approve error:', err.message);
+    res.status(500).json(fail('SERVER_ERROR', '服务器错误'));
+  } finally {
+    client.release();
+  }
+});
+
+app.post('/api/admin/tool-submissions/:id/reject', requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { admin_note } = req.body;
+    const result = await pool.query(
+      `UPDATE tool_submissions
+       SET status = 'rejected', admin_note = $1, reviewed_at = NOW()
+       WHERE id = $2 AND status = 'pending'
+       RETURNING *`,
+      [admin_note || '', id]
+    );
+    if (!result.rows.length) {
+      const existing = await pool.query('SELECT status FROM tool_submissions WHERE id = $1', [id]);
+      if (!existing.rows.length) {
+        return res.status(404).json(fail('RESOURCE_NOT_FOUND', '提交记录不存在'));
+      }
+      return res.status(400).json(fail('INVALID_STATUS', '该提交已处理'));
+    }
+    res.json(ok({ submission: result.rows[0] }));
+  } catch (err) {
+    console.error('POST /api/admin/tool-submissions/:id/reject error:', err.message);
+    res.status(500).json(fail('SERVER_ERROR', '服务器错误'));
+  }
+});
+
 // ==================== 管理后台统计 ====================
 
 app.get('/api/admin/stats', requireAdmin, async (req, res) => {
@@ -378,15 +539,19 @@ app.get('/api/admin/stats', requireAdmin, async (req, res) => {
     `);
 
     const clickStats = await pool.query(`
-      SELECT COUNT(*) as today_clicks FROM clicks WHERE clicked_at > CURRENT_DATE
+      SELECT
+        COUNT(*) FILTER (WHERE clicked_at >= CURRENT_DATE) as today_clicks,
+        COUNT(*) FILTER (WHERE clicked_at > NOW() - INTERVAL '7 days') as clicks_7d,
+        COUNT(*) as total_real
+      FROM clicks
     `);
 
-    const totalSeedClicks = await pool.query(`
-      SELECT COALESCE(SUM(seed_clicks), 0) as total_seed FROM workflows WHERE status = 'active'
-    `);
-
-    const totalRealClicks = await pool.query(`
-      SELECT COUNT(*) as total_real FROM clicks
+    const seedClickStats = await pool.query(`
+      SELECT
+        COALESCE(SUM(seed_clicks), 0) as total_seed,
+        COALESCE(SUM(seed_clicks_7d), 0) as seed_7d
+      FROM workflows
+      WHERE status = 'active'
     `);
 
     const adStats = await pool.query(`
@@ -396,9 +561,54 @@ app.get('/api/admin/stats', requireAdmin, async (req, res) => {
       FROM ad_applications
     `);
 
+    const toolSubmissionStats = await pool.query(`
+      SELECT
+        COUNT(*) FILTER (WHERE status = 'pending') as pending,
+        COUNT(*) FILTER (WHERE status = 'approved') as approved,
+        COUNT(*) FILTER (WHERE status = 'rejected') as rejected
+      FROM tool_submissions
+    `);
+
+    const workflowRanking = await pool.query(`
+      SELECT
+        w.id, w.name, w.category, w.type, w.target_url, w.rating,
+        (w.seed_clicks + COUNT(c.id))::INTEGER as clicks
+      FROM workflows w
+      LEFT JOIN clicks c ON c.workflow_id = w.id
+      WHERE w.status = 'active'
+      GROUP BY w.id
+      ORDER BY clicks DESC
+      LIMIT 10
+    `);
+
+    const searchRanking = await pool.query(`
+      SELECT search_query, COUNT(*)::INTEGER as clicks
+      FROM clicks
+      WHERE search_query IS NOT NULL AND BTRIM(search_query) <> ''
+      GROUP BY search_query
+      ORDER BY clicks DESC
+      LIMIT 10
+    `);
+
+    const externalRanking = await pool.query(`
+      SELECT
+        w.id, w.name, w.category, w.target_url,
+        (w.seed_clicks + COUNT(c.id))::INTEGER as clicks
+      FROM workflows w
+      LEFT JOIN clicks c ON c.workflow_id = w.id
+      WHERE w.status = 'active' AND w.type = 'recommend'
+      GROUP BY w.id
+      ORDER BY clicks DESC
+      LIMIT 10
+    `);
+
     const u = userStats.rows[0];
     const w = wfStats.rows[0];
-    const totalClicks = parseInt(totalSeedClicks.rows[0].total_seed) + parseInt(totalRealClicks.rows[0].total_real);
+    const c = clickStats.rows[0];
+    const s = seedClickStats.rows[0];
+    const ts = toolSubmissionStats.rows[0];
+    const totalClicks = parseInt(s.total_seed) + parseInt(c.total_real);
+    const sevenDayClicks = parseInt(s.seed_7d) + parseInt(c.clicks_7d);
 
     res.json(ok({
       users: {
@@ -410,11 +620,27 @@ app.get('/api/admin/stats', requireAdmin, async (req, res) => {
         active: parseInt(w.active),
         reviewing: parseInt(w.reviewing),
         total_calls: totalClicks,
-        today_calls: parseInt(clickStats.rows[0].today_clicks)
+        today_calls: parseInt(c.today_clicks),
+        last_7_days_calls: sevenDayClicks
+      },
+      clicks: {
+        total: totalClicks,
+        today: parseInt(c.today_clicks),
+        last_7_days: sevenDayClicks
       },
       ad_applications: {
         pending: parseInt(adStats.rows[0].pending),
         approved_this_month: parseInt(adStats.rows[0].approved_this_month)
+      },
+      tool_submissions: {
+        pending: parseInt(ts.pending),
+        approved: parseInt(ts.approved),
+        rejected: parseInt(ts.rejected)
+      },
+      rankings: {
+        workflows: workflowRanking.rows,
+        search_terms: searchRanking.rows,
+        external_redirects: externalRanking.rows
       }
     }));
   } catch (err) {
@@ -498,13 +724,17 @@ app.get('/api/data', requireAdmin, async (req, res) => {
     const clicks = await pool.query(
       `SELECT * FROM clicks ORDER BY clicked_at DESC LIMIT 1000`
     );
+    const toolSubmissions = await pool.query(
+      `SELECT * FROM tool_submissions ORDER BY submitted_at DESC`
+    );
 
     res.json(ok({
       workflows: workflows.rows,
       reviews: reviews.rows,
       clicks: clicks.rows,
       ad_applications: adApps.rows,
-      ad_slots: adSlots.rows
+      ad_slots: adSlots.rows,
+      tool_submissions: toolSubmissions.rows
     }));
   } catch (err) {
     console.error('GET /api/data error:', err.message);

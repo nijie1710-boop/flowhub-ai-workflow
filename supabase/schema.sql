@@ -77,6 +77,28 @@ CREATE INDEX IF NOT EXISTS idx_workflows_status ON workflows(status);
 CREATE INDEX IF NOT EXISTS idx_workflows_category ON workflows(category);
 CREATE INDEX IF NOT EXISTS idx_workflows_type ON workflows(type);
 
+-- ========== 外部工具提交审核 ==========
+CREATE TABLE IF NOT EXISTS tool_submissions (
+  id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::TEXT,
+  submitter_name TEXT,
+  contact TEXT NOT NULL,
+  tool_name TEXT NOT NULL,
+  tool_url TEXT NOT NULL,
+  tool_desc TEXT,
+  category TEXT DEFAULT '其他',
+  tags TEXT[] DEFAULT '{}',
+  price_model TEXT DEFAULT 'free',
+  price_amount DECIMAL DEFAULT 0,
+  status TEXT DEFAULT 'pending' CHECK (status IN ('pending','approved','rejected')),
+  admin_note TEXT,
+  workflow_id TEXT REFERENCES workflows(id) ON DELETE SET NULL,
+  submitted_at TIMESTAMPTZ DEFAULT NOW(),
+  reviewed_at TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS idx_tool_submissions_status ON tool_submissions(status);
+CREATE INDEX IF NOT EXISTS idx_tool_submissions_submitted_at ON tool_submissions(submitted_at);
+
 -- ========== 调用记录 ==========
 CREATE TABLE IF NOT EXISTS clicks (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
