@@ -1576,6 +1576,13 @@
     z-index: 1;
     overflow: visible;
   }
+  .iv-link-hit {
+    fill: none;
+    stroke: transparent;
+    stroke-width: 14;
+    pointer-events: stroke;
+    cursor: pointer;
+  }
   .iv-link-path {
     fill: none;
     stroke: rgba(99,80,216,0.82);
@@ -1585,10 +1592,79 @@
     stroke-dasharray: 6 7;
     opacity: 0.72;
   }
+  .iv-link-path.running {
+    stroke: rgba(26,93,58,0.92);
+    stroke-dasharray: 8 6;
+    animation: iv-link-flow 0.8s linear infinite;
+  }
+  .iv-link-path.done {
+    stroke: rgba(26,93,58,0.82);
+  }
+  @keyframes iv-link-flow {
+    to { stroke-dashoffset: -14; }
+  }
   .iv-link-dot {
     fill: #fff;
     stroke: rgba(99,80,216,0.9);
     stroke-width: 2;
+  }
+  .iv-link-dot.running,
+  .iv-link-dot.done {
+    stroke: rgba(26,93,58,0.9);
+  }
+  .iv-node-port {
+    position: absolute;
+    top: 46%;
+    width: 15px;
+    height: 15px;
+    border: 2px solid rgba(91,63,168,0.85);
+    border-radius: 50%;
+    background: #fff;
+    z-index: 7;
+    padding: 0;
+    box-shadow: 0 5px 14px rgba(91,63,168,0.18);
+  }
+  .iv-node-port.in {
+    left: -8px;
+  }
+  .iv-node-port.out {
+    right: -8px;
+  }
+  .iv-node-port:hover,
+  .iv-node-port.active {
+    background: var(--pro);
+    border-color: var(--pro);
+    transform: scale(1.16);
+  }
+  .iv-node-state {
+    border-radius: 999px;
+    padding: 3px 7px;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--ink-3);
+    background: var(--bg-soft);
+    white-space: nowrap;
+  }
+  .iv-node-state.running {
+    color: var(--pro);
+    background: rgba(91,63,168,0.1);
+  }
+  .iv-node-state.done {
+    color: var(--self);
+    background: rgba(26,93,58,0.1);
+  }
+  .iv-node-state.error {
+    color: #B42318;
+    background: rgba(180,35,24,0.08);
+  }
+  .iv-flow-card.status-running,
+  .iv-shot-card.status-running {
+    border-color: rgba(91,63,168,0.72);
+    box-shadow: 0 18px 44px rgba(91,63,168,0.16), 0 0 0 3px rgba(91,63,168,0.08);
+  }
+  .iv-flow-card.status-done,
+  .iv-shot-card.status-done {
+    border-color: rgba(26,93,58,0.42);
   }
   .iv-drop-hint {
     position: absolute;
@@ -9429,7 +9505,7 @@ function renderRun() {
   const topbarActions = isImageVideoRun ? `
           <button class="run-action-btn icon-only" onclick="undoIvCanvas('${wf.id}')" title="撤销">↶</button>
           <button class="run-action-btn icon-only" onclick="redoIvCanvas('${wf.id}')" title="重做">↷</button>
-          <button class="run-action-btn" onclick="generateVideo3Preview('${wf.id}')">▶ 运行</button>
+          <button class="run-action-btn" onclick="runIvWorkflow('${wf.id}')">▶ 运行</button>
           <button class="run-action-btn" onclick="saveIvProject('${wf.id}')"><i class="fas fa-cloud-arrow-up"></i> 保存</button>
           <button class="run-action-btn" onclick="exportIvProject('${wf.id}')"><i class="fas fa-download"></i> 导出</button>
           <button class="run-action-btn" onclick="openIvProjectImport('${wf.id}')"><i class="fas fa-file-import"></i> 导入</button>
@@ -9662,7 +9738,7 @@ function renderImageVideoRunner(wf) {
                 <button class="runner-primary" id="iv-image-btn-${wf.id}" onclick="generateImage2Asset('${wf.id}')">
                   <i class="fas fa-image"></i> 生成图片
                 </button>
-                <button class="runner-secondary" onclick="generateVideo3Preview('${wf.id}')">
+                <button class="runner-secondary" onclick="runIvWorkflow('${wf.id}')">
                   <i class="fas fa-video"></i> 生成视频
                 </button>
               </div>
@@ -13386,6 +13462,7 @@ let _ivDragState = null;
 let _ivPanState = null;
 let _ivHistory = {};
 let _ivBoardsLoaded = false;
+let _ivConnectionDraft = null;
 
 const IV_PROJECT_STORAGE_KEY = 'flowhub_image_video_boards_v1';
 const IV_CANVAS = { width: 1900, height: 1000 };
@@ -13402,7 +13479,10 @@ function createEmptyIvBoard() {
     assets: [],
     shots: [],
     notes: [],
+    connections: [],
+    nodeStates: {},
     video: null,
+    running: false,
     zoom: 1,
     grid: true,
     locked: false,
@@ -13425,7 +13505,10 @@ function normalizeIvBoardPayload(board) {
   next.assets = Array.isArray(source.assets) ? source.assets.filter(asset => asset && asset.id) : [];
   next.shots = Array.isArray(source.shots) ? source.shots.filter(shot => shot && shot.id && shot.assetId) : [];
   next.notes = Array.isArray(source.notes) ? source.notes.filter(note => note && note.id) : [];
+  next.connections = Array.isArray(source.connections) ? source.connections.filter(conn => conn && conn.from && conn.to) : [];
+  next.nodeStates = source.nodeStates && typeof source.nodeStates === 'object' ? source.nodeStates : {};
   next.video = source.video && typeof source.video === 'object' ? source.video : null;
+  next.running = false;
   next.nodePositions = source.nodePositions && typeof source.nodePositions === 'object' ? source.nodePositions : {};
   next.tool = ['select', 'pan'].includes(source.tool) ? source.tool : 'select';
   next.selectedNode = typeof source.selectedNode === 'string' ? source.selectedNode : '';
@@ -13500,7 +13583,10 @@ function ensureImageVideoBoardState(board) {
   board.assets = board.assets || [];
   board.shots = board.shots || [];
   board.notes = board.notes || [];
+  board.connections = Array.isArray(board.connections) ? board.connections : [];
+  board.nodeStates = board.nodeStates && typeof board.nodeStates === 'object' ? board.nodeStates : {};
   board.video = board.video || null;
+  board.running = !!board.running;
   board.zoom = board.zoom || 1;
   board.grid = board.grid !== false;
   board.locked = !!board.locked;
@@ -13518,6 +13604,7 @@ function ensureImageVideoBoardState(board) {
     if (typeof note.x !== 'number') note.x = 330 + index * 36;
     if (typeof note.y !== 'number') note.y = 620 + index * 22;
   });
+  syncIvWorkflowConnections(board);
 }
 
 function cloneIvBoard(board) {
@@ -13525,6 +13612,8 @@ function cloneIvBoard(board) {
     assets: board.assets,
     shots: board.shots,
     notes: board.notes,
+    connections: board.connections,
+    nodeStates: board.nodeStates,
     video: board.video,
     nodePositions: board.nodePositions,
     zoom: board.zoom,
@@ -13533,6 +13622,100 @@ function cloneIvBoard(board) {
     tool: board.tool,
     selectedNode: board.selectedNode
   }));
+}
+
+function getIvNodeKey(type, id) {
+  return `${type}:${id}`;
+}
+
+function isIvWorkflowNodePresent(board, type, id) {
+  if (type === 'config') return id === 'config';
+  if (type === 'video') return id === 'video';
+  if (type === 'output') return id === 'output' && !!board.video;
+  if (type === 'shot') return board.shots.some(shot => shot.id === id);
+  if (type === 'note') return board.notes.some(note => note.id === id);
+  return false;
+}
+
+function makeIvConnection(fromType, fromId, toType, toId, status = 'idle') {
+  return {
+    id: `conn_${fromType}_${fromId}_${toType}_${toId}`.replace(/[^a-zA-Z0-9_]/g, '_'),
+    from: { type: fromType, id: fromId, port: 'out' },
+    to: { type: toType, id: toId, port: 'in' },
+    status
+  };
+}
+
+function getIvDefaultConnections(board) {
+  const links = [];
+  if (board.shots.length) {
+    links.push(makeIvConnection('config', 'config', 'shot', board.shots[0].id));
+    board.shots.forEach((shot, index) => {
+      const next = board.shots[index + 1];
+      if (next) links.push(makeIvConnection('shot', shot.id, 'shot', next.id));
+    });
+    links.push(makeIvConnection('shot', board.shots[board.shots.length - 1].id, 'video', 'video'));
+  } else {
+    links.push(makeIvConnection('config', 'config', 'video', 'video', 'pending'));
+  }
+  if (board.video) links.push(makeIvConnection('video', 'video', 'output', 'output', 'done'));
+  return links;
+}
+
+function syncIvWorkflowConnections(board, options = {}) {
+  const force = !!options.force;
+  const defaults = getIvDefaultConnections(board);
+  const valid = (board.connections || []).filter(conn =>
+    conn.from && conn.to &&
+    isIvWorkflowNodePresent(board, conn.from.type, conn.from.id) &&
+    isIvWorkflowNodePresent(board, conn.to.type, conn.to.id)
+  );
+  const defaultIds = new Set(defaults.map(conn => conn.id));
+  let next = force || !valid.length ? defaults : valid;
+  if (!board.video) next = next.filter(conn => conn.to.type !== 'output' && conn.from.type !== 'output');
+  board.connections = next.map(conn => ({
+    ...conn,
+    status: conn.status || (defaultIds.has(conn.id) ? 'idle' : 'custom')
+  }));
+}
+
+function getIvNodeStatus(board, type, id) {
+  const key = getIvNodeKey(type, id);
+  return board.nodeStates[key] || 'idle';
+}
+
+function setIvNodeStatus(board, type, id, status) {
+  board.nodeStates[getIvNodeKey(type, id)] = status;
+}
+
+function resetIvExecutionState(board) {
+  board.running = false;
+  board.nodeStates = {};
+  (board.connections || []).forEach(conn => {
+    conn.status = conn.status === 'custom' ? 'custom' : 'idle';
+  });
+}
+
+function getIvNodeStatusLabel(status) {
+  if (status === 'running') return '运行中';
+  if (status === 'done') return '完成';
+  if (status === 'error') return '失败';
+  return '就绪';
+}
+
+function renderIvNodeState(board, type, id) {
+  const status = getIvNodeStatus(board, type, id);
+  return `<span class="iv-node-state ${status}">${getIvNodeStatusLabel(status)}</span>`;
+}
+
+function renderIvPort(wfId, type, id, port) {
+  const active = _ivConnectionDraft &&
+    _ivConnectionDraft.wfId === wfId &&
+    _ivConnectionDraft.type === type &&
+    _ivConnectionDraft.id === id &&
+    _ivConnectionDraft.port === port;
+  const title = port === 'out' ? '输出端口:点击后连接到下个节点' : '输入端口:接收上个节点输出';
+  return `<button class="iv-node-port ${port} ${active ? 'active' : ''}" title="${title}" onclick="handleIvPortClick(event,'${wfId}','${type}','${id}','${port}')"></button>`;
 }
 
 function getIvHistory(wfId) {
@@ -13916,6 +14099,8 @@ function renderImageVideoPreviewBox(wfId, options = {}) {
 function resetImageVideoPreview(wfId) {
   const board = getImageVideoBoard(wfId);
   board.video = null;
+  resetIvExecutionState(board);
+  syncIvWorkflowConnections(board, { force: true });
   renderImageVideoPreviewBox(wfId, { empty: true });
   renderImageVideoAssets(wfId);
 }
@@ -14023,6 +14208,7 @@ function addImageAssetToCanvas(wfId, assetId, point, options = {}) {
     x: pos.x,
     y: pos.y
   });
+  syncIvWorkflowConnections(board, { force: true });
   renderImageVideoCanvas(wfId);
   persistIvBoard(wfId, { silent: true });
   showToast('已加入镜头画布');
@@ -14033,6 +14219,7 @@ function removeIvShot(wfId, shotId) {
   pushIvHistory(wfId);
   board.shots = board.shots.filter(shot => shot.id !== shotId);
   resetImageVideoPreview(wfId);
+  syncIvWorkflowConnections(board, { force: true });
   renderImageVideoCanvas(wfId);
   persistIvBoard(wfId, { silent: true });
 }
@@ -14070,19 +14257,14 @@ function getIvNodeCenter(board, type, id, side = 'right') {
 }
 
 function getIvWorkflowLinks(board) {
-  const links = [];
-  if (board.shots.length) {
-    links.push({ from: ['config', 'config'], to: ['shot', board.shots[0].id] });
-    board.shots.forEach((shot, index) => {
-      const next = board.shots[index + 1];
-      if (next) links.push({ from: ['shot', shot.id], to: ['shot', next.id] });
-    });
-    links.push({ from: ['shot', board.shots[board.shots.length - 1].id], to: ['video', 'video'], pending: !board.video });
-  } else {
-    links.push({ from: ['config', 'config'], to: ['video', 'video'], pending: true });
-  }
-  if (board.video) links.push({ from: ['video', 'video'], to: ['output', 'output'] });
-  return links;
+  syncIvWorkflowConnections(board);
+  return board.connections.map(conn => ({
+    id: conn.id,
+    from: [conn.from.type, conn.from.id],
+    to: [conn.to.type, conn.to.id],
+    status: conn.status || 'idle',
+    pending: conn.status === 'pending' || (!board.video && conn.to.type === 'output')
+  }));
 }
 
 function renderIvLinkSvg(wfId) {
@@ -14092,12 +14274,65 @@ function renderIvLinkSvg(wfId) {
     const to = getIvNodeCenter(board, link.to[0], link.to[1], 'left');
     const mid = Math.max(from.x + 50, (from.x + to.x) / 2);
     const d = `M ${from.x} ${from.y} C ${mid} ${from.y}, ${mid} ${to.y}, ${to.x} ${to.y}`;
+    const cls = `${link.pending ? 'pending' : ''} ${escapeHtml(link.status || '')}`;
     return `
-      <path class="iv-link-path ${link.pending ? 'pending' : ''}" d="${d}"></path>
-      <circle class="iv-link-dot" cx="${from.x}" cy="${from.y}" r="5"></circle>
-      <circle class="iv-link-dot" cx="${to.x}" cy="${to.y}" r="5"></circle>
+      <path class="iv-link-hit" d="${d}" onclick="removeIvConnection(event,'${wfId}','${link.id}')"></path>
+      <path class="iv-link-path ${cls}" d="${d}"></path>
+      <circle class="iv-link-dot ${escapeHtml(link.status || '')}" cx="${from.x}" cy="${from.y}" r="5"></circle>
+      <circle class="iv-link-dot ${escapeHtml(link.status || '')}" cx="${to.x}" cy="${to.y}" r="5"></circle>
     `;
   }).join('');
+}
+
+function handleIvPortClick(event, wfId, type, id, port) {
+  event.preventDefault();
+  event.stopPropagation();
+  const board = getImageVideoBoard(wfId);
+  if (board.locked) return showToast('画布已锁定,先关闭锁定再连接节点', true);
+  if (port === 'out') {
+    _ivConnectionDraft = { wfId, type, id, port };
+    renderImageVideoCanvas(wfId);
+    showToast('已选择输出端口,点击下个节点的输入端口完成连接');
+    return;
+  }
+  if (!_ivConnectionDraft || _ivConnectionDraft.wfId !== wfId) {
+    showToast('请先点击一个输出端口', true);
+    return;
+  }
+  if (_ivConnectionDraft.type === type && _ivConnectionDraft.id === id) {
+    showToast('不能连接到同一个节点', true);
+    return;
+  }
+  pushIvHistory(wfId);
+  const conn = makeIvConnection(_ivConnectionDraft.type, _ivConnectionDraft.id, type, id);
+  board.connections = (board.connections || []).filter(item => item.id !== conn.id && !(item.to.type === type && item.to.id === id));
+  board.connections.push(conn);
+  _ivConnectionDraft = null;
+  board.video = null;
+  resetIvExecutionState(board);
+  renderImageVideoPreviewBox(wfId, { empty: true });
+  renderImageVideoAssets(wfId);
+  renderImageVideoCanvas(wfId);
+  persistIvBoard(wfId, { silent: true });
+  showToast('节点已连接');
+}
+
+function removeIvConnection(event, wfId, connId) {
+  event.preventDefault();
+  event.stopPropagation();
+  const board = getImageVideoBoard(wfId);
+  if (board.locked) return showToast('画布已锁定,先关闭锁定再删除连接', true);
+  const conn = board.connections.find(item => item.id === connId);
+  if (!conn) return;
+  pushIvHistory(wfId);
+  board.connections = board.connections.filter(item => item.id !== connId);
+  board.video = null;
+  resetIvExecutionState(board);
+  renderImageVideoPreviewBox(wfId, { empty: true });
+  renderImageVideoAssets(wfId);
+  renderImageVideoCanvas(wfId);
+  persistIvBoard(wfId, { silent: true });
+  showToast('连接已删除');
 }
 
 function redrawIvLinks(wfId) {
@@ -14208,11 +14443,11 @@ function renderImageVideoCanvas(wfId) {
 
   const configNode = `
     <div class="iv-flow-node config-node iv-draggable-node ${selected === 'config:config' ? 'selected' : ''}" style="left:${configPos.x}px;top:${configPos.y}px" onpointerdown="startIvNodeDrag(event,'${wfId}','config','config')">
-      <div class="iv-flow-card">
+      <div class="iv-flow-card status-${getIvNodeStatus(board, 'config', 'config')}">
         <div class="iv-node-head">
           <span class="iv-node-index">1</span>
           <strong>Image2Image 生图</strong>
-          <span class="iv-node-ok"><i class="fas fa-check-circle"></i></span>
+          ${renderIvNodeState(board, 'config', 'config')}
           <span class="iv-node-grip">••</span>
         </div>
         <div class="iv-node-body">
@@ -14222,6 +14457,7 @@ function renderImageVideoCanvas(wfId) {
           <div class="iv-node-row"><span>尺寸</span><span class="iv-node-pill">${escapeHtml(ratio)}</span></div>
         </div>
       </div>
+      ${renderIvPort(wfId, 'config', 'config', 'out')}
     </div>
   `;
 
@@ -14230,11 +14466,12 @@ function renderImageVideoCanvas(wfId) {
     if (!asset) return '';
     return `
       <div class="iv-shot-node iv-draggable-node ${selected === 'shot:' + shot.id ? 'selected' : ''}" style="left:${shot.x}px;top:${shot.y}px" onpointerdown="startIvNodeDrag(event,'${wfId}','shot','${shot.id}')">
-        <div class="iv-shot-card">
+        ${renderIvPort(wfId, 'shot', shot.id, 'in')}
+        <div class="iv-shot-card status-${getIvNodeStatus(board, 'shot', shot.id)}">
           <div class="iv-node-head">
             <span class="iv-node-index">${index + 2}</span>
             <strong>生成图片</strong>
-            <span class="iv-node-ok"><i class="fas fa-check-circle"></i></span>
+            ${renderIvNodeState(board, 'shot', shot.id)}
             <span class="iv-node-grip">••</span>
           </div>
           <div class="iv-shot-preview" data-scene="${escapeHtml(asset.title)}" style="background:${asset.bg}"></div>
@@ -14247,17 +14484,19 @@ function renderImageVideoCanvas(wfId) {
             </div>
           </div>
         </div>
+        ${renderIvPort(wfId, 'shot', shot.id, 'out')}
       </div>
     `;
   }).join('');
 
   const videoNode = `
     <div class="iv-flow-node video-node iv-draggable-node ${selected === 'video:video' ? 'selected' : ''}" style="left:${videoPos.x}px;top:${videoPos.y}px" onpointerdown="startIvNodeDrag(event,'${wfId}','video','video')">
-      <div class="iv-flow-card video">
+      ${renderIvPort(wfId, 'video', 'video', 'in')}
+      <div class="iv-flow-card video status-${getIvNodeStatus(board, 'video', 'video')}">
         <div class="iv-node-head">
           <span class="iv-node-index">${board.shots.length + 2}</span>
           <strong>Grok Video-3 生视频</strong>
-          <span class="iv-node-ok">${board.video ? '<i class="fas fa-check-circle"></i>' : '<i class="fas fa-circle-notch"></i>'}</span>
+          ${renderIvNodeState(board, 'video', 'video')}
           <span class="iv-node-grip">••</span>
         </div>
         <div class="iv-node-body">
@@ -14268,17 +14507,19 @@ function renderImageVideoCanvas(wfId) {
           <div class="iv-node-row"><span>分辨率</span><span class="iv-node-pill">${escapeHtml(ratio === '16:9' ? '1280 x 720' : ratio === '1:1' ? '1024 x 1024' : '720 x 1280')}</span></div>
         </div>
       </div>
+      ${renderIvPort(wfId, 'video', 'video', 'out')}
     </div>
   `;
 
   const outputAsset = board.video ? (board.assets.find(item => item.id === board.video.firstAssetId) || firstAsset) : null;
   const outputNode = board.video ? `
       <div class="iv-flow-node output-node iv-draggable-node ${selected === 'output:output' ? 'selected' : ''}" style="left:${outputPos.x}px;top:${outputPos.y}px" onpointerdown="startIvNodeDrag(event,'${wfId}','output','output')">
-        <div class="iv-flow-card output">
+        ${renderIvPort(wfId, 'output', 'output', 'in')}
+        <div class="iv-flow-card output status-${getIvNodeStatus(board, 'output', 'output')}">
           <div class="iv-node-head">
             <span class="iv-node-index">${board.shots.length + 3}</span>
             <strong>视频输出</strong>
-            <span class="iv-node-ok"><i class="fas fa-check-circle"></i></span>
+            ${renderIvNodeState(board, 'output', 'output')}
             <span class="iv-node-grip">••</span>
           </div>
           <div class="iv-shot-preview" data-scene="${escapeHtml(outputAsset ? outputAsset.title : '视频预览')}" style="background:${outputAsset ? outputAsset.bg : 'linear-gradient(135deg,#0F0F0E,#1A5D3A)'}"></div>
@@ -14344,6 +14585,7 @@ function duplicateIvShot(wfId, shotId) {
     x: shot.x + 42,
     y: shot.y + 42
   });
+  syncIvWorkflowConnections(board, { force: true });
   renderImageVideoCanvas(wfId);
   persistIvBoard(wfId, { silent: true });
   showToast('镜头已复制');
@@ -14548,18 +14790,83 @@ function publishIvWorkflow(wfId) {
   `);
 }
 
-function generateVideo3Preview(wfId) {
+function hasIvConnection(board, fromType, fromId, toType, toId) {
+  return (board.connections || []).some(conn =>
+    conn.from.type === fromType &&
+    conn.from.id === fromId &&
+    conn.to.type === toType &&
+    conn.to.id === toId
+  );
+}
+
+function setIvConnectionStatus(board, fromType, fromId, toType, toId, status) {
+  const conn = (board.connections || []).find(item =>
+    item.from.type === fromType &&
+    item.from.id === fromId &&
+    item.to.type === toType &&
+    item.to.id === toId
+  );
+  if (conn) conn.status = status;
+}
+
+function getIvExecutionPlan(board) {
+  const plan = [{ type: 'config', id: 'config', label: 'Image2Image 生图' }];
+  board.shots.forEach((shot, index) => {
+    plan.push({ type: 'shot', id: shot.id, label: `镜头 ${index + 1}` });
+  });
+  plan.push({ type: 'video', id: 'video', label: 'Grok Video-3 生视频' });
+  return plan;
+}
+
+function validateIvWorkflowGraph(board) {
+  if (board.shots.length < 2) return '至少需要 2 个镜头才能运行视频工作流';
+  const first = board.shots[0];
+  if (!hasIvConnection(board, 'config', 'config', 'shot', first.id)) return 'Image2Image 节点还没有连接到第一个镜头';
+  for (let i = 0; i < board.shots.length - 1; i++) {
+    const current = board.shots[i];
+    const next = board.shots[i + 1];
+    if (!hasIvConnection(board, 'shot', current.id, 'shot', next.id)) return `镜头 ${i + 1} 还没有连接到镜头 ${i + 2}`;
+  }
+  const last = board.shots[board.shots.length - 1];
+  if (!hasIvConnection(board, 'shot', last.id, 'video', 'video')) return '最后一个镜头还没有连接到 Grok Video-3 节点';
+  return '';
+}
+
+function waitIv(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function runIvWorkflow(wfId) {
   const board = getImageVideoBoard(wfId);
   const videoBox = document.getElementById('iv-video-' + wfId);
   if (!videoBox) return;
-  if (board.shots.length < 2) {
-    showToast('至少需要 2 个镜头才能生成视频', true);
-    return;
-  }
+  if (board.running) return showToast('工作流正在运行中', true);
+  const validation = validateIvWorkflowGraph(board);
+  if (validation) return showToast(validation, true);
+
   pushIvHistory(wfId);
+  board.running = true;
+  board.video = null;
+  board.nodeStates = {};
+  (board.connections || []).forEach(conn => { conn.status = 'idle'; });
   videoBox.innerHTML = '<div class="iv-video-empty"><i class="fas fa-spinner fa-spin" style="margin-right:6px"></i>正在调用视频引擎生成预览...</div>';
+  appendIvMessage(wfId, 'bot', '已开始按画布连接顺序运行: Image2 → 镜头链路 → Grok Video-3 → 视频输出。');
   recordWorkflowClick(getData(), wfId, { source: 'video3_generation' });
-  setTimeout(() => {
+
+  const plan = getIvExecutionPlan(board);
+  try {
+    for (let i = 0; i < plan.length; i++) {
+      const node = plan[i];
+      const prev = plan[i - 1];
+      if (prev) setIvConnectionStatus(board, prev.type, prev.id, node.type, node.id, 'running');
+      setIvNodeStatus(board, node.type, node.id, 'running');
+      renderImageVideoCanvas(wfId);
+      await waitIv(node.type === 'video' ? 420 : 220);
+      setIvNodeStatus(board, node.type, node.id, 'done');
+      if (prev) setIvConnectionStatus(board, prev.type, prev.id, node.type, node.id, 'done');
+      renderImageVideoCanvas(wfId);
+    }
+
     const duration = board.shots.reduce((sum, shot) => sum + Number(shot.duration || 2), 0).toFixed(1);
     const firstAsset = board.assets.find(item => item.id === board.shots[0].assetId);
     const ratio = getRunnerValue('iv-ratio-' + wfId, '9:16');
@@ -14571,22 +14878,16 @@ function generateVideo3Preview(wfId) {
       engine: 'Grok Video-3',
       created_at: new Date().toISOString()
     };
-    videoBox.innerHTML = `
-      <div class="iv-video-result">
-        <div class="iv-video-thumb" style="background:${firstAsset ? firstAsset.bg : 'linear-gradient(135deg,#0F0F0E,#1A5D3A)'}"></div>
-        <div class="iv-video-copy">
-          <h5>视频预览已生成</h5>
-          <p>${board.shots.length} 个镜头 · ${duration}s · ${escapeHtml(ratio)}<br>当前为 Grok Video-3 生成链路占位,后续可替换真实 API 返回的视频 URL。</p>
-          <div class="try-actions">
-            <button class="try-btn primary" onclick="showToast('演示版暂不提供下载')"><i class="fas fa-play"></i> 预览</button>
-            <button class="try-btn" onclick="generateVideo3Preview('${wfId}')">重新生成</button>
-          </div>
-        </div>
-      </div>
-    `;
+    const outputConn = makeIvConnection('video', 'video', 'output', 'output', 'done');
+    board.connections = board.connections.filter(conn => conn.id !== outputConn.id);
+    board.connections.push(outputConn);
+    setIvNodeStatus(board, 'output', 'output', 'done');
+    board.running = false;
+    renderImageVideoPreviewBox(wfId, { empty: true });
     renderImageVideoCanvas(wfId);
-    appendIvMessage(wfId, 'bot', `已为你生成 Grok Video-3 方案: ${board.shots.length} 个镜头,${duration}s。左侧画布已出现视频输出节点。`);
+    appendIvMessage(wfId, 'bot', `运行完成: ${board.shots.length} 个镜头已进入 Grok Video-3,生成 ${duration}s 视频输出。`);
     renderImageVideoAssets(wfId);
+
     const data = getData();
     data.inline_runs = data.inline_runs || [];
     data.inline_runs.unshift({
@@ -14595,7 +14896,8 @@ function generateVideo3Preview(wfId) {
       input: {
         shots: board.shots.length,
         engine: 'image2 + video3',
-        ratio
+        ratio,
+        connections: board.connections.length
       },
       output: 'video_preview_demo',
       created_at: new Date().toISOString()
@@ -14603,8 +14905,18 @@ function generateVideo3Preview(wfId) {
     data.inline_runs = data.inline_runs.slice(0, 20);
     saveData(data);
     persistIvBoard(wfId, { silent: true });
-    showToast('视频预览已生成');
-  }, 850);
+    showToast('工作流运行完成');
+  } catch (err) {
+    board.running = false;
+    setIvNodeStatus(board, 'video', 'video', 'error');
+    renderImageVideoCanvas(wfId);
+    persistIvBoard(wfId, { silent: true });
+    showToast('工作流运行失败', true);
+  }
+}
+
+function generateVideo3Preview(wfId) {
+  return runIvWorkflow(wfId);
 }
 
 const SQL_PRESETS = {
