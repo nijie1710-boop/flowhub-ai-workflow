@@ -1690,6 +1690,80 @@
   .iv-shot-card.status-done {
     border-color: rgba(26,93,58,0.42);
   }
+  .iv-run-progress {
+    width: min(520px, 100%);
+    border: 1px solid rgba(91,63,168,0.18);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.9);
+    padding: 14px;
+    text-align: left;
+  }
+  .iv-run-progress strong {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  .iv-run-steps {
+    display: grid;
+    gap: 7px;
+  }
+  .iv-run-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink-3);
+    font-size: 12px;
+  }
+  .iv-run-step i {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    color: var(--ink-4);
+  }
+  .iv-run-step.running {
+    color: var(--pro);
+    font-weight: 800;
+  }
+  .iv-run-step.running i {
+    border-color: rgba(91,63,168,0.5);
+    color: var(--pro);
+  }
+  .iv-run-step.done {
+    color: var(--self);
+  }
+  .iv-run-step.done i {
+    border-color: rgba(26,93,58,0.32);
+    background: rgba(26,93,58,0.1);
+    color: var(--self);
+  }
+  .iv-report-list {
+    display: grid;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .iv-report-row {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--bg-elev);
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--ink-2);
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .iv-report-row span {
+    color: var(--ink-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
   .iv-drop-hint {
     position: absolute;
     left: 502px;
@@ -9690,6 +9764,7 @@ function renderImageVideoRunner(wf) {
                 <button class="iv-tool-btn" onclick="alignIvCanvasNodes('${wf.id}')"><i class="fas fa-align-center"></i> 对齐</button>
                 <button class="iv-tool-btn" onclick="autoLayoutIvCanvas('${wf.id}')"><i class="fas fa-diagram-project"></i> 布局</button>
                 <button class="iv-tool-btn" onclick="fitIvCanvas('${wf.id}')"><i class="fas fa-magnifying-glass"></i> 适配</button>
+                <button class="iv-tool-btn" onclick="showIvWorkflowInspector('${wf.id}')"><i class="fas fa-list-check"></i> 检查</button>
                 <button class="iv-tool-btn" onclick="clearIvCanvas('${wf.id}')"><i class="fas fa-trash-can"></i> 清空</button>
                 <button class="iv-tool-btn" id="iv-lock-${wf.id}" onclick="toggleIvLock('${wf.id}')"><i class="fas fa-lock-open"></i> 锁定</button>
                 <button class="iv-tool-btn active" id="iv-grid-${wf.id}" onclick="toggleIvGrid('${wf.id}')"><i class="fas fa-border-all"></i> 网格</button>
@@ -13505,6 +13580,9 @@ function createEmptyIvBoard() {
     notes: [],
     connections: [],
     nodeStates: {},
+    videoSettings: {
+      prompt: '镜头连贯切换,保留主体一致性,光线和氛围逐步增强'
+    },
     video: null,
     running: false,
     zoom: 1,
@@ -13531,6 +13609,7 @@ function normalizeIvBoardPayload(board) {
   next.notes = Array.isArray(source.notes) ? source.notes.filter(note => note && note.id) : [];
   next.connections = Array.isArray(source.connections) ? source.connections.filter(conn => conn && conn.from && conn.to) : [];
   next.nodeStates = source.nodeStates && typeof source.nodeStates === 'object' ? source.nodeStates : {};
+  next.videoSettings = source.videoSettings && typeof source.videoSettings === 'object' ? source.videoSettings : {};
   next.video = source.video && typeof source.video === 'object' ? source.video : null;
   next.running = false;
   next.nodePositions = source.nodePositions && typeof source.nodePositions === 'object' ? source.nodePositions : {};
@@ -13609,6 +13688,8 @@ function ensureImageVideoBoardState(board) {
   board.notes = board.notes || [];
   board.connections = Array.isArray(board.connections) ? board.connections : [];
   board.nodeStates = board.nodeStates && typeof board.nodeStates === 'object' ? board.nodeStates : {};
+  board.videoSettings = board.videoSettings && typeof board.videoSettings === 'object' ? board.videoSettings : {};
+  board.videoSettings.prompt = board.videoSettings.prompt || '镜头连贯切换,保留主体一致性,光线和氛围逐步增强';
   board.video = board.video || null;
   board.running = !!board.running;
   board.zoom = board.zoom || 1;
@@ -13638,6 +13719,7 @@ function cloneIvBoard(board) {
     notes: board.notes,
     connections: board.connections,
     nodeStates: board.nodeStates,
+    videoSettings: board.videoSettings,
     video: board.video,
     nodePositions: board.nodePositions,
     zoom: board.zoom,
@@ -13740,6 +13822,18 @@ function renderIvPort(wfId, type, id, port) {
     _ivConnectionDraft.port === port;
   const title = port === 'out' ? '输出端口:点击后连接到下个节点' : '输入端口:接收上个节点输出';
   return `<button class="iv-node-port ${port} ${active ? 'active' : ''}" title="${title}" onclick="handleIvPortClick(event,'${wfId}','${type}','${id}','${port}')"></button>`;
+}
+
+function getIvNodeDisplayName(board, type, id) {
+  if (type === 'config') return 'Image2Image 生图';
+  if (type === 'video') return 'Grok Video-3 生视频';
+  if (type === 'output') return '视频输出';
+  if (type === 'shot') {
+    const index = board.shots.findIndex(shot => shot.id === id);
+    return index >= 0 ? `镜头 ${index + 1}` : '镜头';
+  }
+  if (type === 'note') return '文字备注';
+  return type;
 }
 
 function getIvHistory(wfId) {
@@ -14463,7 +14557,7 @@ function renderImageVideoCanvas(wfId) {
   const prompt = firstAsset ? firstAsset.prompt : getRunnerValue('iv-prompt-' + wfId, IMAGE_VIDEO_PRESETS.short.prompt);
   const styleLabel = firstAsset ? firstAsset.styleLabel : IMAGE_VIDEO_STYLES[getRunnerValue('iv-style-' + wfId, 'cinematic')];
   const ratio = firstAsset ? firstAsset.ratio : getRunnerValue('iv-ratio-' + wfId, '9:16');
-  const videoPrompt = '镜头连贯切换,保留主体一致性,光线和氛围逐步增强';
+  const videoPrompt = board.videoSettings.prompt;
   const configPos = board.nodePositions.config;
   const videoPos = board.nodePositions.video;
   const outputPos = board.nodePositions.output;
@@ -14509,6 +14603,7 @@ function renderImageVideoCanvas(wfId) {
             <div class="iv-shot-title">镜头 ${index + 1}</div>
             <div class="iv-shot-meta">${escapeHtml(shot.duration)}s · ${escapeHtml(shot.motion)}</div>
             <div class="iv-shot-actions">
+              <button class="iv-mini-btn" onclick="editIvShotNode(event,'${wfId}','${shot.id}')">参数</button>
               <button class="iv-mini-btn" onclick="removeIvShot('${wfId}','${shot.id}')">移除</button>
               <button class="iv-mini-btn" onclick="duplicateIvShot('${wfId}','${shot.id}')">复制</button>
             </div>
@@ -14535,6 +14630,7 @@ function renderImageVideoCanvas(wfId) {
           <div class="iv-node-row"><span>提示词</span><span class="iv-node-pill">${escapeHtml(videoPrompt)}</span></div>
           <div class="iv-node-row"><span>时长</span><span class="iv-node-pill">${board.video ? escapeHtml(board.video.duration + 's') : '待生成'}</span></div>
           <div class="iv-node-row"><span>分辨率</span><span class="iv-node-pill">${escapeHtml(ratio === '16:9' ? '1280 x 720' : ratio === '1:1' ? '1024 x 1024' : '720 x 1280')}</span></div>
+          <button class="iv-mini-btn" onclick="editIvVideoNode(event,'${wfId}')">编辑视频参数</button>
         </div>
       </div>
       ${renderIvPort(wfId, 'video', 'video', 'out')}
@@ -14601,6 +14697,91 @@ function renderImageVideoCanvas(wfId) {
   syncIvCanvasControls(wfId);
   updateIvMinimap(wfId);
   renderImageVideoPreviewBox(wfId);
+}
+
+function editIvShotNode(event, wfId, shotId) {
+  event.preventDefault();
+  event.stopPropagation();
+  const board = getImageVideoBoard(wfId);
+  const shot = board.shots.find(item => item.id === shotId);
+  if (!shot) return;
+  const index = board.shots.findIndex(item => item.id === shotId) + 1;
+  openModal(`
+    <div style="padding:24px;max-width:460px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <h2 style="font-size:18px;font-weight:800">镜头 ${index} 参数</h2>
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times" style="font-size:11px"></i></button>
+      </div>
+      <div class="runner-two" style="margin-bottom:12px">
+        <div class="runner-field">
+          <label>时长 / 秒</label>
+          <input class="runner-input" id="iv-shot-duration-${shot.id}" type="number" min="0.5" max="12" step="0.5" value="${escapeHtml(shot.duration)}">
+        </div>
+        <div class="runner-field">
+          <label>运动方式</label>
+          <select class="runner-select" id="iv-shot-motion-${shot.id}">
+            ${['push in', 'pull out', 'pan left', 'pan right', 'match cut', 'orbit', 'static'].map(item => `<option value="${escapeHtml(item)}" ${shot.motion === item ? 'selected' : ''}>${escapeHtml(item)}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <div class="runner-field" style="margin-bottom:16px">
+        <label>镜头备注</label>
+        <textarea class="runner-textarea" id="iv-shot-note-${shot.id}" placeholder="给这个镜头补充动作、景别或情绪">${escapeHtml(shot.note || '')}</textarea>
+      </div>
+      <button class="runner-primary" onclick="applyIvShotSettings('${wfId}','${shot.id}')">保存参数</button>
+    </div>
+  `);
+}
+
+function applyIvShotSettings(wfId, shotId) {
+  const board = getImageVideoBoard(wfId);
+  const shot = board.shots.find(item => item.id === shotId);
+  if (!shot) return;
+  const duration = Number(document.getElementById('iv-shot-duration-' + shotId)?.value || shot.duration || 2);
+  const motion = document.getElementById('iv-shot-motion-' + shotId)?.value || shot.motion || 'match cut';
+  const note = document.getElementById('iv-shot-note-' + shotId)?.value || '';
+  if (!Number.isFinite(duration) || duration < 0.5 || duration > 12) return showToast('镜头时长需要在 0.5 到 12 秒之间', true);
+  pushIvHistory(wfId);
+  shot.duration = Number(duration.toFixed(1));
+  shot.motion = motion;
+  shot.note = note.trim();
+  resetImageVideoPreview(wfId);
+  renderImageVideoCanvas(wfId);
+  persistIvBoard(wfId, { silent: true });
+  closeModal();
+  showToast('镜头参数已保存');
+}
+
+function editIvVideoNode(event, wfId) {
+  event.preventDefault();
+  event.stopPropagation();
+  const board = getImageVideoBoard(wfId);
+  openModal(`
+    <div style="padding:24px;max-width:520px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <h2 style="font-size:18px;font-weight:800">Grok Video-3 参数</h2>
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times" style="font-size:11px"></i></button>
+      </div>
+      <div class="runner-field" style="margin-bottom:16px">
+        <label>动态提示词</label>
+        <textarea class="runner-textarea" id="iv-video-prompt-${wfId}" placeholder="描述镜头如何运动、主体如何保持一致、光线如何变化">${escapeHtml(board.videoSettings.prompt)}</textarea>
+      </div>
+      <button class="runner-primary" onclick="applyIvVideoSettings('${wfId}')">保存视频参数</button>
+    </div>
+  `);
+}
+
+function applyIvVideoSettings(wfId) {
+  const board = getImageVideoBoard(wfId);
+  const prompt = (document.getElementById('iv-video-prompt-' + wfId)?.value || '').trim();
+  if (prompt.length < 6) return showToast('视频提示词太短', true);
+  pushIvHistory(wfId);
+  board.videoSettings.prompt = prompt;
+  resetImageVideoPreview(wfId);
+  renderImageVideoCanvas(wfId);
+  persistIvBoard(wfId, { silent: true });
+  closeModal();
+  showToast('视频参数已保存');
 }
 
 function duplicateIvShot(wfId, shotId) {
@@ -14862,6 +15043,75 @@ function validateIvWorkflowGraph(board) {
   return '';
 }
 
+function renderIvExecutionBox(wfId, plan, activeIndex) {
+  const videoBox = document.getElementById('iv-video-' + wfId);
+  if (!videoBox) return;
+  const current = Math.min(activeIndex + 1, plan.length);
+  const steps = plan.map((node, index) => {
+    const cls = index < activeIndex ? 'done' : index === activeIndex ? 'running' : '';
+    const icon = index < activeIndex ? '✓' : index === activeIndex ? '•' : '';
+    return `<div class="iv-run-step ${cls}"><i>${icon}</i><span>${escapeHtml(node.label)}</span></div>`;
+  }).join('');
+  videoBox.innerHTML = `
+    <div class="iv-run-progress">
+      <strong>正在运行工作流 ${current}/${plan.length}</strong>
+      <div class="iv-run-steps">${steps}</div>
+    </div>
+  `;
+}
+
+function repairIvWorkflowConnections(wfId) {
+  const board = getImageVideoBoard(wfId);
+  pushIvHistory(wfId);
+  board.video = null;
+  resetIvExecutionState(board);
+  syncIvWorkflowConnections(board, { force: true });
+  renderImageVideoCanvas(wfId);
+  renderImageVideoAssets(wfId);
+  renderImageVideoPreviewBox(wfId, { empty: true });
+  persistIvBoard(wfId, { silent: true });
+  closeModal();
+  showToast('已按镜头顺序重建默认连接');
+}
+
+function showIvWorkflowInspector(wfId) {
+  const board = getImageVideoBoard(wfId);
+  const validation = validateIvWorkflowGraph(board);
+  const plan = getIvExecutionPlan(board);
+  const connectionRows = (board.connections || []).map(conn => `
+    <div class="iv-report-row">
+      <span>${escapeHtml(conn.status || 'idle')}</span>
+      <strong>${escapeHtml(getIvNodeDisplayName(board, conn.from.type, conn.from.id))} → ${escapeHtml(getIvNodeDisplayName(board, conn.to.type, conn.to.id))}</strong>
+    </div>
+  `).join('');
+  openModal(`
+    <div style="padding:24px;max-width:560px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <h2 style="font-size:18px;font-weight:800">工作流检查</h2>
+        <button class="modal-close" onclick="closeModal()"><i class="fas fa-times" style="font-size:11px"></i></button>
+      </div>
+      <div class="sql-meta-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:12px">
+        <div class="sql-meta-card"><span>素材</span><strong>${board.assets.length}</strong></div>
+        <div class="sql-meta-card"><span>镜头</span><strong>${board.shots.length}</strong></div>
+        <div class="sql-meta-card"><span>连接</span><strong>${board.connections.length}</strong></div>
+        <div class="sql-meta-card"><span>输出</span><strong>${board.video ? '已生成' : '待生成'}</strong></div>
+      </div>
+      <div class="iv-report-row" style="border-color:${validation ? 'rgba(180,35,24,0.24)' : 'rgba(26,93,58,0.24)'};margin-bottom:12px">
+        <span>${validation ? 'blocked' : 'ready'}</span>
+        <strong>${escapeHtml(validation || '链路完整,可以运行')}</strong>
+      </div>
+      <div class="iv-report-list">
+        <div class="iv-report-row"><span>执行顺序</span><strong>${plan.map(item => escapeHtml(item.label)).join(' → ')}</strong></div>
+        ${connectionRows || '<div class="iv-report-row"><span>连接</span><strong>暂无连接</strong></div>'}
+      </div>
+      <div class="try-actions" style="margin-top:16px">
+        <button class="try-btn" onclick="repairIvWorkflowConnections('${wfId}')">重建默认连接</button>
+        <button class="try-btn primary" onclick="closeModal(); runIvWorkflow('${wfId}')">运行工作流</button>
+      </div>
+    </div>
+  `);
+}
+
 function waitIv(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -14879,11 +15129,11 @@ async function runIvWorkflow(wfId) {
   board.video = null;
   board.nodeStates = {};
   (board.connections || []).forEach(conn => { conn.status = 'idle'; });
-  videoBox.innerHTML = '<div class="iv-video-empty"><i class="fas fa-spinner fa-spin" style="margin-right:6px"></i>正在调用视频引擎生成预览...</div>';
   appendIvMessage(wfId, 'bot', '已开始按画布连接顺序运行: Image2 → 镜头链路 → Grok Video-3 → 视频输出。');
   recordWorkflowClick(getData(), wfId, { source: 'video3_generation' });
 
   const plan = getIvExecutionPlan(board);
+  renderIvExecutionBox(wfId, plan, 0);
   try {
     for (let i = 0; i < plan.length; i++) {
       const node = plan[i];
@@ -14891,10 +15141,12 @@ async function runIvWorkflow(wfId) {
       if (prev) setIvConnectionStatus(board, prev.type, prev.id, node.type, node.id, 'running');
       setIvNodeStatus(board, node.type, node.id, 'running');
       renderImageVideoCanvas(wfId);
+      renderIvExecutionBox(wfId, plan, i);
       await waitIv(node.type === 'video' ? 420 : 220);
       setIvNodeStatus(board, node.type, node.id, 'done');
       if (prev) setIvConnectionStatus(board, prev.type, prev.id, node.type, node.id, 'done');
       renderImageVideoCanvas(wfId);
+      renderIvExecutionBox(wfId, plan, i + 1);
     }
 
     const duration = board.shots.reduce((sum, shot) => sum + Number(shot.duration || 2), 0).toFixed(1);
@@ -14906,6 +15158,7 @@ async function runIvWorkflow(wfId) {
       ratio,
       firstAssetId: firstAsset ? firstAsset.id : '',
       engine: 'Grok Video-3',
+      prompt: board.videoSettings.prompt,
       created_at: new Date().toISOString()
     };
     const outputConn = makeIvConnection('video', 'video', 'output', 'output', 'done');
@@ -14927,6 +15180,7 @@ async function runIvWorkflow(wfId) {
         shots: board.shots.length,
         engine: 'image2 + video3',
         ratio,
+        prompt: board.videoSettings.prompt,
         connections: board.connections.length
       },
       output: 'video_preview_demo',
