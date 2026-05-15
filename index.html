@@ -156,6 +156,14 @@
     position: relative;
   }
   .wf-thumb svg { width: 60%; height: auto; opacity: 0.85; }
+  .wf-thumb img,
+  .gallery-image img,
+  .gallery-thumb-img img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
   .wf-thumb-overlay {
     position: absolute;
     inset: 0;
@@ -4444,6 +4452,14 @@
     font-family: 'Noto Serif SC', serif;
     font-weight: 700;
     font-size: 18px;
+    overflow: hidden;
+  }
+  .wf-icon img,
+  .detail-icon-big img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
   .wf-badge {
     font-size: 10px;
@@ -4731,6 +4747,7 @@
     font-weight: 700;
     font-size: 30px;
     flex-shrink: 0;
+    overflow: hidden;
   }
   .detail-header h1 {
     font-family: 'Noto Serif SC', serif;
@@ -5301,6 +5318,23 @@
     color: var(--bg);
     border-color: var(--ink);
   }
+  .auth-link-row {
+    display: flex;
+    justify-content: flex-end;
+    margin: -4px 0 12px;
+  }
+  .auth-text-link {
+    border: none;
+    background: transparent;
+    color: var(--ink-3);
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0;
+  }
+  .auth-text-link:hover {
+    color: var(--ink);
+    text-decoration: underline;
+  }
   .auth-submit-btn {
     width: 100%;
     padding: 13px;
@@ -5321,6 +5355,34 @@
   .auth-submit-btn:hover {
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(15,15,14,0.18);
+  }
+  .media-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .media-preview-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--bg-soft);
+  }
+  .media-preview-card img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    display: block;
+  }
+  .media-preview-card span {
+    display: block;
+    padding: 6px 8px;
+    font-size: 10px;
+    color: var(--ink-3);
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .auth-divider {
     display: flex;
