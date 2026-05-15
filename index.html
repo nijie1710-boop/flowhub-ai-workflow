@@ -7096,6 +7096,9 @@ function _parseWorkflow(w) {
     seed_clicks: parseInt(w.seed_clicks) || 0,
     seed_clicks_7d: parseInt(w.seed_clicks_7d) || 0,
     price_amount: parseFloat(w.price_amount) || 0,
+    gallery: Array.isArray(w.gallery) ? w.gallery : [],
+    cover_image_url: w.cover_image_url || '',
+    logo_url: w.logo_url || w.cover_image_url || '',
     examples: w.examples || []
   };
 }
@@ -7220,6 +7223,20 @@ async function apiPatch(path, body) {
     return await resp.json();
   } catch (err) {
     console.warn('[FlowHub] API PATCH failed:', path, err.message);
+    return { ok: false };
+  }
+}
+
+async function apiPut(path, body) {
+  try {
+    const resp = await fetch(API_BASE + path, {
+      method: 'PUT',
+      headers: authHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify(body)
+    });
+    return await resp.json();
+  } catch (err) {
+    console.warn('[FlowHub] API PUT failed:', path, err.message);
     return { ok: false };
   }
 }
@@ -7385,6 +7402,63 @@ function jsString(s) {
 
 function jsAttr(s) {
   return escapeHtml(jsString(s));
+}
+
+function getWorkflowLogo(wf) {
+  return wf && (wf.logo_url || wf.cover_image_url || '');
+}
+
+function getPrimaryWorkflowImage(wf) {
+  if (!wf) return '';
+  if (Array.isArray(wf.gallery) && wf.gallery.length && wf.gallery[0]?.url) return wf.gallery[0].url;
+  return wf.cover_image_url || wf.logo_url || '';
+}
+
+function renderWorkflowIcon(wf, cls) {
+  const logo = getWorkflowLogo(wf);
+  const style = `background:${wf.cover_color}22; color:${wf.cover_color}`;
+  if (logo) {
+    return `<div class="${cls}" style="${style}"><img src="${escapeHtml(logo)}" alt="${escapeHtml(wf.name)} logo"></div>`;
+  }
+  return `<div class="${cls}" style="${style}">${escapeHtml((wf.name || 'F').charAt(0))}</div>`;
+}
+
+function renderMediaPreview(items, emptyText) {
+  const list = (items || []).filter(item => item && item.url);
+  if (!list.length) return `<div style="font-size:12px;color:var(--ink-3);margin-top:8px">${emptyText || '暂无图片'}</div>`;
+  return `
+    <div class="media-preview-grid">
+      ${list.map((item, index) => `
+        <div class="media-preview-card">
+          <img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.label || 'media')}">
+          <span>${escapeHtml(item.label || ('图片 ' + (index + 1)))}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function fileToDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function readImageInput(inputId, limit) {
+  const input = document.getElementById(inputId);
+  if (!input || !input.files || !input.files.length) return [];
+  const files = Array.from(input.files)
+    .filter(file => file.type.startsWith('image/'))
+    .slice(0, limit || 1);
+  const items = [];
+  for (const file of files) {
+    const url = await fileToDataUrl(file);
+    items.push({ label: file.name, url });
+  }
+  return items;
 }
 
 function stars(rating) {
@@ -8264,6 +8338,10 @@ function startLiveFeed() {
 }
 
 function getThumbSvg(wf, type) {
+  const realImage = getPrimaryWorkflowImage(wf);
+  if (realImage) {
+    return `<img src="${escapeHtml(realImage)}" alt="${escapeHtml(wf.name)}">`;
+  }
   const color = wf.cover_color;
   const cat = wf.category;
   const uid = wf.id.replace(/[^a-zA-Z0-9]/g, '').slice(0, 8);
@@ -8820,7 +8898,7 @@ function renderGallerySlides(wf) {
   const slides = getGallerySlides(wf);
   return slides.map((s, i) => `
     <div class="gallery-slide ${i === 0 ? 'active' : ''}" data-slide="${i}">
-      <div class="gallery-image">${s.svg}</div>
+      <div class="gallery-image">${s.html || s.svg}</div>
       <div class="gallery-caption">
         <div class="gallery-caption-label">${s.label}</div>
         <div class="gallery-caption-title">${s.title}</div>
@@ -8840,7 +8918,7 @@ function renderGalleryThumbs(wf) {
   const slides = getGallerySlides(wf);
   return slides.map((s, i) => `
     <div class="gallery-thumb ${i === 0 ? 'active' : ''}" data-thumb="${i}" onclick="galleryGoTo('${wf.id}', ${i})">
-      <div class="gallery-thumb-img">${s.svg}</div>
+      <div class="gallery-thumb-img">${s.html || s.svg}</div>
       <div class="gallery-thumb-label">${s.shortLabel || s.label.split(' · ')[0]}</div>
     </div>
   `).join('');
@@ -8848,6 +8926,8 @@ function renderGalleryThumbs(wf) {
 
 function getGallerySlides(wf) {
   // 根据工作流类型,生成 3-5 张大图
+  const customSlides = getCustomGallerySlides(wf);
+  if (customSlides.length) return customSlides;
   const color = wf.cover_color;
 
   if (wf.name.includes('PicSpark') || wf.name.includes('商品图')) {
@@ -8889,6 +8969,19 @@ function getGallerySlides(wf) {
   return [
     { label: '场景示例', shortLabel: '示例', title: wf.tagline || wf.name, svg: getThumbSvg(wf) }
   ];
+}
+
+function getCustomGallerySlides(wf) {
+  const gallery = Array.isArray(wf.gallery) ? wf.gallery.filter(item => item && item.url) : [];
+  const media = gallery.length
+    ? gallery
+    : (wf.cover_image_url ? [{ label: '产品主图', url: wf.cover_image_url }] : []);
+  return media.slice(0, 6).map((item, index) => ({
+    label: item.label || `产品图 ${index + 1}`,
+    shortLabel: item.shortLabel || `图 ${index + 1}`,
+    title: item.title || wf.name,
+    html: `<img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.label || wf.name)}">`
+  }));
 }
 
 function galleryProductSwap(color, scene) {
@@ -9232,7 +9325,7 @@ function renderWfCard(wf) {
         <div class="wf-thumb-overlay"></div>
       </div>
       <div class="wf-card-head">
-        <div class="wf-icon" style="background:${wf.cover_color}22; color:${wf.cover_color}">${wf.name.charAt(0)}</div>
+        ${renderWorkflowIcon(wf, 'wf-icon')}
         <span class="wf-badge ${wf.type === 'self' ? 'self' : 'ad'}">${wf.type === 'self' ? '自营' : '推荐'}</span>
       </div>
       <h3>${escapeHtml(wf.name)}</h3>
@@ -10121,7 +10214,7 @@ function renderDetail() {
       <div class="detail-layout">
         <div>
           <div class="detail-header">
-            <div class="detail-icon-big" style="background:${wf.cover_color}22; color:${wf.cover_color}">${wf.name.charAt(0)}</div>
+            ${renderWorkflowIcon(wf, 'detail-icon-big')}
             <div>
               <h1>${escapeHtml(wf.name)}</h1>
               <div class="detail-tagline">${escapeHtml(wf.tagline)}</div>
@@ -10509,7 +10602,7 @@ function openLogin() {
         </div>
         <div class="auth-soft-note">
           <i class="fas fa-circle-check"></i>
-          <span>邮箱验证码登录,不用记密码。验证码 5 分钟内有效。</span>
+          <span>默认使用邮箱和密码登录。忘记密码时,再通过邮箱验证码登录。</span>
         </div>
         <div class="auth-tabs">
           <div class="auth-tab active" onclick="switchAuthTab(this, 'login')">登录</div>
@@ -10552,10 +10645,36 @@ function switchAuthTab(el, type) {
 }
 
 function renderAuthForm(type) {
+  if (type === 'forgot') {
+    return `
+      <div class="auth-form-hint">
+        <i class="fas fa-envelope-circle-check"></i>
+        <span>忘记密码时使用邮箱验证码登录。验证码 5 分钟内有效。</span>
+      </div>
+      <div class="field">
+        <label>邮箱</label>
+        <input id="auth-email" type="email" autocomplete="email" placeholder="name@example.com">
+      </div>
+      <div class="field">
+        <label>验证码</label>
+        <div style="display:flex;gap:8px">
+          <input id="auth-code" inputmode="numeric" autocomplete="one-time-code" placeholder="6 位验证码" maxlength="6" style="flex:1">
+          <button class="auth-code-btn" id="auth-sms-btn" onclick="sendEmailCode()">获取验证码</button>
+        </div>
+      </div>
+      <div class="auth-link-row" style="justify-content:flex-start">
+        <button class="auth-text-link" onclick="switchAuthTab(document.querySelector('.auth-tab.active'), 'login')">返回密码登录</button>
+      </div>
+      <button class="auth-submit-btn" onclick="doAuth('forgot')">
+        邮箱验证登录
+        <i class="fas fa-arrow-right" style="font-size:11px;margin-left:6px"></i>
+      </button>
+    `;
+  }
   return `
     <div class="auth-form-hint">
       <i class="fas fa-shield-halved"></i>
-      <span>${type === 'login' ? '输入已注册邮箱,获取验证码后继续。' : '注册后可获得 50 次免费调用额度。'}</span>
+      <span>${type === 'login' ? '输入注册邮箱和密码继续。' : '注册后可获得 50 次免费调用额度。'}</span>
     </div>
     <div class="field">
       <label>邮箱</label>
@@ -10568,12 +10687,19 @@ function renderAuthForm(type) {
       </div>
     ` : ''}
     <div class="field">
-      <label>验证码</label>
-      <div style="display:flex;gap:8px">
-        <input id="auth-code" inputmode="numeric" autocomplete="one-time-code" placeholder="6 位验证码" maxlength="6" style="flex:1">
-        <button class="auth-code-btn" id="auth-sms-btn" onclick="sendEmailCode()">获取验证码</button>
-      </div>
+      <label>密码</label>
+      <input id="auth-password" type="password" autocomplete="${type === 'login' ? 'current-password' : 'new-password'}" placeholder="${type === 'login' ? '输入密码' : '至少 6 位密码'}">
     </div>
+    ${type === 'register' ? `
+      <div class="field">
+        <label>确认密码</label>
+        <input id="auth-password-confirm" type="password" autocomplete="new-password" placeholder="再次输入密码">
+      </div>
+    ` : `
+      <div class="auth-link-row">
+        <button class="auth-text-link" onclick="document.getElementById('auth-content').innerHTML = renderAuthForm('forgot')">忘记密码? 用邮箱验证码登录</button>
+      </div>
+    `}
     <button class="auth-submit-btn" onclick="doAuth('${type}')">
       ${type === 'login' ? '登录' : '注册并登录'}
       <i class="fas fa-arrow-right" style="font-size:11px;margin-left:6px"></i>
