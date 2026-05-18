@@ -14,6 +14,7 @@ const {
   hashPassword,
   verifyPassword
 } = require('../lib/context');
+const { requireAuth } = require('../middleware/auth');
 
 // ==================== 用户认证 ====================
 
@@ -138,15 +139,9 @@ router.post('/api/auth/register', async (req, res) => {
   }
 });
 
-router.get('/api/auth/me', async (req, res) => {
+router.get('/api/auth/me', requireAuth, async (req, res) => {
   try {
-    const token = (req.headers.authorization || '').replace('Bearer ', '');
-    if (!token) return res.status(401).json(fail('UNAUTHORIZED', '未登录'));
-
-    const result = await pool.query('SELECT * FROM users WHERE token = $1', [token]);
-    if (!result.rows.length) return res.status(401).json(fail('UNAUTHORIZED', 'token 无效'));
-
-    const user = result.rows[0];
+    const user = req.user;
     const role = user.is_admin ? 'admin' : (user.is_creator ? 'creator' : 'user');
     res.json(ok({
       user: { id: user.id, email: user.email, name: user.name, tier: user.tier, role, created_at: user.created_at }

@@ -1,9 +1,9 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "installCommand": "cd server && npm ci",
-  "buildCommand": "rm -rf public && mkdir -p public && cp index.html public/index.html && if [ -d assets ]; then cp -R assets public/assets; fi && if [ -d src ]; then cp -R src public/src; fi",
-  "outputDirectory": "public",
+  "installCommand": "npm ci && cd server && npm ci",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "functions": {
     "api/[...path].js": {
       "memory": 1024,

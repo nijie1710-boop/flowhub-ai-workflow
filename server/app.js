@@ -14,8 +14,16 @@ const reviewRoutes = require('./routes/reviews');
 const submissionRoutes = require('./routes/submissions');
 const adminRoutes = require('./routes/admin');
 const toolRoutes = require('./routes/tools');
+const {
+  authLimiter,
+  clickLimiter,
+  reviewLimiter,
+  adminLimiter
+} = require('./middleware/rateLimiters');
 
 const app = express();
+
+app.set('trust proxy', 1);
 
 const DEFAULT_ALLOWED_ORIGINS = [
   'http://localhost:3000',
@@ -42,6 +50,12 @@ app.use(cors({
   }
 }));
 app.use(express.json({ limit: '20mb' }));
+
+app.use('/api/auth', authLimiter);
+app.use(/^\/api\/workflows\/[^/]+\/click$/, clickLimiter);
+app.use('/api/clicks', clickLimiter);
+app.use(/^\/api\/workflows\/[^/]+\/reviews$/, reviewLimiter);
+app.use('/api/admin', adminLimiter);
 
 app.use(authRoutes);
 app.use(workflowRoutes);

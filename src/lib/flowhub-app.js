@@ -2,13 +2,17 @@
    FlowHub 完整 Demo · 数据层
    ============================================================= */
 
-const STORAGE_KEY = 'flowhub_full_v1';
 const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
   ? 'http://127.0.0.1:3001/api'
   : '/api';
 const DEMO_EMAIL_CODE = '123456';
 let _apiCache = null;
 let _apiLoaded = false;
+let _memoryData = null;
+let _sessionUser = null;
+let _sessionNotifs = null;
+let _searchHistory = [];
+let _localAccounts = {};
 
 const CATEGORIES = ['全部', '设计 · 海报', '写作 · 文案', '编程 · 开发', '效率 · 办公', '数据 · 分析', '营销 · 增长', '其他'];
 const VERIFIED_SELF_WORKFLOW_IDS = new Set([
@@ -586,39 +590,32 @@ function normalizeDataShape(data) {
 
 function getData() {
   if (_apiCache) {
-    const localUser = localStorage.getItem('flowhub_user');
-    const localNotifs = localStorage.getItem('flowhub_notifs');
     const merged = Object.assign({}, _apiCache);
-    if (localUser) merged.user = JSON.parse(localUser);
-    if (localNotifs) merged._notifs = JSON.parse(localNotifs);
+    if (_sessionUser !== null) merged.user = _sessionUser;
+    if (_sessionNotifs !== null) merged._notifs = _sessionNotifs;
     return normalizeDataShape(merged);
   }
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) {
-    saveData(JSON.parse(JSON.stringify(SEED_DATA)));
-    return normalizeDataShape(JSON.parse(JSON.stringify(SEED_DATA)));
-  }
-  try {
-    const parsed = JSON.parse(raw);
-    const hadRemovedSelfWorkflows = Array.isArray(parsed.workflows)
-      && parsed.workflows.some(w => w && REMOVED_SELF_WORKFLOW_IDS.has(w.id));
-    const data = normalizeDataShape(parsed);
-    if (hadRemovedSelfWorkflows || !Array.isArray(parsed.tool_submissions)) saveData(data);
-    return data;
-  } catch {
-    saveData(JSON.parse(JSON.stringify(SEED_DATA)));
-    return normalizeDataShape(JSON.parse(JSON.stringify(SEED_DATA)));
-  }
+  if (!_memoryData) _memoryData = JSON.parse(JSON.stringify(SEED_DATA));
+  return normalizeDataShape(_memoryData);
 }
 
 function saveData(data) {
-  normalizeDataShape(data);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  const normalized = normalizeDataShape(data);
+  if (_apiCache) {
+    _apiCache = normalizeDataShape({
+      ..._apiCache,
+      ...normalized,
+      user: _apiCache.user,
+      _notifs: _apiCache._notifs
+    });
+  } else {
+    _memoryData = normalized;
+  }
   if (data.user !== undefined) {
-    localStorage.setItem('flowhub_user', JSON.stringify(data.user));
+    _sessionUser = data.user;
   }
   if (data._notifs !== undefined) {
-    localStorage.setItem('flowhub_notifs', JSON.stringify(data._notifs));
+    _sessionNotifs = data._notifs;
   }
 }
 
@@ -628,7 +625,7 @@ let _adminDataLoaded = false;
 
 function authHeaders(extra) {
   const headers = Object.assign({}, extra || {});
-  const token = localStorage.getItem('flowhub_token');
+  const token = window.FlowHubAuth?.getToken ? window.FlowHubAuth.getToken() : localStorage.getItem('flowhub_token');
   if (token) headers.Authorization = 'Bearer ' + token;
   return headers;
 }
@@ -669,7 +666,7 @@ async function loadDataFromAPI() {
       loadAdDataAsync();
     }
   } catch (err) {
-    console.warn('[FlowHub] API unavailable, using localStorage fallback:', err.message);
+    console.warn('[FlowHub] API unavailable, using in-memory seed fallback:', err.message);
     _apiCache = null;
   }
 }
@@ -802,7 +799,8 @@ async function apiForm(path, formData) {
 
 function resetAll() {
   if (!confirm('确定重置所有数据?会回到初始示例状态')) return;
-  localStorage.removeItem(STORAGE_KEY);
+  _memoryData = JSON.parse(JSON.stringify(SEED_DATA));
+  _sessionNotifs = null;
   state.currentDetailId = null;
   state.adminView = 'overview';
   state.searchQuery = '';
@@ -847,7 +845,7 @@ const VIEW_TITLES = {
 function getViewPath(view) {
   const basePath = location.pathname.endsWith('.html') ? location.pathname : '/';
   if (view === 'run') {
-    const runId = state.currentRunId || localStorage.getItem('flowhub_current_run') || '';
+    const runId = state.currentRunId || '';
     return basePath + (runId ? '#run=' + encodeURIComponent(runId) : '#run');
   }
   return basePath + (view === 'market' ? '' : '#' + view);
@@ -889,7 +887,6 @@ window.addEventListener('popstate', (e) => {
     const runId = decodeURIComponent(hashView.slice(4));
     state.currentRunId = runId;
     state.currentDetailId = runId;
-    localStorage.setItem('flowhub_current_run', runId);
     initialView = 'run';
   }
   history.replaceState({ view: initialView }, '', getViewPath(initialView));
@@ -1063,7 +1060,6 @@ function goToDetail(wfId) {
 function goToRun(wfId) {
   state.currentRunId = wfId;
   state.currentDetailId = wfId;
-  localStorage.setItem('flowhub_current_run', wfId);
   switchView('run');
 }
 
@@ -1562,17 +1558,17 @@ function clearSearchFilters() {
 }
 
 function getSearchHistory() {
-  try { return JSON.parse(localStorage.getItem('flowhub_search_history') || '[]'); } catch { return []; }
+  return _searchHistory;
 }
 function addSearchHistory(q) {
   if (!q || q.length < 2) return;
   let h = getSearchHistory().filter(x => x !== q);
   h.unshift(q);
   if (h.length > 8) h = h.slice(0, 8);
-  localStorage.setItem('flowhub_search_history', JSON.stringify(h));
+  _searchHistory = h;
 }
 function clearSearchHistory() {
-  localStorage.removeItem('flowhub_search_history');
+  _searchHistory = [];
   showSearchDropdown();
 }
 
@@ -3530,7 +3526,7 @@ function renderInlineRunner(wf) {
 
 function renderRun() {
   const data = getData();
-  const runId = state.currentRunId || localStorage.getItem('flowhub_current_run');
+  const runId = state.currentRunId;
   const wf = data.workflows.find(w => w.id === runId);
   if (wf) {
     state.currentRunId = wf.id;
@@ -4602,7 +4598,8 @@ async function doAuth(type) {
         return showToast(result.error?.message || '操作失败', true);
       }
 
-      localStorage.setItem('flowhub_token', result.data.token);
+      if (window.FlowHubAuth?.setToken) window.FlowHubAuth.setToken(result.data.token);
+      else localStorage.setItem('flowhub_token', result.data.token);
       const data = getData();
       data.user = result.data.user;
       saveData(data);
@@ -4622,7 +4619,7 @@ async function doAuth(type) {
     return showToast('邮箱验证码登录需要后端服务可用', true);
   }
 
-  const accounts = JSON.parse(localStorage.getItem('flowhub_local_accounts') || '{}');
+  const accounts = _localAccounts;
   if (type === 'register') {
     if (accounts[email]) {
       if (btn) { btn.disabled = false; btn.innerHTML = '注册并登录'; }
@@ -4634,7 +4631,6 @@ async function doAuth(type) {
       password: btoa(unescape(encodeURIComponent(password))),
       created_at: new Date().toISOString()
     };
-    localStorage.setItem('flowhub_local_accounts', JSON.stringify(accounts));
   }
   if (type === 'forgot' && !_apiLoaded) {
     const demoCode = sessionStorage.getItem('flowhub_demo_email_code:' + email);
@@ -4660,7 +4656,6 @@ async function doAuth(type) {
       name: '用户' + email.split('@')[0].slice(-4),
       created_at: new Date().toISOString()
     };
-    localStorage.setItem('flowhub_local_accounts', JSON.stringify(accounts));
   }
 
   const data = getData();
@@ -4681,13 +4676,17 @@ async function doAuth(type) {
 }
 
 async function restoreSession() {
-  const token = localStorage.getItem('flowhub_token');
+  const token = window.FlowHubAuth?.getToken ? window.FlowHubAuth.getToken() : localStorage.getItem('flowhub_token');
   if (!token || !_apiLoaded) return;
   try {
     const resp = await fetch(API_BASE + '/auth/me', {
       headers: { 'Authorization': 'Bearer ' + token }
     });
-    if (!resp.ok) { localStorage.removeItem('flowhub_token'); return; }
+    if (!resp.ok) {
+      if (window.FlowHubAuth?.clearToken) window.FlowHubAuth.clearToken();
+      else localStorage.removeItem('flowhub_token');
+      return;
+    }
     const result = await resp.json();
     if (result.ok && result.data.user) {
       const data = getData();
@@ -7645,13 +7644,14 @@ function toggleTheme() {
   const cur = document.documentElement.getAttribute('data-theme') || 'light';
   const next = cur === 'light' ? 'dark' : 'light';
   document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('flowhub_theme', next);
+  if (window.FlowHubAuth?.setTheme) window.FlowHubAuth.setTheme(next);
+  else localStorage.setItem('flowhub_theme', next);
   const cls = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
   document.querySelectorAll('#theme-icon, #theme-icon-nav').forEach(el => { if (el) el.className = cls; });
 }
 
 (function() {
-  const saved = localStorage.getItem('flowhub_theme');
+  const saved = window.FlowHubAuth?.getTheme ? window.FlowHubAuth.getTheme() : localStorage.getItem('flowhub_theme');
   if (saved) {
     document.documentElement.setAttribute('data-theme', saved);
     const cls = saved === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
@@ -7749,7 +7749,7 @@ let _ivHistory = {};
 let _ivBoardsLoaded = false;
 let _ivConnectionDraft = null;
 
-const IV_PROJECT_STORAGE_KEY = 'flowhub_image_video_boards_v1';
+let _ivBoardMemoryStore = {};
 const IV_CANVAS = { width: 1900, height: 1000 };
 const IV_NODE_SIZE = {
   config: { w: 210, h: 206 },
@@ -7809,9 +7809,7 @@ function loadIvBoardsFromStorage() {
   if (_ivBoardsLoaded) return;
   _ivBoardsLoaded = true;
   try {
-    const raw = localStorage.getItem(IV_PROJECT_STORAGE_KEY);
-    if (!raw) return;
-    const parsed = JSON.parse(raw);
+    const parsed = _ivBoardMemoryStore;
     if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return;
     const loaded = {};
     Object.keys(parsed).forEach(wfId => {
@@ -7830,7 +7828,7 @@ function saveIvBoardsToStorage(wfId) {
       ensureImageVideoBoardState(_imageVideoBoards[id]);
       payload[id] = cloneIvBoard(_imageVideoBoards[id]);
     });
-    localStorage.setItem(IV_PROJECT_STORAGE_KEY, JSON.stringify(payload));
+    _ivBoardMemoryStore = payload;
     markIvSaveStatus(wfId, '已保存', 'saved');
     return true;
   } catch (err) {
