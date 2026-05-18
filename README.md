@@ -20,15 +20,20 @@ flowhub-ai-workflow/
 │   ├── App.jsx                # 应用壳
 │   ├── pages/                 # 页面容器
 │   │   ├── Market.jsx
+│   │   ├── Search.jsx
 │   │   ├── Detail.jsx
+│   │   ├── Run.jsx
 │   │   ├── Admin.jsx
 │   │   ├── Creator.jsx
+│   │   ├── Advertiser.jsx
+│   │   ├── Wizard.jsx
 │   │   └── Me.jsx
-│   ├── components/            # 共享 UI / legacy runtime
+│   ├── components/            # 共享 UI 组件
 │   ├── lib/
 │   │   ├── api.js             # 前端 API 封装
 │   │   ├── auth.js            # token / theme 本地状态
-│   │   └── flowhub-app.js     # 现有业务逻辑迁移层
+│   │   ├── seedData.js        # API 不可用时的种子数据
+│   │   └── workflowUtils.js   # 工作流展示工具函数
 │   └── styles/main.css        # 原有视觉样式
 ├── public/assets/             # Vite 静态资源
 ├── server/
@@ -82,6 +87,8 @@ API 默认运行在 `http://127.0.0.1:3001`，前端默认运行在 `http://127.
 
 工作流、点击、评价、提交审核、后台统计等数据走 Express API + PostgreSQL。数据库连接通过 `server/.env` 配置。
 
+登录默认使用邮箱 + 密码；忘记密码时可以切换到邮箱验证码登录。验证码发送依赖 SMTP 环境变量。
+
 后端 token 默认 7 天过期，可通过环境变量调整：
 
 ```bash
@@ -122,8 +129,12 @@ Vercel 使用：
 
 ## 迁移说明
 
-当前 React 迁移采用低风险方式：
+当前 React 迁移采用分阶段方式：
 
-1. React 负责页面壳、页面容器和运行时加载。
-2. `src/lib/flowhub-app.js` 保留现有成熟业务逻辑，避免一次性重写导致功能丢失。
-3. 后续可以逐步把 `Market / Detail / Admin / Creator / Me` 内部渲染从 legacy 函数迁到 React 组件。
+1. `Market / Search / Detail / Run / Me / Admin / Creator / Advertiser / Wizard` 已由 React 组件真实渲染。
+2. 现有 Vite 构建直接输出 `dist`，不再用单文件 HTML 或 LegacyRuntime 接管主页面。
+3. 搜索页保留关键词、分类、类型筛选，并区分“立即使用 / 访问官网 / 推广”状态。
+4. 运行页已经迁移健身餐、图片 OCR、文档转 Markdown、网页转 Markdown、Image2Video 分镜画布入口。
+5. 管理后台已接入统计接口、pending 工具审核和基础产品信息编辑。
+6. 广告主入驻页面已接入推广位申请接口。
+7. 后续可以继续把更细的工作流执行器拆成独立 React 组件和后端任务接口。
