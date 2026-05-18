@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS users (
   email TEXT UNIQUE,
   name TEXT,
   avatar_url TEXT,
+  password_hash TEXT,
   tier TEXT DEFAULT 'free' CHECK (tier IN ('free','pro','team')),
   token TEXT,
   token_created_at TIMESTAMPTZ,
@@ -23,6 +24,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 ALTER TABLE users ADD COLUMN IF NOT EXISTS token TEXT;
 ALTER TABLE users ADD COLUMN IF NOT EXISTS token_created_at TIMESTAMPTZ;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash TEXT;
 
 CREATE INDEX IF NOT EXISTS idx_users_phone ON users(phone);
 CREATE INDEX IF NOT EXISTS idx_users_invite_code ON users(invite_code);
@@ -53,6 +55,7 @@ CREATE TABLE IF NOT EXISTS workflows (
   category TEXT NOT NULL,
   tags TEXT[] DEFAULT '{}',
   cover_color TEXT DEFAULT '#1A5D3A',
+  logo_url TEXT,
   cover_image_url TEXT,
   gallery JSONB,
   type TEXT NOT NULL CHECK (type IN ('self','ad','recommend')),
@@ -77,6 +80,8 @@ CREATE INDEX IF NOT EXISTS idx_workflows_status ON workflows(status);
 CREATE INDEX IF NOT EXISTS idx_workflows_category ON workflows(category);
 CREATE INDEX IF NOT EXISTS idx_workflows_type ON workflows(type);
 
+ALTER TABLE workflows ADD COLUMN IF NOT EXISTS logo_url TEXT;
+
 -- ========== 外部工具提交审核 ==========
 CREATE TABLE IF NOT EXISTS tool_submissions (
   id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::TEXT,
@@ -87,8 +92,11 @@ CREATE TABLE IF NOT EXISTS tool_submissions (
   tool_desc TEXT,
   category TEXT DEFAULT '其他',
   tags TEXT[] DEFAULT '{}',
+  submission_type TEXT DEFAULT 'recommend' CHECK (submission_type IN ('self','recommend','ad')),
   price_model TEXT DEFAULT 'free',
   price_amount DECIMAL DEFAULT 0,
+  logo_url TEXT,
+  gallery JSONB DEFAULT '[]'::jsonb,
   status TEXT DEFAULT 'pending' CHECK (status IN ('pending','approved','rejected')),
   admin_note TEXT,
   workflow_id TEXT REFERENCES workflows(id) ON DELETE SET NULL,
@@ -98,6 +106,11 @@ CREATE TABLE IF NOT EXISTS tool_submissions (
 
 CREATE INDEX IF NOT EXISTS idx_tool_submissions_status ON tool_submissions(status);
 CREATE INDEX IF NOT EXISTS idx_tool_submissions_submitted_at ON tool_submissions(submitted_at);
+
+ALTER TABLE workflows ADD COLUMN IF NOT EXISTS gallery JSONB;
+ALTER TABLE tool_submissions ADD COLUMN IF NOT EXISTS submission_type TEXT DEFAULT 'recommend';
+ALTER TABLE tool_submissions ADD COLUMN IF NOT EXISTS logo_url TEXT;
+ALTER TABLE tool_submissions ADD COLUMN IF NOT EXISTS gallery JSONB DEFAULT '[]'::jsonb;
 
 -- ========== 调用记录 ==========
 CREATE TABLE IF NOT EXISTS clicks (

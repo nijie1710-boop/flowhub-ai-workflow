@@ -251,6 +251,74 @@ INSERT INTO workflows (id, name, slug, tagline, description, category, tags, typ
   '2026-04-12'
 ),
 (
+  'wf_seed_doc_markdown',
+  '文档转 Markdown',
+  'document-markdown',
+  '上传 PDF / Word / HTML,转成 AI 可读 Markdown',
+  '基于开源解析能力的 FlowHub 自营工具。支持 PDF、DOCX、HTML、TXT、MD、CSV、JSON 文件,把文档转成结构化 Markdown,方便继续交给 AI 摘要、知识库入库或内容复用。',
+  '效率 · 办公',
+  ARRAY['文档', 'Markdown', 'PDF'],
+  'self',
+  'https://flowhub.cn/run/document-markdown',
+  '#2563EB',
+  'active',
+  4.8, 216, 1380, 176,
+  'free', 0, true, false, 1,
+  '[{"label":"场景 · 合同转 Markdown","text":"输入:PDF 合同\n输出:保留段落结构的 Markdown 文本,可继续摘要或提取条款"}]'::jsonb,
+  '2026-05-16'
+),
+(
+  'wf_seed_web_markdown',
+  '网页转 Markdown',
+  'webpage-markdown',
+  '输入网址,自动提取正文并转成 Markdown',
+  '输入公开网页地址,自动抓取正文、去掉导航和广告噪声,输出干净 Markdown。适合竞品分析、SEO 素材整理、知识库采集和文章归档。',
+  '营销 · 增长',
+  ARRAY['网页抓取', 'Markdown', '知识库'],
+  'self',
+  'https://flowhub.cn/run/webpage-markdown',
+  '#0891B2',
+  'active',
+  4.7, 184, 1160, 143,
+  'free', 0, true, false, 1,
+  '[{"label":"场景 · 竞品页面采集","text":"输入:竞品落地页 URL\n输出:页面标题、摘要、正文 Markdown 和字数统计"}]'::jsonb,
+  '2026-05-16'
+),
+(
+  'wf_seed_image_ocr',
+  '图片 OCR 识别',
+  'image-ocr',
+  '上传截图或图片,识别中英文文字',
+  '基于本地开源 OCR 引擎的 FlowHub 自营工具。上传 PNG、JPG、WEBP 等图片,识别中文和英文文字,输出纯文本与 Markdown,适合截图整理、票据录入和图片资料转写。',
+  '效率 · 办公',
+  ARRAY['OCR', '截图', '中文识别'],
+  'self',
+  'https://flowhub.cn/run/image-ocr',
+  '#7C3AED',
+  'active',
+  4.6, 162, 980, 121,
+  'free', 0, true, false, 1,
+  '[{"label":"场景 · 截图转文字","text":"输入:中文网页截图\n输出:识别文本、置信度和 Markdown 结果"}]'::jsonb,
+  '2026-05-16'
+),
+(
+  'wf_seed_fitness_meal',
+  '健身餐菜谱生成器',
+  'fitness-meal-generator',
+  '输入现有食材,生成菜谱并计算热量和三大营养素',
+  '参考开源 AI fitness planner 的营养计算思路,输入鸡胸肉、米饭、西兰花、鸡蛋等食材和重量,自动生成一份健身餐做法,并计算总热量、蛋白质、碳水和脂肪。第一版使用本地常见食材营养表,不依赖付费 API。',
+  '效率 · 办公',
+  ARRAY['健身餐', '菜谱', '热量计算'],
+  'self',
+  'https://flowhub.cn/run/fitness-meal',
+  '#16A34A',
+  'active',
+  4.7, 88, 760, 94,
+  'free', 0, true, false, 1,
+  '[{"label":"场景 · 减脂晚餐","text":"输入:鸡胸肉 200g、米饭 150g、西兰花 100g、鸡蛋 2个\n输出:高蛋白健身餐做法、总热量和 P/C/F 三大营养素"}]'::jsonb,
+  '2026-05-16'
+),
+(
   'wf_seed_email',
   '邮件模板工厂(合作方)',
   'email-templates',
@@ -309,3 +377,32 @@ INSERT INTO tool_submissions (id, submitter_name, contact, tool_name, tool_url, 
 ('tool_sub_1', '陈同学', 'chen@example.com', 'PromptForge 提示词库', 'https://example-promptforge.com', '面向中文运营和设计团队的提示词协作工具,支持团队收藏和版本管理。', '效率 · 办公', ARRAY['提示词','团队协作','效率'], 'free', 0, 'pending', NOW() - INTERVAL '12 hours'),
 ('tool_sub_2', '杭州某电商团队', 'ops@example.com', 'ModelShot 商品模特图', 'https://example-modelshot.com', '上传平铺商品图后生成不同人群、场景和姿势的模特穿搭图。', '设计 · 海报', ARRAY['电商','模特图','AI 生图'], 'cpc', 0.8, 'pending', NOW() - INTERVAL '2 hours')
 ON CONFLICT (id) DO NOTHING;
+
+-- ========== 下线未接真实能力的自营演示工具 ==========
+DELETE FROM reviews
+WHERE workflow_id IN (
+  'wf_seed_xhs',
+  'wf_seed_palette',
+  'wf_seed_translate',
+  'wf_seed_codereview',
+  'wf_seed_poster',
+  'wf_seed_meeting',
+  'wf_seed_dataclean',
+  'wf_seed_social',
+  'wf_seed_sql',
+  'wf_seed_web_markdown'
+);
+
+DELETE FROM workflows
+WHERE id IN (
+  'wf_seed_xhs',
+  'wf_seed_palette',
+  'wf_seed_translate',
+  'wf_seed_codereview',
+  'wf_seed_poster',
+  'wf_seed_meeting',
+  'wf_seed_dataclean',
+  'wf_seed_social',
+  'wf_seed_sql',
+  'wf_seed_web_markdown'
+);

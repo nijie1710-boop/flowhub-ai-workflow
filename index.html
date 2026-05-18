@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="icon" href="assets/flowhub-mark.png">
 <style>
   :root {
     --bg: #FAFAF7;
@@ -590,6 +591,495 @@
     font-size: 13px;
     color: var(--ink);
   }
+  .tool-file-input {
+    width: 100%;
+    border: 1px dashed var(--line-strong);
+    border-radius: 8px;
+    padding: 12px;
+    background: var(--bg);
+    color: var(--ink-2);
+    font-size: 12px;
+  }
+  .ocr-preview-card {
+    margin-top: 10px;
+    min-height: 220px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--bg-soft);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .ocr-preview-card.has-image {
+    min-height: 280px;
+    background: #0F0F0E;
+  }
+  .ocr-preview-card img {
+    width: 100%;
+    max-height: 380px;
+    object-fit: contain;
+    display: block;
+    background: #0F0F0E;
+  }
+  .ocr-preview-empty {
+    padding: 26px;
+    text-align: center;
+    color: var(--ink-3);
+    font-size: 12px;
+    line-height: 1.7;
+  }
+  .ocr-preview-empty i {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--self);
+    font-size: 22px;
+  }
+  .ocr-preview-meta {
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 7px 9px;
+    border-radius: 7px;
+    background: rgba(15,15,14,0.78);
+    color: rgba(250,250,247,0.86);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    backdrop-filter: blur(8px);
+  }
+  .ocr-preview-meta span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .meal-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .meal-macro-card {
+    background: var(--bg-elev);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px;
+    min-height: 74px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .meal-macro-card:nth-child(1) { border-top: 3px solid var(--self); }
+  .meal-macro-card:nth-child(2) { border-top: 3px solid var(--pro); }
+  .meal-macro-card:nth-child(3) { border-top: 3px solid var(--ad); }
+  .meal-macro-card:nth-child(4) { border-top: 3px solid #0D7377; }
+  .meal-macro-card span {
+    display: block;
+    color: var(--ink-3);
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .meal-macro-card strong {
+    color: var(--ink);
+    font-size: 20px;
+  }
+  .meal-ingredient-list {
+    display: grid;
+    gap: 0;
+  }
+  .meal-ingredient-row {
+    display: grid;
+    grid-template-columns: minmax(150px, 1.1fr) minmax(90px, 0.7fr) minmax(180px, 1.4fr);
+    gap: 10px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--ink-2);
+  }
+  .meal-ingredient-row strong {
+    color: var(--ink);
+  }
+  .meal-ingredient-row span:last-child {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--ink-3);
+    font-size: 11px;
+  }
+  .meal-ingredient-row:last-child { border-bottom: none; }
+  .meal-steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: meal-step;
+  }
+  .meal-steps li {
+    counter-increment: meal-step;
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 10px;
+    margin-bottom: 10px;
+    color: var(--ink-2);
+    font-size: 12px;
+    line-height: 1.65;
+  }
+  .meal-steps li::before {
+    content: counter(meal-step);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--self-bg);
+    color: var(--self);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 800;
+    margin-top: 1px;
+  }
+  .meal-tips {
+    display: grid;
+    gap: 8px;
+  }
+  .meal-tip {
+    border: 1px solid var(--line);
+    background: var(--bg-soft);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 12px;
+    line-height: 1.65;
+    color: var(--ink-2);
+  }
+  .meal-markdown-details {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--bg-elev);
+    overflow: hidden;
+  }
+  .meal-markdown-details summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 11px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink-2);
+  }
+  .meal-markdown-details summary::-webkit-details-marker {
+    display: none;
+  }
+  .meal-markdown-details .tool-markdown {
+    border-radius: 0;
+    max-height: 300px;
+  }
+  .fitness-meal-runner .inline-runner-head {
+    padding: 20px 22px;
+  }
+  .meal-runner-title {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    min-width: 0;
+  }
+  .meal-title-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--ink);
+    color: var(--bg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+  .meal-head-stats {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    gap: 8px;
+    align-items: start;
+    flex-shrink: 0;
+  }
+  .meal-head-stat {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: rgba(255,255,255,0.58);
+    padding: 8px 10px;
+    min-width: 78px;
+  }
+  .meal-head-stat span {
+    display: block;
+    color: var(--ink-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .meal-head-stat strong {
+    color: var(--ink);
+    font-size: 12px;
+  }
+  .fitness-meal-runner .runner-form {
+    background: linear-gradient(180deg, rgba(26,93,58,0.055), transparent 260px), var(--bg-elev);
+    gap: 14px;
+  }
+  .meal-form-card {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background:
+      linear-gradient(135deg, rgba(26,93,58,0.09), rgba(184,92,0,0.05)),
+      var(--bg-elev);
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+  }
+  .meal-form-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: var(--self);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+  }
+  .meal-form-card h5 {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+  .meal-form-card p {
+    font-size: 12px;
+    line-height: 1.65;
+    color: var(--ink-3);
+  }
+  .meal-quick-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .meal-quick-stat {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--bg-soft);
+    padding: 10px;
+  }
+  .meal-quick-stat span {
+    display: block;
+    color: var(--ink-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .meal-quick-stat strong {
+    color: var(--ink);
+    font-size: 12px;
+  }
+  .meal-control-panel {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.5);
+    padding: 12px;
+    display: grid;
+    gap: 12px;
+  }
+  .meal-control-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--ink);
+  }
+  .meal-control-title span {
+    color: var(--ink-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+  }
+  .meal-field-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .meal-field-head label {
+    margin: 0;
+  }
+  .meal-field-hint {
+    color: var(--ink-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+  }
+  .meal-ingredients-input {
+    min-height: 190px;
+    font-size: 13px;
+    line-height: 1.75;
+    background: var(--bg);
+  }
+  .meal-chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+  .meal-chip {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg-soft);
+    color: var(--ink-2);
+    padding: 7px 10px;
+    font-size: 11px;
+    cursor: pointer;
+  }
+  .meal-chip:hover {
+    border-color: rgba(26,93,58,0.35);
+    color: var(--self);
+  }
+  .meal-submit-row {
+    position: sticky;
+    bottom: 0;
+    padding-top: 10px;
+    background: linear-gradient(180deg, transparent, var(--bg-elev) 28%);
+  }
+  .meal-empty-layout {
+    width: 100%;
+    max-width: 560px;
+    display: grid;
+    gap: 14px;
+  }
+  .meal-empty-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 14px;
+    background: var(--self-bg);
+    color: var(--self);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    margin: 0 auto 4px;
+  }
+  .meal-empty-title {
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+  .meal-empty-copy {
+    color: var(--ink-3);
+    font-size: 12px;
+  }
+  .meal-empty-macros {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .meal-empty-macros span {
+    border: 1px dashed var(--line-strong);
+    border-radius: 8px;
+    padding: 10px 6px;
+    color: var(--ink-4);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+  }
+  .meal-result {
+    gap: 12px;
+  }
+  .meal-result-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 16px;
+    align-items: center;
+    background:
+      linear-gradient(135deg, rgba(26,93,58,0.94), rgba(15,15,14,0.98)),
+      var(--ink);
+    color: #fff;
+    border-radius: 10px;
+    padding: 18px;
+  }
+  .meal-result-hero h5 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #fff;
+  }
+  .meal-result-hero .tool-meta {
+    margin-bottom: 0;
+  }
+  .meal-result-hero .tool-meta span {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.16);
+    color: rgba(255,255,255,0.78);
+  }
+  .meal-kcal-hero {
+    min-width: 132px;
+    text-align: right;
+  }
+  .meal-kcal-hero span,
+  .meal-kcal-hero small {
+    display: block;
+    color: rgba(255,255,255,0.62);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+  }
+  .meal-kcal-hero strong {
+    display: block;
+    color: #fff;
+    font-size: 34px;
+    line-height: 1;
+    margin: 5px 0 3px;
+  }
+  .meal-kcal-hero em {
+    color: rgba(255,255,255,0.72);
+    font-style: normal;
+    font-size: 12px;
+  }
+  .tool-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .tool-meta span {
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg-elev);
+    color: var(--ink-3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 5px 8px;
+  }
+  .tool-markdown {
+    max-height: 420px;
+    overflow: auto;
+    background: #0F0F0E;
+    color: #EDECE8;
+    border-radius: 8px;
+    padding: 14px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.65;
+  }
+  .tool-error {
+    border: 1px solid rgba(184,56,56,0.22);
+    background: rgba(184,56,56,0.08);
+    color: var(--danger);
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 12px;
+    line-height: 1.6;
+  }
   .iv-studio {
     display: grid;
     grid-template-columns: minmax(360px, 1.18fr) minmax(320px, 0.82fr);
@@ -973,6 +1463,51 @@
   .run-workspace .detail-section > h3,
   .run-workspace .detail-section > p {
     display: none;
+  }
+  .run-page.is-form-run .run-workspace {
+    flex: 0 0 auto;
+    min-height: calc(100vh - 58px);
+    overflow: visible;
+    padding: 16px;
+  }
+  .run-page.is-form-run {
+    overflow-y: auto;
+  }
+  .run-page.is-form-run .run-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+  }
+  .run-page.is-form-run .detail-section,
+  .run-page.is-form-run .inline-runner {
+    height: auto;
+    min-height: calc(100vh - 90px);
+  }
+  .run-page.is-form-run .inline-runner {
+    max-width: 1220px;
+    margin: 0 auto;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 18px 50px rgba(15, 15, 14, 0.06);
+  }
+  .run-page.is-form-run .inline-runner-head {
+    display: flex;
+    background:
+      linear-gradient(135deg, rgba(26,93,58,0.09), rgba(250,250,247,0) 58%),
+      var(--bg-elev);
+  }
+  .run-page.is-form-run .inline-runner-grid {
+    align-items: start;
+    grid-template-columns: minmax(340px, 0.72fr) minmax(520px, 1.28fr);
+  }
+  .run-page.is-form-run .runner-form,
+  .run-page.is-form-run .runner-output {
+    min-height: calc(100vh - 188px);
+  }
+  .run-page.is-form-run .runner-output {
+    overflow: visible;
+    padding-bottom: 24px;
   }
   .run-workspace .iv-studio {
     height: 100%;
@@ -1931,6 +2466,12 @@
     background: var(--bg-soft);
   }
   [data-theme="dark"] .runner-output {
+    background: rgba(255,255,255,0.04);
+  }
+  [data-theme="dark"] .meal-head-stat,
+  [data-theme="dark"] .meal-control-panel,
+  [data-theme="dark"] .meal-quick-stat,
+  [data-theme="dark"] .meal-form-card {
     background: rgba(255,255,255,0.04);
   }
   [data-theme="dark"] .iv-canvas-panel,
@@ -5611,6 +6152,33 @@
     text-transform: uppercase;
     margin-top: 1px;
   }
+  .brand-mark {
+    flex: 0 0 auto;
+    display: block !important;
+    background: none !important;
+    color: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    object-fit: contain;
+    overflow: visible;
+  }
+  .logo .brand-mark { width: 35px; height: 29px; }
+  .auth-logo-mark.brand-mark { width: 35px; height: 29px; }
+  .admin-logo .brand-mark { width: 31px; height: 26px; }
+  .footer-logo.brand-mark { width: 38px; height: 31px; }
+  .logo .name,
+  .auth-modal-logo span,
+  .admin-logo .name,
+  .footer-name {
+    background: linear-gradient(90deg, #7C2DFF 0%, #4D4EFF 48%, #18A8FF 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+  }
 
   .nav-section {
     font-size: 9px;
@@ -6386,6 +6954,21 @@
     .runner-empty { min-height: 260px; }
     .ps-preview { min-height: 220px; }
     .sql-meta-grid { grid-template-columns: 1fr; }
+    .meal-head-stats,
+    .meal-quick-stats,
+    .meal-summary-grid,
+    .meal-ingredient-row,
+    .meal-empty-macros,
+    .meal-result-hero {
+      grid-template-columns: 1fr;
+    }
+    .meal-kcal-hero { text-align: left; }
+    .meal-runner-title,
+    .meal-field-head,
+    .meal-control-title {
+      align-items: flex-start;
+      flex-direction: column;
+    }
     .iv-studio { grid-template-columns: 1fr; min-height: 0; }
     .iv-canvas-panel { border-right: none; border-bottom: 1px solid var(--line); }
     .iv-canvas-stage { min-height: 260px; align-items: stretch; }
@@ -6577,10 +7160,31 @@ const STORAGE_KEY = 'flowhub_full_v1';
 const API_BASE = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
   ? 'http://127.0.0.1:3001/api'
   : '/api';
+const DEMO_EMAIL_CODE = '123456';
 let _apiCache = null;
 let _apiLoaded = false;
 
 const CATEGORIES = ['全部', '设计 · 海报', '写作 · 文案', '编程 · 开发', '效率 · 办公', '数据 · 分析', '营销 · 增长', '其他'];
+const VERIFIED_SELF_WORKFLOW_IDS = new Set([
+  'wf_seed_doc_markdown',
+  'wf_seed_image_ocr',
+  'wf_seed_fitness_meal'
+]);
+const KEEP_IN_PROGRESS_SELF_WORKFLOW_IDS = new Set([
+  'wf_seed_image_video'
+]);
+const REMOVED_SELF_WORKFLOW_IDS = new Set([
+  'wf_seed_xhs',
+  'wf_seed_palette',
+  'wf_seed_translate',
+  'wf_seed_codereview',
+  'wf_seed_poster',
+  'wf_seed_meeting',
+  'wf_seed_dataclean',
+  'wf_seed_social',
+  'wf_seed_sql',
+  'wf_seed_web_markdown'
+]);
 
 const SEED_DATA = {
   user: null,
@@ -6893,6 +7497,94 @@ const SEED_DATA = {
       created_at: '2026-04-12'
     },
     {
+      id: 'wf_seed_doc_markdown',
+      name: '文档转 Markdown',
+      tagline: '上传 PDF / Word / HTML,转成 AI 可读 Markdown',
+      description: '基于开源解析能力的 FlowHub 自营工具。支持 PDF、DOCX、HTML、TXT、MD、CSV、JSON 文件,把文档转成结构化 Markdown,方便继续交给 AI 摘要、知识库入库或内容复用。',
+      target_url: 'https://flowhub.cn/run/document-markdown',
+      type: 'self',
+      category: '效率 · 办公',
+      tags: ['文档', 'Markdown', 'PDF'],
+      price_model: 'free',
+      price_amount: 0,
+      cover_color: '#2563EB',
+      status: 'active',
+      rating: 4.8,
+      review_count: 216,
+      examples: [
+        { label: '场景 · 合同转 Markdown', text: '输入:PDF 合同\n输出:保留段落结构的 Markdown 文本,可继续摘要或提取条款' }
+      ],
+      seed_clicks: 1380,
+      seed_clicks_7d: 176,
+      created_at: '2026-05-16'
+    },
+    {
+      id: 'wf_seed_web_markdown',
+      name: '网页转 Markdown',
+      tagline: '输入网址,自动提取正文并转成 Markdown',
+      description: '输入公开网页地址,自动抓取正文、去掉导航和广告噪声,输出干净 Markdown。适合竞品分析、SEO 素材整理、知识库采集和文章归档。',
+      target_url: 'https://flowhub.cn/run/webpage-markdown',
+      type: 'self',
+      category: '营销 · 增长',
+      tags: ['网页抓取', 'Markdown', '知识库'],
+      price_model: 'free',
+      price_amount: 0,
+      cover_color: '#0891B2',
+      status: 'active',
+      rating: 4.7,
+      review_count: 184,
+      examples: [
+        { label: '场景 · 竞品页面采集', text: '输入:竞品落地页 URL\n输出:页面标题、摘要、正文 Markdown 和字数统计' }
+      ],
+      seed_clicks: 1160,
+      seed_clicks_7d: 143,
+      created_at: '2026-05-16'
+    },
+    {
+      id: 'wf_seed_image_ocr',
+      name: '图片 OCR 识别',
+      tagline: '上传截图或图片,识别中英文文字',
+      description: '基于本地开源 OCR 引擎的 FlowHub 自营工具。上传 PNG、JPG、WEBP 等图片,识别中文和英文文字,输出纯文本与 Markdown,适合截图整理、票据录入和图片资料转写。',
+      target_url: 'https://flowhub.cn/run/image-ocr',
+      type: 'self',
+      category: '效率 · 办公',
+      tags: ['OCR', '截图', '中文识别'],
+      price_model: 'free',
+      price_amount: 0,
+      cover_color: '#7C3AED',
+      status: 'active',
+      rating: 4.6,
+      review_count: 162,
+      examples: [
+        { label: '场景 · 截图转文字', text: '输入:中文网页截图\n输出:识别文本、置信度和 Markdown 结果' }
+      ],
+      seed_clicks: 980,
+      seed_clicks_7d: 121,
+      created_at: '2026-05-16'
+    },
+    {
+      id: 'wf_seed_fitness_meal',
+      name: '健身餐菜谱生成器',
+      tagline: '输入现有食材,生成菜谱并计算热量和三大营养素',
+      description: '参考开源 AI fitness planner 的营养计算思路,输入鸡胸肉、米饭、西兰花、鸡蛋等食材和重量,自动生成一份健身餐做法,并计算总热量、蛋白质、碳水和脂肪。第一版使用本地常见食材营养表,不依赖付费 API。',
+      target_url: 'https://flowhub.cn/run/fitness-meal',
+      type: 'self',
+      category: '效率 · 办公',
+      tags: ['健身餐', '菜谱', '热量计算'],
+      price_model: 'free',
+      price_amount: 0,
+      cover_color: '#16A34A',
+      status: 'active',
+      rating: 4.7,
+      review_count: 88,
+      examples: [
+        { label: '场景 · 减脂晚餐', text: '输入:鸡胸肉 200g、米饭 150g、西兰花 100g、鸡蛋 2个\n输出:高蛋白健身餐做法、总热量和 P/C/F 三大营养素' }
+      ],
+      seed_clicks: 760,
+      seed_clicks_7d: 94,
+      created_at: '2026-05-16'
+    },
+    {
       id: 'wf_seed_email',
       name: '邮件模板工厂(合作方)',
       tagline: '输入场景和要点,生成专业邮件模板',
@@ -7025,15 +7717,19 @@ const AD_SLOTS = [
 function normalizeDataShape(data) {
   if (!data || typeof data !== 'object') return JSON.parse(JSON.stringify(SEED_DATA));
   if (!Array.isArray(data.workflows)) data.workflows = [];
+  data.workflows = data.workflows.filter(w => w && !REMOVED_SELF_WORKFLOW_IDS.has(w.id));
   const existingWorkflowIds = new Set(data.workflows.map(w => w && w.id).filter(Boolean));
   (SEED_DATA.workflows || []).forEach(seedWf => {
-    if (!existingWorkflowIds.has(seedWf.id)) {
+    if (!REMOVED_SELF_WORKFLOW_IDS.has(seedWf.id) && !existingWorkflowIds.has(seedWf.id)) {
       data.workflows.push(JSON.parse(JSON.stringify(seedWf)));
     }
   });
   if (!Array.isArray(data.clicks)) data.clicks = [];
   if (!Array.isArray(data.inline_runs)) data.inline_runs = [];
   if (!Array.isArray(data.reviews)) data.reviews = [];
+  data.clicks = data.clicks.filter(c => !REMOVED_SELF_WORKFLOW_IDS.has(c.workflow_id));
+  data.inline_runs = data.inline_runs.filter(r => !REMOVED_SELF_WORKFLOW_IDS.has(r.workflow_id));
+  data.reviews = data.reviews.filter(r => !REMOVED_SELF_WORKFLOW_IDS.has(r.workflow_id));
   if (!Array.isArray(data.ad_applications)) data.ad_applications = [];
   if (!Array.isArray(data.ad_slots)) data.ad_slots = [];
   if (!Array.isArray(data.tool_submissions)) {
@@ -7057,8 +7753,11 @@ function getData() {
     return normalizeDataShape(JSON.parse(JSON.stringify(SEED_DATA)));
   }
   try {
-    const data = normalizeDataShape(JSON.parse(raw));
-    if (!Array.isArray(JSON.parse(raw).tool_submissions)) saveData(data);
+    const parsed = JSON.parse(raw);
+    const hadRemovedSelfWorkflows = Array.isArray(parsed.workflows)
+      && parsed.workflows.some(w => w && REMOVED_SELF_WORKFLOW_IDS.has(w.id));
+    const data = normalizeDataShape(parsed);
+    if (hadRemovedSelfWorkflows || !Array.isArray(parsed.tool_submissions)) saveData(data);
     return data;
   } catch {
     saveData(JSON.parse(JSON.stringify(SEED_DATA)));
@@ -7241,6 +7940,20 @@ async function apiPut(path, body) {
   }
 }
 
+async function apiForm(path, formData) {
+  try {
+    const resp = await fetch(API_BASE + path, {
+      method: 'POST',
+      headers: authHeaders(),
+      body: formData
+    });
+    return await resp.json();
+  } catch (err) {
+    console.warn('[FlowHub] API FORM failed:', path, err.message);
+    return { ok: false, error: { message: '网络错误,请确认后端服务已启动' } };
+  }
+}
+
 function resetAll() {
   if (!confirm('确定重置所有数据?会回到初始示例状态')) return;
   localStorage.removeItem(STORAGE_KEY);
@@ -7286,13 +7999,12 @@ const VIEW_TITLES = {
 };
 
 function getViewPath(view) {
-  const useHashRouting = location.hostname === 'localhost' ||
-    location.hostname === '127.0.0.1' ||
-    location.pathname.endsWith('.html');
-  if (useHashRouting) {
-    return '/index.html' + (view === 'market' ? '' : '#' + view);
+  const basePath = location.pathname.endsWith('.html') ? location.pathname : '/';
+  if (view === 'run') {
+    const runId = state.currentRunId || localStorage.getItem('flowhub_current_run') || '';
+    return basePath + (runId ? '#run=' + encodeURIComponent(runId) : '#run');
   }
-  return view === 'market' ? '/' : '/' + view;
+  return basePath + (view === 'market' ? '' : '#' + view);
 }
 
 function switchView(view, skipPush) {
@@ -7324,9 +8036,16 @@ window.addEventListener('popstate', (e) => {
   const validViews = ['market', 'search', 'me', 'admin', 'creator', 'advertiser', 'wizard', 'detail', 'run'];
   const hashView = location.hash.replace(/^#\/?/, '');
   const pathView = location.pathname.replace(/^\//, '').replace(/\.html$/, '') || 'market';
-  const initialView = validViews.includes(hashView)
+  let initialView = validViews.includes(hashView)
     ? hashView
     : (validViews.includes(pathView) ? pathView : 'market');
+  if (hashView.startsWith('run=')) {
+    const runId = decodeURIComponent(hashView.slice(4));
+    state.currentRunId = runId;
+    state.currentDetailId = runId;
+    localStorage.setItem('flowhub_current_run', runId);
+    initialView = 'run';
+  }
   history.replaceState({ view: initialView }, '', getViewPath(initialView));
   if (initialView !== 'market') {
     setTimeout(() => switchView(initialView, true), 0);
@@ -7388,9 +8107,13 @@ function shortUrl(url) {
 }
 
 function escapeHtml(s) {
-  return String(s || '').replace(/[&<>"']/g, c => ({
+  return String(s ?? '').replace(/[&<>"']/g, c => ({
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   })[c]);
+}
+
+function renderBrandMark(className = 'brand-mark') {
+  return `<img class="${escapeHtml(className)}" src="assets/flowhub-mark.png" alt="" aria-hidden="true">`;
 }
 
 function jsString(s) {
@@ -7535,7 +8258,7 @@ function getWorkflowTypeLabel(wf) {
 }
 
 function isInlineRunnerWorkflow(wf) {
-  return !!wf && (wf.id === 'wf_seed_sql' || wf.id === 'wf_seed_image_video');
+  return !!wf && (VERIFIED_SELF_WORKFLOW_IDS.has(wf.id) || KEEP_IN_PROGRESS_SELF_WORKFLOW_IDS.has(wf.id));
 }
 
 function scrollToInlineRunner(wfId) {
@@ -7609,12 +8332,7 @@ function runWorkflow(wfId, options = {}) {
   const data = getData();
   const wf = data.workflows.find(w => w.id === wfId);
   if (!wf) return;
-
-  if (isInlineRunnerWorkflow(wf) && !options.external) {
-    scrollToInlineRunner(wfId);
-    showToast('已打开自营工作流执行面板');
-    return;
-  }
+  const isInlineRunner = isInlineRunnerWorkflow(wf) && !options.external;
 
   // 权限校验:自营 + Pro 工作流需要 Pro 会员
   if (wf.type === 'self' && wf.price_model === 'pro') {
@@ -7641,6 +8359,18 @@ function runWorkflow(wfId, options = {}) {
     return;
   }
 
+  // 记录点击
+  recordWorkflowClick(data, wfId, {
+    source: options.source || (state.view === 'search' ? 'search' : 'market'),
+    search_query: options.search_query !== undefined ? options.search_query : state.searchQuery
+  });
+
+  if (isInlineRunner) {
+    scrollToInlineRunner(wfId);
+    showToast('已打开自营工作流执行面板');
+    return;
+  }
+
   // 找到立即使用按钮,显示加载状态
   const ctaButtons = document.querySelectorAll('.side-cta:not(.outline)');
   ctaButtons.forEach(btn => {
@@ -7648,12 +8378,6 @@ function runWorkflow(wfId, options = {}) {
       btn.disabled = true;
       btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>&nbsp;准备启动…';
     }
-  });
-
-  // 记录点击
-  recordWorkflowClick(data, wfId, {
-    source: options.source || (state.view === 'search' ? 'search' : 'market'),
-    search_query: options.search_query !== undefined ? options.search_query : state.searchQuery
   });
 
   // 跳转(归因参数)
@@ -7754,7 +8478,7 @@ function renderMarket() {
           <div class="hero-content">
             <div class="hero-eyebrow">A WORKFLOW MARKETPLACE</div>
             <h1>先逛工作流,<span class="accent">需要时再登录</span></h1>
-            <p class="hero-sub">不用登录也可以浏览、搜索和查看详情。收藏、评价或使用 Pro 工作流时,再用邮箱验证码登录。</p>
+            <p class="hero-sub">不用登录也可以浏览、搜索和查看详情。当前自营区只保留已接真实处理链路的工具。</p>
             <div class="home-search-panel">
               <i class="fas fa-search"></i>
               <input id="home-search-input" type="text" placeholder="搜索 AI 工作流、外部工具或任务场景…" value="${escapeHtml(state.searchQuery)}" />
@@ -7766,11 +8490,12 @@ function renderMarket() {
             <div class="hero-task-row">
               <span class="hero-task-label">热门任务</span>
               ${[
-                ['商品图', '商品图换背景'],
-                ['小红书', '小红书笔记'],
-                ['SQL', 'SQL 查询'],
-                ['会议纪要', '会议纪要'],
-                ['简历', '简历优化']
+                ['Markdown', '文档转 Markdown'],
+                ['OCR', '图片 OCR'],
+                ['PDF', 'PDF 转文本'],
+                ['截图', '截图转文字'],
+                ['健身餐', '健身餐菜谱'],
+                ['商品图', '商品图工具']
               ].map(([q, label]) => `<span class="hero-task-chip" onclick="quickSearch('${q}')">${label}</span>`).join('')}
             </div>
             <div class="hero-cta-row">
@@ -7802,7 +8527,7 @@ function renderMarket() {
             </div>
             <div class="hero-trust-row">
               <span><i class="fas fa-circle-check"></i> 游客可浏览</span>
-              <span><i class="fas fa-circle-check"></i> 免费工作流可试用</span>
+              <span><i class="fas fa-circle-check"></i> 自营工具已实测</span>
               <span><i class="fas fa-circle-check"></i> 第三方工具直达</span>
             </div>
           </div>
@@ -7823,8 +8548,8 @@ function renderMarket() {
             </div>
             <div class="hero-meta-divider"></div>
             <div class="hero-meta-stat">
-              <span class="num">${4283 + Math.floor(Math.random() * 30)}</span>
-              <span class="lbl">Pro 会员</span>
+              <span class="num">${selfWfs.length}</span>
+              <span class="lbl">可用自营</span>
             </div>
             <div class="hero-meta-divider"></div>
             <div class="hero-meta-stat">
@@ -7847,12 +8572,12 @@ function renderMarket() {
         <div class="market-control-main">
           <div class="hot-bar">
             <span class="hot-label">热门</span>
-            <span class="hot-tag" onclick="quickSearch('小红书')">小红书爆款<span class="trend">↑42%</span></span>
-            <span class="hot-tag" onclick="quickSearch('商品图')">商品图换背景</span>
-            <span class="hot-tag" onclick="quickSearch('海报')">节日海报<span class="trend">↑28%</span></span>
-            <span class="hot-tag" onclick="quickSearch('代码')">代码 Review</span>
-            <span class="hot-tag" onclick="quickSearch('翻译')">多语言翻译</span>
-            <span class="hot-tag" onclick="quickSearch('简历')">简历优化</span>
+            <span class="hot-tag" onclick="quickSearch('Markdown')">文档转 Markdown<span class="trend">已验证</span></span>
+            <span class="hot-tag" onclick="quickSearch('OCR')">图片 OCR</span>
+            <span class="hot-tag" onclick="quickSearch('PDF')">PDF 解析</span>
+            <span class="hot-tag" onclick="quickSearch('截图')">截图转文字</span>
+            <span class="hot-tag" onclick="quickSearch('健身餐')">健身餐菜谱<span class="trend">NEW</span></span>
+            <span class="hot-tag" onclick="quickSearch('商品图')">商品图工具</span>
           </div>
           <div class="filter-row">
             ${CATEGORIES.map(c => `
@@ -7866,7 +8591,7 @@ function renderMarket() {
       <section class="section">
         <div class="section-head">
           <span class="sec-tag self">自营</span>
-          <h2>${showHero ? `平台精选 · 本周首推 ${escapeHtml(heroWf.name)}` : '平台精选 · 会员可用'}</h2>
+          <h2>${showHero ? `平台精选 · 本周首推 ${escapeHtml(heroWf.name)}` : '平台精选 · 已验证可用'}</h2>
           <span class="count">${selfWfs.length} 个</span>
         </div>
         <div class="market-grid-with-side">
@@ -8235,10 +8960,10 @@ function renderFooter() {
       <div class="footer-cols">
         <div class="footer-col">
           <div class="footer-brand">
-            <div class="footer-logo">流</div>
+            ${renderBrandMark('footer-logo brand-mark')}
             <span class="footer-name">FlowHub</span>
           </div>
-          <p class="footer-tagline">让 AI 工作流触手可及 · 一个订阅,用尽全场。</p>
+          <p class="footer-tagline">让 AI 工作流触手可及 · 当前只展示可验证的自营工具和外部推荐。</p>
           <div class="footer-social">
             <button class="footer-social-btn" title="微信"><i class="fab fa-weixin"></i></button>
             <button class="footer-social-btn" title="微博"><i class="fab fa-weibo"></i></button>
@@ -8250,7 +8975,6 @@ function renderFooter() {
         <div class="footer-col">
           <h5>产品</h5>
           <a onclick="switchView('market')">工作流市场</a>
-          <a onclick="openPricing()">定价方案</a>
           <a onclick="switchView('advertiser')">广告主入驻</a>
           <a onclick="switchView('creator')">创作者中心</a>
         </div>
@@ -9511,7 +10235,7 @@ function renderNav() {
   return `
     <nav class="cnav">
       <div class="logo" onclick="switchView('market')">
-        <div class="mark">流</div>
+        ${renderBrandMark('mark brand-mark')}
         <span class="name">FlowHub</span>
       </div>
       <div class="cnav-search" id="cnav-search-wrap">
@@ -9555,7 +10279,6 @@ function renderNav() {
           </div>
           <div class="avatar" onclick="switchView('me')">${data.user.name.charAt(0)}<div class="dot"></div></div>
         ` : `
-          <button class="btn-pro" onclick="openPricing()"><i class="fas fa-crown" style="font-size:10px"></i>升级 Pro</button>
           <button class="login-btn" onclick="openLogin()">登录</button>
         `}
         <button class="theme-toggle" onclick="toggleTheme()" title="切换主题" style="background:none;border:1px solid var(--line);width:32px;height:32px;border-radius:8px;cursor:pointer;color:var(--ink-2);display:flex;align-items:center;justify-content:center;font-size:13px;margin-left:4px"><i class="fas fa-moon" id="theme-icon-nav"></i></button>
@@ -9616,7 +10339,7 @@ function renderMobileDrawer() {
   drawer.innerHTML = `
     <div class="mobile-drawer-head">
       <div class="logo" style="cursor:default">
-        <div class="mark">流</div>
+        ${renderBrandMark('mark brand-mark')}
         <span class="name">FlowHub</span>
       </div>
     </div>
@@ -9719,10 +10442,271 @@ function clearSearch() {
   render();
 }
 
+function renderDocumentMarkdownRunner(wf) {
+  return `
+    <div class="detail-section" id="inline-runner-${wf.id}">
+      <h3>站内执行 · 文档转 Markdown</h3>
+      <p>真实后端转换:PDF 用 pdf-parse,Word 用 mammoth,HTML 用 Readability/Turndown。适合把文件整理成 AI 可读素材。</p>
+      <div class="inline-runner">
+        <div class="inline-runner-head">
+          <div>
+            <div class="inline-runner-kicker">Open-source Workflow</div>
+            <h4>上传文档,生成 Markdown</h4>
+            <p>支持 PDF、DOCX、HTML、TXT、MD、CSV、JSON。最大 20MB,结果不会上传到第三方 API。</p>
+          </div>
+          <span class="inline-runner-badge">真实可用 · 本地处理</span>
+        </div>
+        <div class="inline-runner-grid">
+          <div class="runner-form">
+            <div class="runner-field">
+              <label for="doc-file-${wf.id}">选择文件</label>
+              <input class="tool-file-input" id="doc-file-${wf.id}" type="file" accept=".pdf,.docx,.html,.htm,.txt,.md,.markdown,.csv,.json,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/*">
+            </div>
+            <div class="runner-field">
+              <label>可用场景</label>
+              <div class="runner-presets">
+                <span class="runner-preset">合同整理</span>
+                <span class="runner-preset">论文入库</span>
+                <span class="runner-preset">知识库素材</span>
+              </div>
+            </div>
+            <div class="runner-actions">
+              <button class="runner-primary" id="doc-run-${wf.id}" onclick="runDocumentMarkdownWorkflow('${wf.id}')">
+                <i class="fas fa-file-arrow-up"></i> 转换 Markdown
+              </button>
+            </div>
+          </div>
+          <div class="runner-output" id="doc-output-${wf.id}">
+            <div class="runner-empty">
+              <div><i class="fas fa-file-lines"></i>上传文件后会输出 Markdown、字数和解析信息</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderWebpageMarkdownRunner(wf) {
+  return `
+    <div class="detail-section" id="inline-runner-${wf.id}">
+      <h3>站内执行 · 网页转 Markdown</h3>
+      <p>真实后端抓取公开网页,用 Readability 提取正文,再转成 Markdown。适合做竞品分析、知识库采集和文章归档。</p>
+      <div class="inline-runner">
+        <div class="inline-runner-head">
+          <div>
+            <div class="inline-runner-kicker">Open-source Workflow</div>
+            <h4>输入 URL,提取正文</h4>
+            <p>为安全起见只支持公开 http/https 页面,会拦截 localhost 和内网地址。</p>
+          </div>
+          <span class="inline-runner-badge">真实抓取 · SSRF 防护</span>
+        </div>
+        <div class="inline-runner-grid">
+          <div class="runner-form">
+            <div class="runner-field">
+              <label for="web-url-${wf.id}">网页 URL</label>
+              <input class="runner-input" id="web-url-${wf.id}" value="https://example.com" placeholder="https://example.com/article">
+            </div>
+            <div class="runner-field">
+              <label>适合内容</label>
+              <div class="runner-presets">
+                <button class="runner-preset" onclick="setRunnerInput('web-url-${wf.id}', 'https://example.com')">示例页面</button>
+                <span class="runner-preset">竞品官网</span>
+                <span class="runner-preset">博客文章</span>
+              </div>
+            </div>
+            <div class="runner-actions">
+              <button class="runner-primary" id="web-run-${wf.id}" onclick="runWebpageMarkdownWorkflow('${wf.id}')">
+                <i class="fas fa-globe"></i> 抓取并转换
+              </button>
+            </div>
+          </div>
+          <div class="runner-output" id="web-output-${wf.id}">
+            <div class="runner-empty">
+              <div><i class="fas fa-file-code"></i>输入公开网页地址后会输出标题、摘要和 Markdown 正文</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderImageOcrRunner(wf) {
+  return `
+    <div class="detail-section" id="inline-runner-${wf.id}">
+      <h3>站内执行 · 图片 OCR 识别</h3>
+      <p>真实后端 OCR:上传图片后由 Tesseract.js 识别中英文文字。首次识别会加载语言模型,需要多等几秒。</p>
+      <div class="inline-runner">
+        <div class="inline-runner-head">
+          <div>
+            <div class="inline-runner-kicker">Open-source Workflow</div>
+            <h4>截图 / 图片转文字</h4>
+            <p>支持 PNG、JPG、WEBP、BMP、TIFF。适合网页截图、图片资料和简单票据转写。</p>
+          </div>
+          <span class="inline-runner-badge">OCR · 本地引擎</span>
+        </div>
+        <div class="inline-runner-grid">
+          <div class="runner-form">
+            <div class="runner-field">
+              <label for="ocr-file-${wf.id}">选择图片</label>
+              <input class="tool-file-input" id="ocr-file-${wf.id}" type="file" accept="image/png,image/jpeg,image/webp,image/bmp,image/tiff" onchange="previewOcrImage('${wf.id}')">
+              <div class="ocr-preview-card" id="ocr-preview-${wf.id}">
+                <div class="ocr-preview-empty">
+                  <i class="fas fa-image"></i>
+                  选择图片后会在这里显示预览
+                </div>
+              </div>
+            </div>
+            <div class="runner-field">
+              <label for="ocr-lang-${wf.id}">识别语言</label>
+              <select class="runner-select" id="ocr-lang-${wf.id}">
+                <option value="chi_sim+eng">中文 + 英文</option>
+                <option value="eng">英文</option>
+                <option value="chi_sim">简体中文</option>
+              </select>
+            </div>
+            <div class="runner-actions">
+              <button class="runner-primary" id="ocr-run-${wf.id}" onclick="runImageOcrWorkflow('${wf.id}')">
+                <i class="fas fa-eye"></i> 开始识别
+              </button>
+            </div>
+          </div>
+          <div class="runner-output" id="ocr-output-${wf.id}">
+            <div class="runner-empty">
+              <div><i class="fas fa-image"></i>上传图片后会输出识别文本、置信度和 Markdown</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderFitnessMealRunner(wf) {
+  return `
+    <div class="detail-section" id="inline-runner-${wf.id}">
+      <h3>站内执行 · 健身餐菜谱生成器</h3>
+      <p>快速接入版:参考开源 AI fitness planner 的思路,用本地常见食材营养表计算热量和 P/C/F,再生成一份可执行健身餐。</p>
+      <div class="inline-runner fitness-meal-runner">
+        <div class="inline-runner-head">
+          <div class="meal-runner-title">
+            <span class="meal-title-icon"><i class="fas fa-utensils"></i></span>
+            <div>
+              <div class="inline-runner-kicker">Open-source Inspired Workflow</div>
+              <h4>食材 → 菜谱 → 热量营养</h4>
+              <p>输入已有食材和重量,适合减脂餐、增肌餐、备餐便当。第一版覆盖常见健身餐食材。</p>
+            </div>
+          </div>
+          <div class="meal-head-stats">
+            <div class="meal-head-stat"><span>Engine</span><strong>本地计算</strong></div>
+            <div class="meal-head-stat"><span>Output</span><strong>菜谱 + P/C/F</strong></div>
+            <div class="meal-head-stat"><span>Source</span><strong>MIT 参考</strong></div>
+          </div>
+        </div>
+        <div class="inline-runner-grid">
+          <div class="runner-form">
+            <div class="meal-form-card">
+              <span class="meal-form-icon"><i class="fas fa-list-check"></i></span>
+              <div>
+                <h5>输入你现在有的食材</h5>
+                <p>每行写一个食材和重量,例如「鸡胸肉 200g」。系统会先算营养,再生成适合目标的做法。</p>
+              </div>
+            </div>
+            <div class="meal-quick-stats">
+              <div class="meal-quick-stat"><span>Step 01</span><strong>录入食材</strong></div>
+              <div class="meal-quick-stat"><span>Step 02</span><strong>计算营养</strong></div>
+              <div class="meal-quick-stat"><span>Step 03</span><strong>生成做法</strong></div>
+            </div>
+            <div class="runner-field">
+              <div class="meal-field-head">
+                <label for="meal-ingredients-${wf.id}">现有食材</label>
+                <span class="meal-field-hint">支持 g / kg / 斤 / 个 / ml</span>
+              </div>
+              <textarea class="runner-textarea meal-ingredients-input" id="meal-ingredients-${wf.id}" placeholder="每行一个食材,尽量写重量。例如: 鸡胸肉 200g">鸡胸肉 200g
+米饭 150g
+西兰花 100g
+鸡蛋 2个</textarea>
+            </div>
+            <div class="meal-control-panel">
+              <div class="meal-control-title">目标设置 <span>按目标调整主食和油脂建议</span></div>
+              <div class="runner-two">
+                <div class="runner-field">
+                  <label for="meal-goal-${wf.id}">目标</label>
+                  <select class="runner-select" id="meal-goal-${wf.id}">
+                    <option value="fat_loss">减脂</option>
+                    <option value="muscle_gain">增肌</option>
+                    <option value="balanced">均衡</option>
+                  </select>
+                </div>
+                <div class="runner-field">
+                  <label for="meal-type-${wf.id}">餐次</label>
+                  <select class="runner-select" id="meal-type-${wf.id}">
+                    <option value="dinner">晚餐</option>
+                    <option value="lunch">午餐</option>
+                    <option value="breakfast">早餐</option>
+                    <option value="snack">加餐</option>
+                  </select>
+                </div>
+              </div>
+              <div class="runner-field">
+                <label for="meal-servings-${wf.id}">份数</label>
+                <input class="runner-input" id="meal-servings-${wf.id}" type="number" min="1" max="8" value="1">
+              </div>
+            </div>
+            <div class="runner-field">
+              <label>快速样例</label>
+              <div class="runner-presets">
+                <button class="runner-preset" onclick="applyFitnessMealPreset('${wf.id}','cut')">减脂晚餐</button>
+                <button class="runner-preset" onclick="applyFitnessMealPreset('${wf.id}','bulk')">增肌午餐</button>
+                <button class="runner-preset" onclick="applyFitnessMealPreset('${wf.id}','breakfast')">高蛋白早餐</button>
+              </div>
+            </div>
+            <div class="runner-field">
+              <label>常见食材</label>
+              <div class="meal-chip-row">
+                ${['鸡胸肉 200g', '米饭 150g', '西兰花 100g', '鸡蛋 2个', '燕麦 60g', '牛肉 200g', '香蕉 1根', '希腊酸奶 150g'].map(item => `
+                  <button class="meal-chip" onclick="appendFitnessIngredient('${wf.id}', '${item}')">${item}</button>
+                `).join('')}
+              </div>
+            </div>
+            <div class="runner-actions meal-submit-row">
+              <button class="runner-primary" id="meal-run-${wf.id}" onclick="runFitnessMealWorkflow('${wf.id}')">
+                <i class="fas fa-utensils"></i> 生成菜谱
+              </button>
+            </div>
+          </div>
+          <div class="runner-output" id="meal-output-${wf.id}">
+            <div class="runner-empty">
+              <div class="meal-empty-layout">
+                <div>
+                  <div class="meal-empty-icon"><i class="fas fa-bowl-food"></i></div>
+                  <div class="meal-empty-title">等待生成菜谱</div>
+                  <div class="meal-empty-copy">输入食材后会生成健身餐做法、总热量和三大营养素</div>
+                </div>
+                <div class="meal-empty-macros">
+                  <span>kcal</span>
+                  <span>protein</span>
+                  <span>carbs</span>
+                  <span>fat</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 function renderInlineRunner(wf) {
   if (!isInlineRunnerWorkflow(wf)) return '';
   if (wf.id === 'wf_seed_image_video') return renderImageVideoRunner(wf);
   if (wf.id === 'wf_seed_sql') return renderSqlRunner(wf);
+  if (wf.id === 'wf_seed_doc_markdown') return renderDocumentMarkdownRunner(wf);
+  if (wf.id === 'wf_seed_web_markdown') return renderWebpageMarkdownRunner(wf);
+  if (wf.id === 'wf_seed_image_ocr') return renderImageOcrRunner(wf);
+  if (wf.id === 'wf_seed_fitness_meal') return renderFitnessMealRunner(wf);
   return '';
 }
 
@@ -9770,7 +10754,7 @@ function renderRun() {
           <button class="run-action-btn" onclick="favoriteIvWorkflow('${wf.id}')">☆ 收藏</button>
   `;
   view.innerHTML = `
-    <div class="run-page">
+    <div class="run-page ${isImageVideoRun ? 'is-canvas-run' : 'is-form-run'}">
       <div class="run-topbar">
         <div class="run-left">
           <button class="run-back" onclick="goToDetail('${wf.id}')" title="返回详情">←</button>
@@ -10549,7 +11533,7 @@ function openLogin() {
       <aside class="auth-rail">
         <div>
           <div class="auth-modal-logo">
-            <div class="auth-logo-mark">流</div>
+            ${renderBrandMark('auth-logo-mark brand-mark')}
             <span>FlowHub</span>
           </div>
           <div class="auth-rail-copy">
@@ -10750,19 +11734,32 @@ async function sendEmailCode() {
     btn.disabled = false;
     btn.textContent = '获取验证码';
     btn.style.opacity = '1';
-    showToast('网络错误，请稍后重试', true);
+    if (!_apiLoaded) {
+      sessionStorage.setItem('flowhub_demo_email_code:' + email, DEMO_EMAIL_CODE);
+      showToast('后端邮件服务未连接,本地演示验证码为 ' + DEMO_EMAIL_CODE);
+      return;
+    }
+    showToast('验证码发送失败,请检查后端 API 和 SMTP 配置', true);
   }
 }
 
 async function doAuth(type) {
   const email = document.getElementById('auth-email').value.trim();
-  const code = document.getElementById('auth-code').value.trim();
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showToast('请输入正确的邮箱地址', true);
-  if (!code || code.length !== 6) return showToast('请输入 6 位验证码', true);
 
   const name = type === 'register'
     ? (document.getElementById('auth-name').value.trim() || '新用户')
     : undefined;
+  const password = document.getElementById('auth-password')?.value || '';
+  const confirmPassword = document.getElementById('auth-password-confirm')?.value || '';
+  const code = document.getElementById('auth-code')?.value.trim() || '';
+
+  if (type === 'login' && !password) return showToast('请输入密码', true);
+  if (type === 'register') {
+    if (password.length < 6) return showToast('密码至少 6 位', true);
+    if (password !== confirmPassword) return showToast('两次输入的密码不一致', true);
+  }
+  if (type === 'forgot' && (!code || code.length !== 6)) return showToast('请输入 6 位验证码', true);
 
   const btn = document.querySelector('.auth-submit-btn');
   if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 处理中…'; }
@@ -10770,7 +11767,9 @@ async function doAuth(type) {
   if (_apiLoaded) {
     try {
       const endpoint = type === 'register' ? '/auth/register' : '/auth/login';
-      const body = type === 'register' ? { email, code, name } : { email, code };
+      const body = type === 'register'
+        ? { email, password, name }
+        : (type === 'forgot' ? { email, code, mode: 'email_code' } : { email, password });
       const resp = await fetch(API_BASE + endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -10779,7 +11778,7 @@ async function doAuth(type) {
       const result = await resp.json();
 
       if (!resp.ok) {
-        if (btn) { btn.disabled = false; btn.innerHTML = type === 'login' ? '登录' : '注册并登录'; }
+        if (btn) { btn.disabled = false; btn.innerHTML = type === 'register' ? '注册并登录' : (type === 'forgot' ? '邮箱验证登录' : '登录'); }
         if (result.error?.code === 'USER_NOT_FOUND') return showToast('该邮箱未注册，请先注册', true);
         if (result.error?.code === 'USER_EXISTS') return showToast('该邮箱已注册，请直接登录', true);
         return showToast(result.error?.message || '操作失败', true);
@@ -10800,11 +11799,58 @@ async function doAuth(type) {
     }
   }
 
+  if (type === 'forgot') {
+    if (btn) { btn.disabled = false; btn.innerHTML = '邮箱验证登录'; }
+    return showToast('邮箱验证码登录需要后端服务可用', true);
+  }
+
+  const accounts = JSON.parse(localStorage.getItem('flowhub_local_accounts') || '{}');
+  if (type === 'register') {
+    if (accounts[email]) {
+      if (btn) { btn.disabled = false; btn.innerHTML = '注册并登录'; }
+      return showToast('该邮箱已注册，请直接登录', true);
+    }
+    accounts[email] = {
+      email,
+      name,
+      password: btoa(unescape(encodeURIComponent(password))),
+      created_at: new Date().toISOString()
+    };
+    localStorage.setItem('flowhub_local_accounts', JSON.stringify(accounts));
+  }
+  if (type === 'forgot' && !_apiLoaded) {
+    const demoCode = sessionStorage.getItem('flowhub_demo_email_code:' + email);
+    if (code !== demoCode) {
+      if (btn) { btn.disabled = false; btn.innerHTML = '邮箱验证登录'; }
+      return showToast('本地演示验证码不正确', true);
+    }
+  }
+  if (type === 'login') {
+    const account = accounts[email];
+    if (!account) {
+      if (btn) { btn.disabled = false; btn.innerHTML = '登录'; }
+      return showToast('本地演示未找到账号，请先注册', true);
+    }
+    if (account.password !== btoa(unescape(encodeURIComponent(password)))) {
+      if (btn) { btn.disabled = false; btn.innerHTML = '登录'; }
+      return showToast('密码不正确', true);
+    }
+  }
+  if (type === 'forgot' && !accounts[email]) {
+    accounts[email] = {
+      email,
+      name: '用户' + email.split('@')[0].slice(-4),
+      created_at: new Date().toISOString()
+    };
+    localStorage.setItem('flowhub_local_accounts', JSON.stringify(accounts));
+  }
+
   const data = getData();
+  const localAccount = accounts[email];
   data.user = {
     id: 'u_' + email.replace(/[@.]/g, '_'),
     email: email,
-    name: name || ('用户' + email.split('@')[0].slice(-4)),
+    name: name || localAccount?.name || ('用户' + email.split('@')[0].slice(-4)),
     tier: 'free',
     role: 'user',
     created_at: new Date().toISOString()
@@ -11420,7 +12466,7 @@ function renderAdmin() {
     <div class="admin-layout">
       <aside class="admin-sidebar">
         <div class="admin-logo">
-          <div class="mark">流</div>
+          ${renderBrandMark('mark brand-mark')}
           <div>
             <div class="name">FlowHub</div>
             <div class="role">Admin</div>
@@ -11950,14 +12996,18 @@ function renderAdminWorkflows() {
   `;
 }
 
-function openWfForm(wfId) {
+function openWfForm(wfId, options) {
   const data = getData();
   const wf = wfId ? data.workflows.find(w => w.id === wfId) : null;
+  const mode = options?.mode || 'admin';
   state.editingWfId = wfId || null;
+  state.editingWfMode = mode;
+  state.clearWfLogo = false;
+  state.clearWfGallery = false;
 
   openModal(`
-    <h2>${wf ? '编辑工作流' : '添加工作流'}</h2>
-    <p class="modal-sub">填写工作流元信息</p>
+    <h2>${wf ? (mode === 'creator' ? '编辑提交资料' : '编辑工作流') : '添加工作流'}</h2>
+    <p class="modal-sub">${mode === 'creator' ? '修改后会重新进入管理员审核,通过后才会展示到市场。' : '填写真实产品信息、Logo 和详情页图片。'}</p>
     <div class="field">
       <label>名称 *</label>
       <input id="wf-name" value="${escapeHtml(wf ? wf.name : '')}" placeholder="比如:PicSpark 商品图 AI">
@@ -11973,6 +13023,19 @@ function openWfForm(wfId) {
     <div class="field">
       <label>跳转 URL *</label>
       <input id="wf-url" value="${escapeHtml(wf ? wf.target_url : '')}" placeholder="https://www.picspark.cn">
+    </div>
+    <div class="field">
+      <label>产品 Logo / 图标</label>
+      <input id="wf-logo-file" type="file" accept="image/*">
+      ${getWorkflowLogo(wf) ? renderMediaPreview([{ label: '当前 Logo', url: getWorkflowLogo(wf) }], '') : '<div style="font-size:12px;color:var(--ink-3);margin-top:8px">未上传时会使用产品名称首字作为图标</div>'}
+      ${getWorkflowLogo(wf) ? '<button class="row-btn danger" style="margin-top:8px" onclick="clearWorkflowLogoField()">移除当前 Logo</button>' : ''}
+    </div>
+    <div class="field">
+      <label>详情页轮播图片</label>
+      <input id="wf-gallery-files" type="file" accept="image/*" multiple>
+      <div style="font-size:11px;color:var(--ink-3);margin-top:6px">最多 6 张。上传后会替换当前详情页轮播图,用于展示真实产品截图或案例图。</div>
+      ${renderMediaPreview(wf?.gallery || [], '未上传时使用系统生成的演示图')}
+      ${wf?.gallery?.length ? '<button class="row-btn danger" style="margin-top:8px" onclick="clearWorkflowGalleryField()">清空当前轮播图</button>' : ''}
     </div>
     <div class="field-row">
       <div class="field">
@@ -12025,12 +13088,26 @@ function openWfForm(wfId) {
   `);
 }
 
+function openCreatorWfForm(wfId) {
+  openWfForm(wfId, { mode: 'creator' });
+}
+
 function pickColor(color, el) {
   el.parentElement.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
   el.classList.add('active');
 }
 
-function saveWf() {
+function clearWorkflowLogoField() {
+  state.clearWfLogo = true;
+  showToast('保存后会移除当前 Logo');
+}
+
+function clearWorkflowGalleryField() {
+  state.clearWfGallery = true;
+  showToast('保存后会清空当前轮播图');
+}
+
+async function saveWf() {
   const name = document.getElementById('wf-name').value.trim();
   const url = document.getElementById('wf-url').value.trim();
   if (!name) return showToast('请填写名称', true);
@@ -12038,6 +13115,18 @@ function saveWf() {
   try { new URL(url); } catch { return showToast('URL 格式不正确', true); }
 
   const data = getData();
+  const existing = state.editingWfId ? data.workflows.find(w => w.id === state.editingWfId) : null;
+  const logoUpload = await readImageInput('wf-logo-file', 1);
+  const galleryUpload = await readImageInput('wf-gallery-files', 6);
+  const logoUrl = logoUpload[0]?.url || (state.clearWfLogo ? '' : (existing?.logo_url || existing?.cover_image_url || ''));
+  const gallery = galleryUpload.length
+    ? galleryUpload.map((item, index) => ({
+      label: item.label || ('产品图 ' + (index + 1)),
+      shortLabel: '图 ' + (index + 1),
+      title: name,
+      url: item.url
+    }))
+    : (state.clearWfGallery ? [] : (existing?.gallery || []));
   const newData = {
     name,
     tagline: document.getElementById('wf-tagline').value.trim(),
@@ -12048,13 +13137,22 @@ function saveWf() {
     price_model: document.getElementById('wf-price-model').value,
     price_amount: parseFloat(document.getElementById('wf-price-amount').value) || 0,
     cover_color: document.querySelector('.color-swatch.active').dataset.color,
+    cover_image_url: logoUrl,
+    logo_url: logoUrl,
+    gallery,
     tags: document.getElementById('wf-tags').value.split(',').map(t => t.trim()).filter(Boolean)
   };
 
   if (state.editingWfId) {
-    const wf = data.workflows.find(w => w.id === state.editingWfId);
+    const wf = existing;
     Object.assign(wf, newData);
-    showToast('已更新工作流');
+    if (state.editingWfMode === 'creator') {
+      wf.status = 'reviewing';
+      wf.updated_at = new Date().toISOString();
+      showToast('已保存,等待管理员审核');
+    } else {
+      showToast('已更新工作流');
+    }
   } else {
     data.workflows.unshift({
       id: 'wf_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
@@ -12067,9 +13165,23 @@ function saveWf() {
     });
     showToast('已添加工作流');
   }
+
+  if (_apiLoaded && state.editingWfMode !== 'creator') {
+    const result = state.editingWfId
+      ? await apiPut('/admin/workflows/' + state.editingWfId, newData)
+      : await apiPost('/admin/workflows', newData);
+    if (!result.ok) showToast(result.error?.message || '已保存到本地,但同步 API 失败', true);
+    else await loadAdminDataAsync();
+  }
+
   saveData(data);
+  if (_apiLoaded && _apiCache) {
+    _apiCache.workflows = data.workflows.map(_parseWorkflow);
+  }
   closeModal();
-  renderAdmin();
+  state.editingWfMode = 'admin';
+  if (state.view === 'creator') renderCreator();
+  else renderAdmin();
 }
 
 function toggleWfStatus(id) {
@@ -12307,7 +13419,8 @@ function renderAdminToolSubmissions() {
               <tr>
                 <td>
                   <div class="nm">${escapeHtml(sub.tool_name)}</div>
-                  <div class="sub">${escapeHtml(sub.tool_desc || '暂无描述')}</div>
+                  <div class="sub">${sub.submission_type === 'self' ? '自营工作流' : '推荐工具'} · ${escapeHtml(sub.tool_desc || '暂无描述')}</div>
+                  ${sub.logo_url || (sub.gallery || []).length ? `<div class="sub">已上传 Logo / 案例图 ${Array.isArray(sub.gallery) ? sub.gallery.length : 0} 张</div>` : ''}
                 </td>
                 <td>
                   <div class="nm">${escapeHtml(sub.submitter_name || '匿名提交')}</div>
@@ -12362,18 +13475,23 @@ function renderAdminToolSubmissions() {
 }
 
 function workflowFromToolSubmission(sub) {
+  const type = sub.submission_type === 'self' ? 'self' : 'recommend';
+  const priceModel = sub.price_model || (type === 'self' ? 'pro' : 'free');
   return {
     id: 'wf_tool_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
     name: sub.tool_name,
     tagline: (sub.tool_desc || '用户提交的外部 AI 工具').slice(0, 80),
     description: sub.tool_desc || '用户提交的外部 AI 工具',
     target_url: sub.tool_url,
-    type: 'recommend',
+    type,
     category: sub.category || '其他',
     tags: sub.tags || [],
-    price_model: sub.price_model || 'free',
+    price_model: priceModel,
     price_amount: parseFloat(sub.price_amount) || 0,
-    cover_color: '#B85C00',
+    cover_color: type === 'self' ? '#1A5D3A' : '#B85C00',
+    cover_image_url: sub.logo_url || '',
+    logo_url: sub.logo_url || '',
+    gallery: Array.isArray(sub.gallery) ? sub.gallery : [],
     status: 'active',
     rating: 4.5,
     review_count: 0,
@@ -12382,6 +13500,19 @@ function workflowFromToolSubmission(sub) {
     examples: [],
     created_at: new Date().toISOString()
   };
+}
+
+function workflowPreviewFromToolSubmission(sub) {
+  const wf = workflowFromToolSubmission(sub);
+  wf.id = sub.workflow_id || sub.id;
+  wf.status = sub.status === 'approved' ? 'active' : (sub.status === 'pending' ? 'reviewing' : 'rejected');
+  wf.rating = 0;
+  wf.review_count = 0;
+  wf.seed_clicks = 0;
+  wf.seed_clicks_7d = 0;
+  wf._submission = true;
+  wf._creator = { name: sub.submitter_name || '', contact: sub.contact || '' };
+  return wf;
 }
 
 async function approveToolSubmission(id) {
@@ -12827,6 +13958,15 @@ function openCreatorApply() {
         <input id="ca-url" placeholder="https://your-tool.com">
       </div>
       <div class="field">
+        <label>产品 Logo / 图标</label>
+        <input id="ca-logo-file" type="file" accept="image/*">
+      </div>
+      <div class="field">
+        <label>详情页产品图 / 案例图</label>
+        <input id="ca-gallery-files" type="file" accept="image/*" multiple>
+        <div style="font-size:11px;color:var(--ink-3);margin-top:6px">最多 6 张,审核通过后会展示在详情页轮播。</div>
+      </div>
+      <div class="field">
         <label>所属分类 *</label>
         <select id="ca-category">
           ${CATEGORIES.filter(c => c !== '全部').map(c => `<option value="${c}">${c}</option>`).join('')}
@@ -12856,7 +13996,7 @@ function switchCreatorType(type) {
   window._creatorApplyType = type;
 }
 
-function submitCreatorApply() {
+async function submitCreatorApply() {
   const name = document.getElementById('ca-name').value.trim();
   const contact = document.getElementById('ca-contact').value.trim();
   const wfName = document.getElementById('ca-wf-name').value.trim();
@@ -12872,33 +14012,53 @@ function submitCreatorApply() {
   const type = window._creatorApplyType || 'self';
   const tags = document.getElementById('ca-tags').value.split(/[,，]/).map(t => t.trim()).filter(Boolean).slice(0, 3);
   const desc = document.getElementById('ca-desc').value.trim();
+  const logoUpload = await readImageInput('ca-logo-file', 1);
+  const galleryUpload = await readImageInput('ca-gallery-files', 6);
+  const logoUrl = logoUpload[0]?.url || '';
+  const gallery = galleryUpload.map((item, index) => ({
+    label: item.label || ('案例图 ' + (index + 1)),
+    shortLabel: '图 ' + (index + 1),
+    title: wfName,
+    url: item.url
+  }));
 
   const data = getData();
-  const newWf = {
-    id: 'wf_apply_' + Date.now(),
-    name: wfName,
-    slug: wfName.toLowerCase().replace(/\s+/g, '-'),
-    tagline: tagline,
-    description: desc || tagline,
-    target_url: url,
-    type: type,
-    category: category,
-    tags: tags,
+  const submission = {
+    id: 'tool_sub_' + Date.now(),
+    submitter_name: name,
+    contact,
+    tool_name: wfName,
+    tool_url: url,
+    tool_desc: desc || tagline,
+    category,
+    tags,
+    submission_type: type,
     price_model: type === 'self' ? 'pro' : 'cpc',
     price_amount: type === 'self' ? 0 : 1,
-    cover_color: ['#1A5D3A','#1E3A8A','#B83A6B','#5B3FA8','#B85C00','#DC2626','#0D7377','#7C3AED'][Math.floor(Math.random() * 8)],
-    status: 'reviewing',
-    rating: 0,
-    review_count: 0,
-    examples: [],
-    seed_clicks: 0,
-    seed_clicks_7d: 0,
-    created_at: new Date().toISOString(),
-    _creator: { name, contact }
+    logo_url: logoUrl,
+    gallery,
+    status: 'pending',
+    admin_note: '',
+    workflow_id: null,
+    submitted_at: new Date().toISOString(),
+    reviewed_at: null,
+    _creator_user_id: data.user?.id || null
   };
 
-  data.workflows.push(newWf);
-  saveData(data);
+  if (_apiLoaded) {
+    const result = await apiPost('/tool-submissions', submission);
+    if (!result.ok) return showToast(result.error?.message || '提交失败,请稍后再试', true);
+    if (_apiCache) {
+      const saved = { ...submission, ...(result.data?.submission || {}) };
+      saved._creator_user_id = data.user?.id || null;
+      _apiCache.tool_submissions = _apiCache.tool_submissions || [];
+      _apiCache.tool_submissions.unshift(saved);
+    }
+  } else {
+    data.tool_submissions = data.tool_submissions || [];
+    data.tool_submissions.unshift(submission);
+    saveData(data);
+  }
 
   closeModal();
   showToast('申请已提交!审核通过后将上架到市场');
@@ -13246,10 +14406,25 @@ function runWizardTest() {
    ============================================================= */
 function renderCreator() {
   const data = getData();
+  const currentUser = data.user || {};
   // 假设当前创作者是 "PicSpark 团队",拥有 PicSpark 工作流
-  const myWorkflows = data.workflows.filter(w =>
-    w.name.includes('PicSpark') || w.id === 'wf_seed_picspark' || w.name.includes('小红书') || w.name.includes('品牌色板')
+  const ownedWorkflows = data.workflows.filter(w =>
+    w.name.includes('PicSpark') ||
+    w.id === 'wf_seed_picspark' ||
+    w.name.includes('小红书') ||
+    w.name.includes('品牌色板') ||
+    w._creator?.contact === currentUser.email ||
+    w.creator_id === currentUser.id
   );
+  const ownedIds = new Set(ownedWorkflows.map(w => w.id));
+  const mySubmissions = (data.tool_submissions || []).filter(sub =>
+    (currentUser.email && sub.contact === currentUser.email) ||
+    (currentUser.id && sub._creator_user_id === currentUser.id)
+  );
+  const submissionWorkflows = mySubmissions
+    .filter(sub => !sub.workflow_id || !ownedIds.has(sub.workflow_id))
+    .map(workflowPreviewFromToolSubmission);
+  const myWorkflows = [...ownedWorkflows, ...submissionWorkflows];
 
   const totalClicks = myWorkflows.reduce((sum, w) => sum + getClickCount(w.id), 0);
   const baseEarning = 18420;
@@ -13260,7 +14435,7 @@ function renderCreator() {
     <div class="admin-layout">
       <aside class="admin-sidebar">
         <div class="admin-logo">
-          <div class="mark">流</div>
+          ${renderBrandMark('mark brand-mark')}
           <div>
             <div class="name">FlowHub</div>
             <div class="role">Creator</div>
@@ -13369,14 +14544,14 @@ function renderCreator() {
         <div class="panel">
           <div class="panel-head">
             <h3>我的工作流表现</h3>
-            <span style="font-size:11px;color:var(--ink-3);font-family:'JetBrains Mono', monospace">${myWorkflows.length} 个上线中</span>
+            <span style="font-size:11px;color:var(--ink-3);font-family:'JetBrains Mono', monospace">${myWorkflows.length} 个工作流 / 提交</span>
           </div>
           ${myWorkflows.length === 0 ? `
             <div style="padding:40px;text-align:center;color:var(--ink-3);font-size:13px">还没有上架工作流</div>
           ` : `
             <table class="panel-table">
               <thead>
-                <tr><th>工作流</th><th>类型</th><th class="right">本月调用</th><th class="right">评分</th><th class="right">本月收益</th><th class="right">操作</th></tr>
+                <tr><th>工作流</th><th>类型</th><th>状态</th><th class="right">本月调用</th><th class="right">评分</th><th class="right">本月收益</th><th class="right">操作</th></tr>
               </thead>
               <tbody>
                 ${myWorkflows.map(w => {
@@ -13389,11 +14564,16 @@ function renderCreator() {
                         <div class="sub">${escapeHtml(w.category)} · ${escapeHtml((w.tags || []).join(', '))}</div>
                       </td>
                       <td><span class="badge-${w.type === 'self' ? 'self' : 'ad'}">${w.type === 'self' ? '自营' : '推荐'}</span></td>
+                      <td><span class="${w.status === 'active' ? 'badge-active' : w.status === 'reviewing' ? 'badge-pending' : 'badge-rejected'}">${w.status === 'active' ? '已上架' : w.status === 'reviewing' ? '待审核' : '未通过'}</span></td>
                       <td class="right"><span class="num">${clicks.toLocaleString()}</span></td>
                       <td class="right"><span class="num">${w.rating} ⭐</span></td>
                       <td class="right"><span class="num" style="color:var(--self);font-weight:700">¥${wfEarn.toLocaleString()}</span></td>
                       <td class="right">
-                        <button class="row-btn" onclick="goToDetail('${w.id}')">查看</button>
+                        ${w._submission
+                          ? `<button class="row-btn" onclick="showToast('提交正在审核中,通过后会生成正式工作流')">查看</button>`
+                          : `<button class="row-btn" onclick="goToDetail('${w.id}')">查看</button>`
+                        }
+                        ${!w._submission && (w._creator || w.status === 'reviewing') ? `<button class="row-btn" onclick="openCreatorWfForm('${w.id}')">编辑</button>` : ''}
                       </td>
                     </tr>
                   `;
@@ -15706,6 +16886,396 @@ let _picsparkPromptCache = {};
 function getRunnerValue(id, fallback) {
   const el = document.getElementById(id);
   return el ? String(el.value || '').trim() || fallback : fallback;
+}
+
+function setRunnerInput(id, value) {
+  const el = document.getElementById(id);
+  if (el) el.value = value;
+}
+
+let _toolResultCache = {};
+let _ocrPreviewUrls = {};
+
+function formatFileSize(bytes) {
+  const size = Number(bytes || 0);
+  if (size < 1024) return size + ' B';
+  if (size < 1024 * 1024) return (size / 1024).toFixed(1) + ' KB';
+  return (size / 1024 / 1024).toFixed(1) + ' MB';
+}
+
+function previewOcrImage(wfId) {
+  const input = document.getElementById('ocr-file-' + wfId);
+  const preview = document.getElementById('ocr-preview-' + wfId);
+  const file = input?.files?.[0];
+  if (!preview) return;
+
+  if (_ocrPreviewUrls[wfId]) {
+    URL.revokeObjectURL(_ocrPreviewUrls[wfId]);
+    delete _ocrPreviewUrls[wfId];
+  }
+
+  if (!file) {
+    preview.classList.remove('has-image');
+    preview.innerHTML = `
+      <div class="ocr-preview-empty">
+        <i class="fas fa-image"></i>
+        选择图片后会在这里显示预览
+      </div>
+    `;
+    return;
+  }
+
+  if (!file.type.startsWith('image/')) {
+    preview.classList.remove('has-image');
+    preview.innerHTML = `
+      <div class="ocr-preview-empty">
+        <i class="fas fa-triangle-exclamation"></i>
+        当前文件不是图片,请重新选择
+      </div>
+    `;
+    return;
+  }
+
+  const url = URL.createObjectURL(file);
+  _ocrPreviewUrls[wfId] = url;
+  preview.classList.add('has-image');
+  preview.innerHTML = `
+    <img src="${url}" alt="待识别图片预览" id="ocr-preview-img-${wfId}">
+    <div class="ocr-preview-meta">
+      <span>${escapeHtml(file.name)}</span>
+      <span>${formatFileSize(file.size)}</span>
+    </div>
+  `;
+
+  const image = document.getElementById('ocr-preview-img-' + wfId);
+  if (image) {
+    image.onload = () => {
+      const meta = preview.querySelector('.ocr-preview-meta');
+      if (meta && image.naturalWidth && image.naturalHeight) {
+        meta.innerHTML = `
+          <span>${escapeHtml(file.name)}</span>
+          <span>${image.naturalWidth}x${image.naturalHeight} · ${formatFileSize(file.size)}</span>
+        `;
+      }
+    };
+  }
+}
+
+function getApiError(json, fallback = '工具执行失败') {
+  return json?.error?.message || json?.message || fallback;
+}
+
+function setToolLoading(outputId, icon, text) {
+  const output = document.getElementById(outputId);
+  if (!output) return;
+  output.classList.add('loading');
+  output.innerHTML = `<div class="runner-empty"><div><i class="fas ${icon}"></i>${escapeHtml(text)}</div></div>`;
+}
+
+function setToolButtonLoading(btnId, loadingText) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+  btn.disabled = true;
+  btn.dataset.originalHtml = btn.innerHTML;
+  btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${escapeHtml(loadingText)}`;
+}
+
+function resetToolButton(btnId) {
+  const btn = document.getElementById(btnId);
+  if (!btn) return;
+  btn.disabled = false;
+  if (btn.dataset.originalHtml) btn.innerHTML = btn.dataset.originalHtml;
+}
+
+function renderToolError(outputId, message) {
+  const output = document.getElementById(outputId);
+  if (!output) return;
+  output.classList.remove('loading');
+  output.innerHTML = `
+    <div class="tool-error">
+      <strong>执行失败</strong><br>
+      ${escapeHtml(message)}
+    </div>
+  `;
+}
+
+function renderMarkdownToolResult(wfId, outputId, result) {
+  const output = document.getElementById(outputId);
+  if (!output) return;
+  const markdown = result.markdown || result.text || '';
+  _toolResultCache[wfId] = markdown;
+  output.classList.remove('loading');
+  output.innerHTML = `
+    <div class="ps-result">
+      <div class="ps-result-block">
+        <h5>${escapeHtml(result.title || result.file_name || '转换结果')}</h5>
+        <div class="tool-meta">
+          ${result.engine ? `<span>${escapeHtml(result.engine)}</span>` : ''}
+          ${result.word_count !== undefined ? `<span>${Number(result.word_count || 0).toLocaleString()} 字/词</span>` : ''}
+          ${result.pages ? `<span>${Number(result.pages).toLocaleString()} 页</span>` : ''}
+          ${result.confidence !== undefined ? `<span>置信度 ${escapeHtml(result.confidence)}%</span>` : ''}
+        </div>
+        ${result.excerpt ? `<p>${escapeHtml(result.excerpt)}</p>` : ''}
+        ${(result.warnings || []).length ? `<p style="color:var(--warn)">提示:${escapeHtml(result.warnings.join('; '))}</p>` : ''}
+      </div>
+      <pre class="tool-markdown">${escapeHtml(markdown || '没有识别到可用内容')}</pre>
+      <div class="try-actions">
+        <button class="try-btn primary" onclick="copyToolResult('${wfId}')"><i class="fas fa-copy"></i> 复制结果</button>
+        <button class="try-btn" onclick="downloadToolResult('${wfId}', '${escapeHtml((result.title || result.file_name || 'flowhub-result').replace(/'/g, ''))}')"><i class="fas fa-download"></i> 下载 Markdown</button>
+      </div>
+    </div>
+  `;
+}
+
+function saveToolRun(wfId, input, output) {
+  const data = getData();
+  data.inline_runs = data.inline_runs || [];
+  data.inline_runs.unshift({
+    id: 'run_' + Date.now(),
+    workflow_id: wfId,
+    input,
+    output,
+    created_at: new Date().toISOString()
+  });
+  data.inline_runs = data.inline_runs.slice(0, 20);
+  saveData(data);
+}
+
+function copyToolResult(wfId) {
+  const text = _toolResultCache[wfId];
+  if (!text) return showToast('没有可复制的结果', true);
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text)
+      .then(() => showToast('结果已复制'))
+      .catch(() => showToast('复制失败,可手动选中文本', true));
+  } else {
+    showToast('当前浏览器不支持自动复制', true);
+  }
+}
+
+function downloadToolResult(wfId, filename) {
+  const text = _toolResultCache[wfId];
+  if (!text) return showToast('没有可下载的结果', true);
+  const safeName = (filename || 'flowhub-result').replace(/[\\/:*?"<>|]+/g, '-').slice(0, 60);
+  const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = safeName + '.md';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+async function runDocumentMarkdownWorkflow(wfId) {
+  const fileInput = document.getElementById('doc-file-' + wfId);
+  const file = fileInput?.files?.[0];
+  if (!file) return showToast('请先选择一个文档文件', true);
+  const data = getData();
+  recordWorkflowClick(data, wfId, { source: 'inline_execution' });
+  setToolLoading('doc-output-' + wfId, 'fa-file-lines', '正在上传并转换文档...');
+  setToolButtonLoading('doc-run-' + wfId, '转换中');
+  try {
+    const form = new FormData();
+    form.append('file', file);
+    const json = await apiForm('/tools/document-markdown', form);
+    if (!json.ok) throw new Error(getApiError(json, '文档转换失败'));
+    renderMarkdownToolResult(wfId, 'doc-output-' + wfId, json.data);
+    saveToolRun(wfId, { file_name: file.name, file_size: file.size }, json.data.markdown);
+    showToast('文档已转换为 Markdown');
+  } catch (err) {
+    renderToolError('doc-output-' + wfId, err.message);
+    showToast(err.message, true);
+  } finally {
+    resetToolButton('doc-run-' + wfId);
+  }
+}
+
+async function runWebpageMarkdownWorkflow(wfId) {
+  const url = getRunnerValue('web-url-' + wfId, '');
+  if (!/^https?:\/\//i.test(url)) return showToast('请输入 http/https 开头的网址', true);
+  const data = getData();
+  recordWorkflowClick(data, wfId, { source: 'inline_execution' });
+  setToolLoading('web-output-' + wfId, 'fa-globe', '正在抓取网页并提取正文...');
+  setToolButtonLoading('web-run-' + wfId, '抓取中');
+  try {
+    const json = await apiPost('/tools/webpage-markdown', { url });
+    if (!json.ok) throw new Error(getApiError(json, '网页转换失败'));
+    renderMarkdownToolResult(wfId, 'web-output-' + wfId, json.data);
+    saveToolRun(wfId, { url }, json.data.markdown);
+    showToast('网页已转换为 Markdown');
+  } catch (err) {
+    renderToolError('web-output-' + wfId, err.message);
+    showToast(err.message, true);
+  } finally {
+    resetToolButton('web-run-' + wfId);
+  }
+}
+
+async function runImageOcrWorkflow(wfId) {
+  const fileInput = document.getElementById('ocr-file-' + wfId);
+  const file = fileInput?.files?.[0];
+  if (!file) return showToast('请先选择一张图片', true);
+  const lang = getRunnerValue('ocr-lang-' + wfId, 'chi_sim+eng');
+  const data = getData();
+  recordWorkflowClick(data, wfId, { source: 'inline_execution' });
+  setToolLoading('ocr-output-' + wfId, 'fa-eye', '正在识别图片文字,首次加载语言模型会稍慢...');
+  setToolButtonLoading('ocr-run-' + wfId, '识别中');
+  try {
+    const form = new FormData();
+    form.append('file', file);
+    form.append('lang', lang);
+    const json = await apiForm('/tools/image-ocr', form);
+    if (!json.ok) throw new Error(getApiError(json, '图片 OCR 失败'));
+    renderMarkdownToolResult(wfId, 'ocr-output-' + wfId, json.data);
+    saveToolRun(wfId, { file_name: file.name, file_size: file.size, lang }, json.data.text);
+    showToast('图片文字已识别');
+  } catch (err) {
+    renderToolError('ocr-output-' + wfId, err.message);
+    showToast(err.message, true);
+  } finally {
+    resetToolButton('ocr-run-' + wfId);
+  }
+}
+
+function appendFitnessIngredient(wfId, ingredient) {
+  const textarea = document.getElementById('meal-ingredients-' + wfId);
+  if (!textarea) return;
+  const lines = String(textarea.value || '')
+    .split('\n')
+    .map(line => line.trim())
+    .filter(Boolean);
+  if (!lines.includes(ingredient)) lines.push(ingredient);
+  textarea.value = lines.join('\n');
+  textarea.focus();
+}
+
+function applyFitnessMealPreset(wfId, presetId) {
+  const presets = {
+    cut: {
+      ingredients: '鸡胸肉 200g\n米饭 120g\n西兰花 150g\n鸡蛋 1个\n橄榄油 5g',
+      goal: 'fat_loss',
+      meal: 'dinner',
+      servings: 1
+    },
+    bulk: {
+      ingredients: '牛肉 200g\n米饭 250g\n鸡蛋 2个\n番茄 100g\n牛油果 80g',
+      goal: 'muscle_gain',
+      meal: 'lunch',
+      servings: 1
+    },
+    breakfast: {
+      ingredients: '燕麦 60g\n牛奶 250ml\n香蕉 1根\n鸡蛋 2个\n希腊酸奶 150g',
+      goal: 'balanced',
+      meal: 'breakfast',
+      servings: 1
+    }
+  };
+  const preset = presets[presetId];
+  if (!preset) return;
+  setRunnerInput('meal-ingredients-' + wfId, preset.ingredients);
+  setRunnerInput('meal-goal-' + wfId, preset.goal);
+  setRunnerInput('meal-type-' + wfId, preset.meal);
+  setRunnerInput('meal-servings-' + wfId, String(preset.servings));
+}
+
+function renderFitnessMealResult(wfId, result) {
+  const output = document.getElementById('meal-output-' + wfId);
+  if (!output) return;
+  _toolResultCache[wfId] = result.markdown || '';
+  const total = result.total || {};
+  const per = result.per_serving || {};
+  output.classList.remove('loading');
+  output.innerHTML = `
+    <div class="ps-result meal-result">
+      <div class="meal-result-hero">
+        <div>
+          <h5>${escapeHtml(result.title || '健身餐菜谱')}</h5>
+          <div class="tool-meta">
+            <span>${escapeHtml(result.goal || '均衡')}</span>
+            <span>${escapeHtml(result.meal_type || '正餐')}</span>
+            <span>${Number(result.servings || 1)} 份</span>
+            <span>${escapeHtml(result.engine || 'Nutrition rules')}</span>
+          </div>
+        </div>
+        <div class="meal-kcal-hero">
+          <span>每份热量</span>
+          <strong>${escapeHtml(per.kcal ?? 0)}</strong>
+          <em>kcal</em>
+          <small>总计 ${escapeHtml(total.kcal ?? per.kcal ?? 0)} kcal</small>
+        </div>
+      </div>
+      <div class="ps-result-block">
+        <h5>营养概览</h5>
+        <div class="meal-summary-grid">
+          <div class="meal-macro-card"><span>每份热量</span><strong>${escapeHtml(per.kcal ?? 0)}</strong> kcal</div>
+          <div class="meal-macro-card"><span>蛋白质</span><strong>${escapeHtml(per.protein ?? 0)}</strong> g</div>
+          <div class="meal-macro-card"><span>碳水</span><strong>${escapeHtml(per.carbs ?? 0)}</strong> g</div>
+          <div class="meal-macro-card"><span>脂肪</span><strong>${escapeHtml(per.fat ?? 0)}</strong> g</div>
+        </div>
+      </div>
+      <div class="ps-result-block">
+        <h5>食材营养明细</h5>
+        <div class="meal-ingredient-list">
+          ${(result.ingredients || []).map(item => `
+            <div class="meal-ingredient-row">
+              <strong>${escapeHtml(item.name)} ${escapeHtml(item.grams)}g</strong>
+              <span>${escapeHtml(item.kcal)} kcal</span>
+              <span>P ${escapeHtml(item.protein)}g / C ${escapeHtml(item.carbs)}g / F ${escapeHtml(item.fat)}g</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div class="ps-result-block">
+        <h5>怎么做这份菜谱</h5>
+        <ol class="meal-steps">
+          ${(result.steps || []).map(step => `<li>${escapeHtml(step)}</li>`).join('')}
+        </ol>
+      </div>
+      <div class="ps-result-block">
+        <h5>食用建议</h5>
+        <div class="meal-tips">
+          ${(result.tips || ['按目标调整主食和油脂用量。']).map(tip => `<div class="meal-tip">${escapeHtml(tip)}</div>`).join('')}
+          <div class="meal-tip">营养值为估算值,会因品牌、烹饪方式和熟重/生重差异变化。</div>
+        </div>
+      </div>
+      ${(result.warnings || []).length ? `
+        <div class="tool-error" style="color:var(--ad);border-color:rgba(184,92,0,0.22);background:rgba(184,92,0,0.08)">
+          ${result.warnings.map(item => escapeHtml(item)).join('<br>')}
+        </div>
+      ` : ''}
+      <div class="try-actions">
+        <button class="try-btn primary" onclick="copyToolResult('${wfId}')"><i class="fas fa-copy"></i> 复制菜谱</button>
+        <button class="try-btn" onclick="downloadToolResult('${wfId}', '${escapeHtml((result.title || 'fitness-meal').replace(/'/g, ''))}')"><i class="fas fa-download"></i> 下载 Markdown</button>
+      </div>
+      <details class="meal-markdown-details">
+        <summary>查看 Markdown 原文</summary>
+        <pre class="tool-markdown">${escapeHtml(result.markdown || '')}</pre>
+      </details>
+    </div>
+  `;
+}
+
+async function runFitnessMealWorkflow(wfId) {
+  const ingredients = getRunnerValue('meal-ingredients-' + wfId, '');
+  if (!ingredients || ingredients.length < 4) return showToast('请先输入食材和重量', true);
+  const goal = getRunnerValue('meal-goal-' + wfId, 'fat_loss');
+  const mealType = getRunnerValue('meal-type-' + wfId, 'dinner');
+  const servings = getRunnerValue('meal-servings-' + wfId, '1');
+  const data = getData();
+  recordWorkflowClick(data, wfId, { source: 'inline_execution' });
+  setToolLoading('meal-output-' + wfId, 'fa-utensils', '正在生成菜谱并计算营养...');
+  setToolButtonLoading('meal-run-' + wfId, '生成中');
+  try {
+    const json = await apiPost('/tools/fitness-meal', { ingredients, goal, meal_type: mealType, servings });
+    if (!json.ok) throw new Error(getApiError(json, '健身餐生成失败'));
+    renderFitnessMealResult(wfId, json.data);
+    saveToolRun(wfId, { ingredients, goal, meal_type: mealType, servings }, json.data.markdown);
+    showToast('健身餐菜谱已生成');
+  } catch (err) {
+    renderToolError('meal-output-' + wfId, err.message);
+    showToast(err.message, true);
+  } finally {
+    resetToolButton('meal-run-' + wfId);
+  }
 }
 
 function applyPicsparkPreset(wfId, presetId) {

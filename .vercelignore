@@ -1,6 +1,7 @@
 .git
 .DS_Store
-server
+node_modules
+server/node_modules
 supabase
 docs
 *.md
