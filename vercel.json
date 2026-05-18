@@ -2,7 +2,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "installCommand": "cd server && npm ci",
-  "buildCommand": "rm -rf public && mkdir -p public && cp index.html public/index.html && if [ -d assets ]; then cp -R assets public/assets; fi",
+  "buildCommand": "rm -rf public && mkdir -p public && cp index.html public/index.html && if [ -d assets ]; then cp -R assets public/assets; fi && if [ -d src ]; then cp -R src public/src; fi",
   "outputDirectory": "public",
   "functions": {
     "api/[...path].js": {

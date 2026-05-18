@@ -85,6 +85,7 @@ ALTER TABLE workflows ADD COLUMN IF NOT EXISTS logo_url TEXT;
 -- ========== 外部工具提交审核 ==========
 CREATE TABLE IF NOT EXISTS tool_submissions (
   id TEXT PRIMARY KEY DEFAULT gen_random_uuid()::TEXT,
+  user_id UUID REFERENCES users(id) ON DELETE SET NULL,
   submitter_name TEXT,
   contact TEXT NOT NULL,
   tool_name TEXT NOT NULL,
@@ -111,6 +112,7 @@ ALTER TABLE workflows ADD COLUMN IF NOT EXISTS gallery JSONB;
 ALTER TABLE tool_submissions ADD COLUMN IF NOT EXISTS submission_type TEXT DEFAULT 'recommend';
 ALTER TABLE tool_submissions ADD COLUMN IF NOT EXISTS logo_url TEXT;
 ALTER TABLE tool_submissions ADD COLUMN IF NOT EXISTS gallery JSONB DEFAULT '[]'::jsonb;
+ALTER TABLE tool_submissions ADD COLUMN IF NOT EXISTS user_id UUID REFERENCES users(id) ON DELETE SET NULL;
 
 -- ========== 调用记录 ==========
 CREATE TABLE IF NOT EXISTS clicks (
