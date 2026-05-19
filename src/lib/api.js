@@ -79,8 +79,12 @@ export async function listWorkflows() {
   try {
     const json = await get('/workflows?limit=100');
     if (json.ok && Array.isArray(json.data?.workflows) && json.data.workflows.length > 0) {
+      const apiWorkflows = json.data.workflows.map(normalizeWorkflow);
+      const existingIds = new Set(apiWorkflows.map((workflow) => workflow.id));
+      const requiredSelfSeeds = getSeedWorkflows()
+        .filter((workflow) => workflow.type === 'self' && !existingIds.has(workflow.id));
       return {
-        workflows: json.data.workflows.map(normalizeWorkflow),
+        workflows: [...apiWorkflows, ...requiredSelfSeeds],
         source: 'api'
       };
     }
