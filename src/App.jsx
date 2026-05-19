@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import DemoBar from './components/DemoBar.jsx';
+import LegacyRuntime from './components/LegacyRuntime.jsx';
 import LoginModal from './components/LoginModal.jsx';
 import MobileChrome from './components/MobileChrome.jsx';
 import Market from './pages/Market.jsx';
@@ -161,6 +162,7 @@ export default function App() {
           }}
         />
       )}
+      <LegacyRuntime />
       <div className={`toast ${toast ? 'show' : ''}`}>
         <i className="fas fa-circle-check" />
         <span>{toast}</span>
